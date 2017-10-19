@@ -134,7 +134,7 @@
     <orderEntry type="library" name="Maven: com.lowagie:itext:2.0.8" level="project" />
     <orderEntry type="library" name="Maven: bouncycastle:bcmail-jdk14:138" level="project" />
     <orderEntry type="library" name="Maven: bouncycastle:bcprov-jdk14:138" level="project" />
-    <orderEntry type="library" name="Maven: org.xhtmlrenderer:core-renderer:R8-0604" level="project" />
+    <orderEntry type="library" name="Maven: org.xhtmlrenderer:core-renderer:R8" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi:3.9" level="project" />
     <orderEntry type="library" name="Maven: javax.mail:mail:1.4.7" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
