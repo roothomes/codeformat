@@ -1,3 +1,4 @@
+package com.roothomes.test.bean;
 /**
  * Product bean; note that it must be a public class!
  */
