@@ -3,17 +3,17 @@ package ${GROUPID}.${ARTIFACTID}.model;
 
 <#list PACKAGE as p>
     <#if p.desc??>
-    /** ${p.desc} */
+/** ${p.desc} */
     </#if>
-    ${p.importPackage}
+${p.importPackage}
 </#list>
 
 
 <#list ANNOTATION as a>
     <#if a.desc??>
-    /** ${a.desc} */
+/** ${a.desc} */
     </#if>
-    ${a.name}
+${a.name}
 </#list>
 public class ${POJO} extends BaseModel<String>
 {
