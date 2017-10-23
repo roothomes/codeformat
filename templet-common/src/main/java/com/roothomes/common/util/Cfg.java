@@ -2,6 +2,7 @@ package com.roothomes.common.util;
 
 /**
  * 系统配置类
+ * @author roothomes
  */
 public class Cfg {
 

@@ -8,9 +8,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * 文件夹的工具类
+ * @author roothomes
+ */
 public class DirUtil {
     private static final Logger LOG = LoggerFactory.getLogger( DirUtil.class );
 
+    /**
+     * 获取生成业务文件的具体路径
+     * @param systemType 系统标识
+     * @param cfg 配置信息
+     * @return
+     * @author roothomes
+     */
     public Map<DirEnum,String> getFilePathMap(SystemEnum systemType, Cfg cfg){
         //基础输出地址 + 包名称 + 类名称。
         File file = new File(cfg.getCfgOutputBaseDir());

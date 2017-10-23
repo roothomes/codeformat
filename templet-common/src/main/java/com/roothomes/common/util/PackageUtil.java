@@ -3,16 +3,33 @@ package com.roothomes.common.util;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 模板包的处理类
+ * @author roothomes
+ */
 public class PackageUtil {
-
+    /**
+     * 生成业务包的路径集合
+     * @param systemtype
+     * @param packageBaseName
+     * @return
+     * @author roothomes
+     */
     public static Map<DirEnum,String> generatePackages(SystemEnum systemtype, String packageBaseName){
        if(SystemEnum.spring_boots.equals(systemtype)){
            return generatePackagesCommon(packageBaseName);
        }else{
+           System.err.println("未定义" + systemtype.name());
            return null;
        }
     }
 
+    /**
+     * 生成业务文件的包的路径集合
+     * @param getPackageBaseName
+     * @return
+     * @author roothomes
+     */
     private static Map<DirEnum,String> generatePackagesCommon(String getPackageBaseName){
         Map<DirEnum,String> map = new HashMap<DirEnum,String>();
         map.put(DirEnum.p_model, getPackageBaseName + "." + "model");

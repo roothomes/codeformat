@@ -2,6 +2,7 @@ package com.roothomes.common.util;
 
 /**
  * 生成的包的类型命名
+ * @author roothomes
  */
 public enum DirEnum {
     p_dao,
