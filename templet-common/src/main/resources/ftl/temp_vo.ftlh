@@ -2,36 +2,41 @@ package ${PACKAGE};
 
 
 <#list PACKAGES as p>
-    <#if p.desc??>
-/** ${p.desc} */
-    </#if>
+<#if p.desc??>/** ${p.desc} */</#if>
 ${p.importPackage}
 </#list>
 
-import com.apec.framework.common.enumtype.EnableFlag;
-import com.apec.framework.dto.BaseDTO;
-
+/**
+ * <#if MODELDESC??> ${MODELDESC}</#if>
+ * @author <#if CREATE_AUTHOR??> ${CREATE_AUTHOR}</#if>
+ * @version V1.0
+ * @date <#if CREAT_DATE??> ${CREAT_DATE}</#if>
+ */
 public class ${CLASSNAME} extends BaseDTO
 {
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-
+<#-- 属性列表 -->
 <#list ATTRIBUTE as a>
-    <#if a.desc??>
-    /** ${a.desc} */
-    </#if>
+    <#if a.desc??>/** ${a.desc} */</#if>
+    <#if a.type == "EnableFlag">
+    private ${a.type} ${a.javaCode} = EnableFlag.Y;
+    <#else>
     private ${a.type} ${a.javaCode};
-    /** ${a.desc} */
+    </#if>
+</#list>
+
+<#-- 属性的get set方法 -->
+<#list ATTRIBUTE as a>
+    <#if a.desc??>/** ${a.desc} */</#if>
     public void set${a.javaCode?substring(0)}(${a.type} ${a.javaCode}) {
         this.${a.javaCode} = ${a.javaCode};
     }
-    /** ${a.desc} */
+    <#if a.desc??>/** ${a.desc} */</#if>
     public ${a.type} get${a.javaCode?substring(0)}() {
-        return ${a.javaCode};
+       return ${a.javaCode};
     }
-
 </#list>
-
 
 
 }

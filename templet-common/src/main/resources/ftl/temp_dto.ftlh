@@ -2,9 +2,7 @@ package ${PACKAGE};
 
 
 <#list PACKAGES as p>
-    <#if p.desc??>
-/** ${p.desc} */
-    </#if>
+<#if p.desc??>/** ${p.desc} */</#if>
 ${p.importPackage}
 </#list>
 
@@ -20,9 +18,7 @@ public class ${CLASSNAME} extends BaseDTO
 
 <#-- 属性列表 -->
 <#list ATTRIBUTE as a>
-    <#if a.desc??>
-    /** ${a.desc} */
-    </#if>
+    <#if a.desc??>/** ${a.desc} */</#if>
     <#if a.type == "EnableFlag">
     private ${a.type} ${a.javaCode} = EnableFlag.Y;
     <#else>
@@ -32,15 +28,11 @@ public class ${CLASSNAME} extends BaseDTO
 
 <#-- 属性的get set方法 -->
 <#list ATTRIBUTE as a>
-    <#if a.desc??>
-    /** ${a.desc} */
-    </#if>
+    <#if a.desc??>/** ${a.desc} */</#if>
     public void set${a.javaCode?substring(0)}(${a.type} ${a.javaCode}) {
         this.${a.javaCode} = ${a.javaCode};
     }
-    <#if a.desc??>
-    /** ${a.desc} */
-    </#if>
+    <#if a.desc??>/** ${a.desc} */</#if>
     public ${a.type} get${a.javaCode?substring(0)}() {
        return ${a.javaCode};
     }
