@@ -35,6 +35,23 @@ public interface IContant {
      */
     String K_CLASSNAME = "CLASSNAME";
     /**
+     * MODEL 模型类的名称
+     */
+    String K_MODEL_CLASSNAME="MODEL_CLASSNAME";
+    /**
+     * VO 模型类的名称
+     */
+    String K_VO_CLASSNAME="VO_CLASSNAME";
+    /**
+     * DTO 模型类的名称
+     */
+    String K_DTO_CLASSNAME="DTO_CLASSNAME";
+    /**
+     * 模型的主键id的类型
+     */
+    String K_PK_ID_TYPE="PK_ID_TYPE";
+
+    /**
      * 模型的描述信息
      */
     String K_MODELDESC="MODELDESC";
@@ -78,6 +95,27 @@ public interface IContant {
      * java 类的vo的模板文件名称
      */
     String V_TEMPLET_FILE_VO="temp_vo.ftlh";
+    /**
+     * java 类的dao的模板文件名称
+     */
+    String V_TEMPLET_FILE_DAO="temp_dao.ftlh";
+    /**
+     * java 类的service的模板文件名称
+     */
+    String V_TEMPLET_FILE_SERVICE="temp_service.ftlh";
+    /**
+     * java 类的serviceImpl的模板文件名称
+     */
+    String V_TEMPLET_FILE_SERVICEIMPL="temp_serviceimpl.ftlh";
+    /**
+     * java 类的util的模板文件名称
+     */
+    String V_TEMPLET_FILE_UTIL="temp_util.ftlh";
+
+    /**
+     * java 类的contant的模板文件名称
+     */
+    String V_TEMPLET_FILE_Contant="temp_contant.ftlh";
 
     /**
      * 模板文件的基础路径

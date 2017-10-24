@@ -15,7 +15,7 @@ ${p.importPackage}
     </#if>
 ${a.name}
 </#list>
-public class ${CLASSNAME} extends BaseModel<String>
+public class ${CLASSNAME} extends BaseModel<${PK_ID_TYPE}>
 {
     private static final long serialVersionUID = 1L;
 

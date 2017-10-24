@@ -12,5 +12,6 @@ public enum DirEnum {
     p_util,
     p_web,
     p_service,
-    p_serviceimpl
+    p_serviceimpl,
+    p_contant
 }

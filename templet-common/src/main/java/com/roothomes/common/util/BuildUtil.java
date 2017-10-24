@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +16,10 @@ import java.util.Map;
 public class BuildUtil {
 
 
-    public static void buildJavaFile4Model(Cfg param,Configuration cfg,Map root,String outputfile,String packageName,String className)throws Exception{
+    public static void buildJavaFile4Model(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_model;
          /* 包名称 */
-        root.put(IContant.K_PACKAGE, packageName);
-         /* 设置类名称 */
-        root.put(IContant.K_CLASSNAME,className);
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
         /* 设置属性 */
         List<TAttribute> listModel = TUtil.getModelAttributeList(
                 param.getCfgJavaAttributeCode(),
@@ -29,6 +29,8 @@ public class BuildUtil {
         root.put(IContant.K_ATTRIBUTE,listModel );
         /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,TUtil.getModelClassImportPackages(param.getCfgJavaAttributeType()));
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
         /* 设置注解列表 */
         List<TAnnotation> list = TAnnotation.getTModelClassList();
@@ -40,20 +42,15 @@ public class BuildUtil {
 
         /* Get the template (uses cache internally) */
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_MODEL);
-
-        /* Merge data-model with template */
-        FileOutputStream fos = new FileOutputStream(outputfile);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
         temp.process(root, out);
-        // Note: Depending on what `out` is, you may need to call `out.close()`.
-        // This is usually the case for file output, but not for servlet output.
     }
 
-    public static void buildJavaFile4DTO(Cfg param,Configuration cfg,Map root,String outputfile,String packageName,String className)throws Exception{
+    public static void buildJavaFile4DTO(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_dto;
         /* 包名称 */
-        root.put(IContant.K_PACKAGE, packageName);
-        /* 设置类名称 */
-        root.put(IContant.K_CLASSNAME,className);
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
         /* 设置属性 */
         List<TAttribute> listDTO = TUtil.getDTOAttributeList(
                 param.getCfgJavaAttributeCode(),
@@ -63,24 +60,21 @@ public class BuildUtil {
         root.put(IContant.K_ATTRIBUTE,listDTO );
          /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,TUtil.getDTOClassImportPackages(IContant.baseJavaAttributeType));
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
         /* Get the template (uses cache internally) */
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_DTO);
-
-        /* Merge data-model with template */
-        FileOutputStream fos = new FileOutputStream(outputfile);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
         temp.process(root, out);
-        // Note: Depending on what `out` is, you may need to call `out.close()`.
-        // This is usually the case for file output, but not for servlet output.
     }
 
 
-    public static void buildJavaFile4Vo(Cfg param,Configuration cfg,Map root,String outputfile,String packageName,String className)throws Exception{
+    public static void buildJavaFile4Vo(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_vo;
         /* 包名称 */
-        root.put(IContant.K_PACKAGE, packageName);
-        /* 设置类名称 */
-        root.put(IContant.K_CLASSNAME,className);
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
         /* 设置属性 */
         List<TAttribute> listDTO = TUtil.getDTOAttributeList(
                 param.getCfgJavaAttributeCode(),
@@ -90,18 +84,120 @@ public class BuildUtil {
         root.put(IContant.K_ATTRIBUTE,listDTO );
          /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,TUtil.getDTOClassImportPackages(IContant.baseJavaAttributeType));
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
         /* Get the template (uses cache internally) */
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_VO);
-
-        /* Merge data-model with template */
-        FileOutputStream fos = new FileOutputStream(outputfile);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
         temp.process(root, out);
-        // Note: Depending on what `out` is, you may need to call `out.close()`.
-        // This is usually the case for file output, but not for servlet output.
+    }
+    public static void buildJavaFile4DAO(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_dao;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        List<TPackage> listPackage = new ArrayList<TPackage>(1);
+        TPackage one = new TPackage();
+        one.setImportPackage("import " + packageMap.get(DirEnum.p_model) + "." +param.getCfgPojoName() + ";");
+        listPackage.add(one);
+
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_DAO);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
     }
 
+    public static void buildJavaFile4Contant(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_contant;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_Contant);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildJavaFile4Util(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_util;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_UTIL);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildJavaFile4Service(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_service;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        List<TPackage> listPackage = new ArrayList<TPackage>(4);
+        TPackage one = new TPackage();
+        one.setImportPackage("import " + packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model) + ";");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("import " + packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto)  + ";");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("import " + packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo)  + ";");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("import com.apec.framework.common.PageDTO;");
+        listPackage.add(one);
+
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_SERVICE);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+
+
+    public static void buildJavaFile4ServiceImpl(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_serviceimpl;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        List<TPackage> listPackage = new ArrayList<TPackage>(4);
+        TPackage one = new TPackage();
+        one.setImportPackage("import " + packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model) + ";");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("import " + packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto)  + ";");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("import " + packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo)  + ";");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("import com.apec.framework.common.PageDTO;");
+        listPackage.add(one);
+
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_SERVICE);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
 
     public static void main(String[] args) throws Exception {
 
@@ -136,10 +232,19 @@ public class BuildUtil {
         root.put(IContant.K_MODELDESC,param.getCfgModelDesc());
         root.put(IContant.K_CREATE_AUTHOR,param.getCfgCreatAuthor());
         root.put(IContant.K_CREAT_DATE,param.getCfgCreatDate());
+        /* 设置模型属性名称 */
+        root.put(IContant.K_MODEL_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
+        root.put(IContant.K_DTO_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_dto));
+        root.put(IContant.K_VO_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
+        root.put(IContant.K_PK_ID_TYPE,param.getCfgJavaPkIdType());
 
 
-        buildJavaFile4Model(param,cfg,root,fileMap.get(DirEnum.p_model),packageMap.get(DirEnum.p_model),param.getCfgPojoName());
-        buildJavaFile4DTO(param,cfg,root,fileMap.get(DirEnum.p_dto),packageMap.get(DirEnum.p_dto),param.getCfgPojoName()+"DTO");
-        buildJavaFile4Vo(param,cfg,root,fileMap.get(DirEnum.p_vo),packageMap.get(DirEnum.p_vo),param.getCfgPojoName()+"Vo");
+        buildJavaFile4Model(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4DTO(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4Vo(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4DAO(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4Contant(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4Util(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4Service(param,cfg,root,packageMap,fileMap);
     }
 }

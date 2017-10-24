@@ -60,11 +60,25 @@ public class DirUtil {
                 fileName = cfg.getCfgPojoName() + "Service" + IContant.JAVA_EXTENSION_NAME;
             }else if(DirEnum.p_serviceimpl.equals(e)){
                 fileName = cfg.getCfgPojoName() + "ServiceImpl"+ IContant.JAVA_EXTENSION_NAME;
+            }else if(DirEnum.p_contant.equals(e)){
+                fileName = cfg.getCfgPojoName() + "Contant"+ IContant.JAVA_EXTENSION_NAME;
             }
             String filePath = cfg.getCfgOutputBaseDir() + dir + File.separator + fileName;
             mapFiles.put(e,filePath);
         }
         return mapFiles;
+    }
+
+    /**
+     * 从文件路径中获取文件类的名称
+     * @param fileMap 文件路径集合
+     * @param fileType 文件类型
+     * @return
+     */
+    public static String getJavaClassName(Map<DirEnum,String> fileMap, DirEnum fileType){
+        // 设置类名称
+        String className = fileMap.get(fileType).substring(fileMap.get(fileType).lastIndexOf(File.separator)+1,fileMap.get(fileType).lastIndexOf("."));
+        return className;
     }
 
 
