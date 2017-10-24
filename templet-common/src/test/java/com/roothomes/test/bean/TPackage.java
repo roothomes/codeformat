@@ -65,7 +65,7 @@ public class TPackage {
         return packages;
     }
 
-    public static List<TPackage> getModelClassPackage(String modelType){
+    public static List<TPackage> getModelClassImportPackages(String modelType){
         String[] types = modelType.split(IKey.K_SPLIT);
         List<TPackage> list = getModelClassBasePackage();
         TPackage one = null;

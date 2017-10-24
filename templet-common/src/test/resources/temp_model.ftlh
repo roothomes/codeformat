@@ -1,4 +1,4 @@
-package ${GROUPID}.${ARTIFACTID}.model;
+package ${PACKAGE};
 
 
 <#list PACKAGES as p>
@@ -28,15 +28,13 @@ public class ${CLASSNAME} extends BaseModel<String>
     private ${a.type} ${a.javaCode};
 
     public void set${a.javaCode?substring(0)}(${a.type} ${a.javaCode}) {
-        this.${a.javaCode} = ${a.javaCode};
+    this.${a.javaCode} = ${a.javaCode};
     }
 
     public ${a.type} get${a.javaCode?substring(0)}() {
-        return ${a.javaCode};
+    return ${a.javaCode};
     }
 
 </#list>
-
-
 
 }

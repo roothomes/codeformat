@@ -17,9 +17,13 @@ public interface IKey {
      */
     String K_ARTIFACTID="ARTIFACTID";
     /**
-     * 导入的Java文件的包语句列表
+     * 生成文件的包空间
      */
     String K_PACKAGE = "PACKAGE";
+    /**
+     * 导入的Java文件的包语句列表
+     */
+    String K_PACKAGES = "PACKAGES";
     /**
      * 导入到Java文件中的注解语句列表
      */

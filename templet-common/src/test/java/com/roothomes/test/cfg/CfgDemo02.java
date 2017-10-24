@@ -194,5 +194,78 @@ public class CfgDemo02
         return path;
     }
 
+    /**
+     * 获取业务的基础包名称
+     * @return
+     */
+    public static String getPackageBaseName(){
+        return V_GROUPID + "." + V_ARTIFACTID;
+    }
+
+    /**
+     * 获取项目该业务model包的名称
+     * @return
+     */
+    public static String getPackageName4Model(){
+        String pkg = getPackageBaseName() + "." + "model";
+        return pkg;
+    }
+    /**
+     * 获取项目该业务dao包的名称
+     * @return
+     */
+    public static String getPackageName4Dao(){
+        String pkg = getPackageBaseName() + "." + "dao";
+        return pkg;
+    }
+    /**
+     * 获取项目该业务dto包的名称
+     * @return
+     */
+    public static String getPackageName4DTO(){
+        String pkg = getPackageBaseName() + "." + "dto";
+        return pkg;
+    }
+    /**
+     * 获取项目该业务service包的名称
+     * @return
+     */
+    public static String getPackageName4Service(){
+        String pkg = getPackageBaseName() + "." + "service";
+        return pkg;
+    }
+    /**
+     * 获取项目该业务serviceImpl包的名称
+     * @return
+     */
+    public static String getPackageName4ServiceImpl(){
+        String pkg = getPackageBaseName() + "." + "service" + "." +"impl";
+        return pkg;
+    }
+    /**
+     * 获取项目该业务util包的名称
+     * @return
+     */
+    public static String getPackageName4Util(){
+        String pkg = getPackageBaseName() + "." + "util";
+        return pkg;
+    }
+    /**
+     * 获取项目该业务vo包的名称
+     * @return
+     */
+    public static String getPackageName4Vo(){
+        String pkg = getPackageBaseName() + "." + "vo";
+        return pkg;
+    }
+    /**
+     * 获取项目该业务web包的名称
+     * @return
+     */
+    public static String getPackageName4Web(){
+        String pkg = getPackageBaseName() + "." + "web";
+        return pkg;
+    }
+
 
 }

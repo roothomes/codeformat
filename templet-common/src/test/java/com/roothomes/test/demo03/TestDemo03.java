@@ -1,4 +1,4 @@
-package com.roothomes.test.demo02;
+package com.roothomes.test.demo03;
 
 import com.roothomes.test.bean.TAnnotation;
 import com.roothomes.test.bean.TAttribute;
@@ -17,11 +17,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestDemo02 {
+public class TestDemo03 {
 
     public static void main(String[] args) throws Exception {
 
-        TestDemo02 instance = new TestDemo02();
+        TestDemo03 instance = new TestDemo03();
         /* ------------------------------------------------------------------------ */
         /* You should do this ONLY ONCE in the whole application life-cycle:        */
 
@@ -41,7 +41,9 @@ public class TestDemo02 {
         root.put(IKey.K_GROUPID, CfgDemo02.V_GROUPID);
         /*设置ArtifactID就是项目的唯一的标识符，用于包结构等*/
         root.put(IKey.K_ARTIFACTID, CfgDemo02.V_ARTIFACTID);
-        /* 设置表对应Java对象的类型 */
+        /* 包名称 */
+        root.put(IKey.K_PACKAGE, CfgDemo02.getPackageName4Model());
+        /* 设置导入的包的信息 */
         root.put(IKey.K_PACKAGES,TPackage.getModelClassImportPackages(CfgDemo02.cfg_type));
         /* 设置注解列表 */
         List<TAnnotation> list = TAnnotation.getTModelClassList();
@@ -55,7 +57,7 @@ public class TestDemo02 {
         root.put(IKey.K_ATTRIBUTE, TAttribute.getModelAttributeList(CfgDemo02.cfg_javaCode,CfgDemo02.cfg_desc,CfgDemo02.cfg_type,CfgDemo02.cfg_dbCode));
 
         /* Get the template (uses cache internally) */
-        Template temp = cfg.getTemplate(CfgDemo02.templetFile);
+        Template temp = cfg.getTemplate("temp_model.ftlh");
 
         /* Merge data-model with template */
         FileOutputStream fos = new FileOutputStream(CfgDemo02.getFilePath4Model());
@@ -64,6 +66,8 @@ public class TestDemo02 {
         // Note: Depending on what `out` is, you may need to call `out.close()`.
         // This is usually the case for file output, but not for servlet output.
     }
+
+
 
 
 
