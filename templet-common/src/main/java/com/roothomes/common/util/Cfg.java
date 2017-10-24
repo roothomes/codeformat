@@ -7,127 +7,168 @@ package com.roothomes.common.util;
 public class Cfg {
 
     /**
-     * 生成文件的基本目录
+     * 生成文件的基本目录 
      */
-    public static String cfgOutputBaseDir = "D:\\git\\codeformat\\templet-common\\output";
+    public String cfgOutputBaseDir = "D:\\git\\codeformat\\templet-common\\output\\";
 
     /** 项目组织唯一的标识符 */
-    public static String cfgGroupId="com.apec";
+    public String cfgGroupId="com.apec";
     /** 项目的唯一的标识符 */
-    public static String cfgArtifactId="notice";
+    public String cfgArtifactId="notice";
     /** POJO中模型类的名称 */
-    public static String cfgPojoName = "Notice";
-    /**
-     * Java POJO模型类中属性的名称;
-     */
-    public static String cfgJavaAttributeCode = "name,key,val";
-    /**
-     * 数据库字段名称
-     * */
-    public static String cfgDBCode = "t_x_01,t_x_02,t_x_03";
+    public String cfgPojoName = "Notice";
+    /** 模型的描述 */
+    public String cfgModelDesc = "咨询信息管理(用于公告、咨询等文字类型)";
+    /** 创建人 */
+    public String cfgCreatAuthor = "roothomes";
+
+    /** 创建时间 */
+    public String cfgCreatDate = "2017-10-24";
+
     /**
      * Java属性名称
      * */
-    public static String cfgJavaAttributeDesc = "属性1名称,属性2名称,属性3名称";
+    public String cfgJavaAttributeDesc = "项目类型(1:咨询;2:市场公告)|咨询信息|咨询标题|内容类型(1:图片；2:文字；3:url)|链接URL|是否为热点(1:是热点；0:不是热点； 主要区分推荐列表和全部分页)";
+    /**
+     * 数据库字段名称
+     * */
+    public String cfgDBColumnCode = "MSG_TYPE|MSG|TITLE|CONTENT_TYPE|URL|HOTSPOT";
     /**
      * Java属性类型(支持基本数据类型)
      * */
-    public static String cfgJavaAttributeType = "String,Integer,Double";
+    public String cfgJavaAttributeType = "String|String|String|String|String|String";
+    /**
+     * Java POJO模型类中属性的名称;
+     */
+    public String cfgJavaAttributeCode = "msgType|msg|title|contentType|url|hotspot";
+
     /** 数据库表名称 */
-    public static String cfgDBTableName="notice";
+    public String cfgDBTableName="notice";
     /** 数据库名称 */
-    public static String cfgDBName = "cncsen";
+    public String cfgDBName = "cncsen";
 
     /**
      * 是否初始化目录列表
      */
-    private static boolean isInitDir = false;
+    private boolean isInitDir = false;
 
-    public static String getCfgOutputBaseDir() {
+    public String getCfgOutputBaseDir() {
         return cfgOutputBaseDir;
     }
 
-    public static void setCfgOutputBaseDir(String cfgOutputBaseDir) {
-        Cfg.cfgOutputBaseDir = cfgOutputBaseDir;
+    public void setCfgOutputBaseDir(String cfgOutputBaseDir) {
+        this.cfgOutputBaseDir = cfgOutputBaseDir;
     }
 
-    public static String getCfgGroupId() {
+    public String getCfgGroupId() {
         return cfgGroupId;
     }
 
-    public static void setCfgGroupId(String cfgGroupId) {
-        Cfg.cfgGroupId = cfgGroupId;
+    public void setCfgGroupId(String cfgGroupId) {
+        this.cfgGroupId = cfgGroupId;
     }
 
-    public static String getCfgArtifactId() {
+    public String getCfgArtifactId() {
         return cfgArtifactId;
     }
 
-    public static void setCfgArtifactId(String cfgArtifactId) {
-        Cfg.cfgArtifactId = cfgArtifactId;
+    public void setCfgArtifactId(String cfgArtifactId) {
+        this.cfgArtifactId = cfgArtifactId;
     }
 
-    public static String getCfgPojoName() {
+    public String getCfgPojoName() {
         return cfgPojoName;
     }
 
-    public static void setCfgPojoName(String cfgPojoName) {
-        Cfg.cfgPojoName = cfgPojoName;
+    public void setCfgPojoName(String cfgPojoName) {
+        this.cfgPojoName = cfgPojoName;
     }
 
-    public static String getCfgJavaAttributeCode() {
+    public String getCfgJavaAttributeCode() {
         return cfgJavaAttributeCode;
     }
 
-    public static void setCfgJavaAttributeCode(String cfgJavaAttributeCode) {
-        Cfg.cfgJavaAttributeCode = cfgJavaAttributeCode;
+    public void setCfgJavaAttributeCode(String cfgJavaAttributeCode) {
+        this.cfgJavaAttributeCode = cfgJavaAttributeCode;
     }
 
-    public static String getCfgDBCode() {
-        return cfgDBCode;
+    public String getCfgDBColumnCode() {
+        return cfgDBColumnCode;
     }
 
-    public static void setCfgDBCode(String cfgDBCode) {
-        Cfg.cfgDBCode = cfgDBCode;
+    public void setCfgDBColumnCode(String cfgDBColumnCode) {
+        this.cfgDBColumnCode = cfgDBColumnCode;
     }
 
-    public static String getCfgJavaAttributeDesc() {
+    public String getCfgJavaAttributeDesc() {
         return cfgJavaAttributeDesc;
     }
 
-    public static void setCfgJavaAttributeDesc(String cfgJavaAttributeDesc) {
-        Cfg.cfgJavaAttributeDesc = cfgJavaAttributeDesc;
+    public void setCfgJavaAttributeDesc(String cfgJavaAttributeDesc) {
+        this.cfgJavaAttributeDesc = cfgJavaAttributeDesc;
     }
 
-    public static String getCfgJavaAttributeType() {
+    public String getCfgJavaAttributeType() {
         return cfgJavaAttributeType;
     }
 
-    public static void setCfgJavaAttributeType(String cfgJavaAttributeType) {
-        Cfg.cfgJavaAttributeType = cfgJavaAttributeType;
+    public void setCfgJavaAttributeType(String cfgJavaAttributeType) {
+        this.cfgJavaAttributeType = cfgJavaAttributeType;
     }
 
-    public static String getCfgDBTableName() {
+    public String getCfgDBTableName() {
         return cfgDBTableName;
     }
 
-    public static void setCfgDBTableName(String cfgDBTableName) {
-        Cfg.cfgDBTableName = cfgDBTableName;
+    public void setCfgDBTableName(String cfgDBTableName) {
+        this.cfgDBTableName = cfgDBTableName;
     }
 
-    public static String getCfgDBName() {
+    public String getCfgDBName() {
         return cfgDBName;
     }
 
-    public static void setCfgDBName(String cfgDBName) {
-        Cfg.cfgDBName = cfgDBName;
+    public void setCfgDBName(String cfgDBName) {
+        this.cfgDBName = cfgDBName;
     }
 
-    public static void setIsInitDir(boolean isInitDir) {
-        Cfg.isInitDir = isInitDir;
+    public void setIsInitDir(boolean isInitDir) {
+        this.isInitDir = isInitDir;
     }
 
-    public static boolean isIsInitDir() {
+    public boolean isIsInitDir() {
         return isInitDir;
+    }
+
+    public String getCfgModelDesc() {
+        return cfgModelDesc;
+    }
+
+    public void setCfgModelDesc(String cfgModelDesc) {
+        this.cfgModelDesc = cfgModelDesc;
+    }
+
+    public boolean isInitDir() {
+        return isInitDir;
+    }
+
+    public void setInitDir(boolean initDir) {
+        isInitDir = initDir;
+    }
+
+    public String getCfgCreatAuthor() {
+        return cfgCreatAuthor;
+    }
+
+    public void setCfgCreatAuthor(String cfgCreatAuthor) {
+        this.cfgCreatAuthor = cfgCreatAuthor;
+    }
+
+    public String getCfgCreatDate() {
+        return cfgCreatDate;
+    }
+
+    public void setCfgCreatDate(String cfgCreatDate) {
+        this.cfgCreatDate = cfgCreatDate;
     }
 }
