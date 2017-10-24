@@ -76,6 +76,33 @@ public class BuildUtil {
     }
 
 
+    public static void buildJavaFile4Vo(Cfg param,Configuration cfg,Map root,String outputfile,String packageName,String className)throws Exception{
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageName);
+        /* 设置类名称 */
+        root.put(IContant.K_CLASSNAME,className);
+        /* 设置属性 */
+        List<TAttribute> listDTO = TUtil.getDTOAttributeList(
+                param.getCfgJavaAttributeCode(),
+                param.getCfgJavaAttributeDesc(),
+                param.getCfgJavaAttributeType(),
+                param.getCfgDBColumnCode());
+        root.put(IContant.K_ATTRIBUTE,listDTO );
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,TUtil.getDTOClassImportPackages(IContant.baseJavaAttributeType));
+
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_VO);
+
+        /* Merge data-model with template */
+        FileOutputStream fos = new FileOutputStream(outputfile);
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+        // Note: Depending on what `out` is, you may need to call `out.close()`.
+        // This is usually the case for file output, but not for servlet output.
+    }
+
+
     public static void main(String[] args) throws Exception {
 
         Cfg param = new Cfg();
@@ -113,5 +140,6 @@ public class BuildUtil {
 
         buildJavaFile4Model(param,cfg,root,fileMap.get(DirEnum.p_model),packageMap.get(DirEnum.p_model),param.getCfgPojoName());
         buildJavaFile4DTO(param,cfg,root,fileMap.get(DirEnum.p_dto),packageMap.get(DirEnum.p_dto),param.getCfgPojoName()+"DTO");
+        buildJavaFile4Vo(param,cfg,root,fileMap.get(DirEnum.p_vo),packageMap.get(DirEnum.p_vo),param.getCfgPojoName()+"Vo");
     }
 }
