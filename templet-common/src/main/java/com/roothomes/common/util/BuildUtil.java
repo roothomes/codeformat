@@ -145,16 +145,16 @@ public class BuildUtil {
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
         List<TPackage> listPackage = new ArrayList<TPackage>(4);
         TPackage one = new TPackage();
-        one.setImportPackage("import " + packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model) + ";");
+        one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
         listPackage.add(one);
         one = new TPackage();
-        one.setImportPackage("import " + packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto)  + ";");
+        one.setImportPackage(packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto));
         listPackage.add(one);
         one = new TPackage();
-        one.setImportPackage("import " + packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo)  + ";");
+        one.setImportPackage(packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
         listPackage.add(one);
         one = new TPackage();
-        one.setImportPackage("import com.apec.framework.common.PageDTO;");
+        one.setImportPackage("com.apec.framework.common.PageDTO");
         listPackage.add(one);
 
          /* 设置导入的包的信息 */
@@ -176,16 +176,53 @@ public class BuildUtil {
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
         List<TPackage> listPackage = new ArrayList<TPackage>(4);
         TPackage one = new TPackage();
-        one.setImportPackage("import " + packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model) + ";");
+        one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
+        one.setDesc("模型类");
         listPackage.add(one);
         one = new TPackage();
-        one.setImportPackage("import " + packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto)  + ";");
+        one.setImportPackage(packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto));
+        one.setDesc("模型DTO类");
         listPackage.add(one);
         one = new TPackage();
-        one.setImportPackage("import " + packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo)  + ";");
+        one.setImportPackage(packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
+        one.setDesc("模型Vo类");
         listPackage.add(one);
         one = new TPackage();
-        one.setImportPackage("import com.apec.framework.common.PageDTO;");
+        one.setImportPackage(packageMap.get(DirEnum.p_contant) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_contant));
+        one.setDesc("模型常量类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_service) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
+        one.setDesc("模型服务接口类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_util) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_util));
+        one.setDesc("模型常用方法类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_dao) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dao));
+        one.setDesc("模型DAO类");
+        listPackage.add(one);
+
+        one = new TPackage();
+        one.setImportPackage("com.apec.framework.cache.CacheService");
+        one.setDesc("缓存类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("com.apec.framework.common.PageDTO");
+        one.setDesc("分页模型类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("com.apec.framework.common.enumtype.EnableFlag");
+        one.setDesc("逻辑删除的枚举");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("com.apec.framework.common.util.BeanUtil");
+        one.setDesc("Bean的常用方法");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_keygen) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_keygen));
+        one.setDesc("主键序列");
         listPackage.add(one);
 
          /* 设置导入的包的信息 */
@@ -193,7 +230,48 @@ public class BuildUtil {
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
         /* Get the template (uses cache internally) */
-        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_SERVICE);
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_SERVICEIMPL);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildJavaFile4Application(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_application;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        List<TPackage> listPackage = new ArrayList<TPackage>(3);
+        TPackage one = new TPackage();
+        one.setImportPackage("com.apec.framework.base.BaseApplication");
+        one.setDesc("springboot架构中基础应用类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("com.apec.framework.common.enumtype.RoutingKey");
+        one.setDesc("springboot架构中消息队列注册类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage("com.apec.framework.springcloud.SpringCloudConfig");
+        one.setDesc("spring云配置文件类");
+        listPackage.add(one);
+
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_Application);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildJavaFile4SnowFlakeKeyGen(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_keygen;
+        root.put("workerId","@Value(\"${workerId}\")");
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_KeyGen);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
         temp.process(root, out);
@@ -236,6 +314,9 @@ public class BuildUtil {
         root.put(IContant.K_MODEL_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
         root.put(IContant.K_DTO_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_dto));
         root.put(IContant.K_VO_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
+        root.put(IContant.K_DAO_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_dao));
+        root.put(IContant.K_SERVICE_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
+        root.put(IContant.K_CONTANT_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_contant));
         root.put(IContant.K_PK_ID_TYPE,param.getCfgJavaPkIdType());
 
 
@@ -246,5 +327,8 @@ public class BuildUtil {
         buildJavaFile4Contant(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Util(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Service(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4ServiceImpl(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4Application(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4SnowFlakeKeyGen(param,cfg,root,packageMap,fileMap);
     }
 }

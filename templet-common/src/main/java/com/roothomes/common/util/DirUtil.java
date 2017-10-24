@@ -62,6 +62,10 @@ public class DirUtil {
                 fileName = cfg.getCfgPojoName() + "ServiceImpl"+ IContant.JAVA_EXTENSION_NAME;
             }else if(DirEnum.p_contant.equals(e)){
                 fileName = cfg.getCfgPojoName() + "Contant"+ IContant.JAVA_EXTENSION_NAME;
+            }else if(DirEnum.p_application.equals(e)){
+                fileName = cfg.getCfgPojoName() + "ServiceApplication"+ IContant.JAVA_EXTENSION_NAME;
+            }else if(DirEnum.p_keygen.equals(e)){
+                fileName = "SnowFlakeKeyGen" + IContant.JAVA_EXTENSION_NAME;
             }
             String filePath = cfg.getCfgOutputBaseDir() + dir + File.separator + fileName;
             mapFiles.put(e,filePath);

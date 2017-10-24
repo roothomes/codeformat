@@ -13,5 +13,7 @@ public enum DirEnum {
     p_web,
     p_service,
     p_serviceimpl,
-    p_contant
+    p_contant,
+    p_application,
+    p_keygen
 }

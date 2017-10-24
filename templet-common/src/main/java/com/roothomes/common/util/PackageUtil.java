@@ -41,6 +41,8 @@ public class PackageUtil {
         map.put(DirEnum.p_vo, getPackageBaseName + "." + "vo");
         map.put(DirEnum.p_web, getPackageBaseName + "." + "web");
         map.put(DirEnum.p_contant, getPackageBaseName + "." + "constants");
+        map.put(DirEnum.p_application,getPackageBaseName);
+        map.put(DirEnum.p_keygen,getPackageBaseName + "." + "util");
         return map;
     }
 }

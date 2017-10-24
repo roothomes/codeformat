@@ -2,12 +2,12 @@ package ${PACKAGE};
 
 <#list PACKAGES as p>
 <#if p.desc??>/** ${p.desc} */</#if>
-${p.importPackage}
+import ${p.importPackage};
 </#list>
 
 import java.util.*;
 import org.springframework.data.domain.PageRequest;
-import com.apec.framework.common.PageDTO;
+
 
 public interface ${CLASSNAME} {
     /**
