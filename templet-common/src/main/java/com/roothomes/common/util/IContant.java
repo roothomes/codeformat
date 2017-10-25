@@ -218,4 +218,13 @@ public interface IContant {
      */
     public String BASE_JAVA_ATTRIBUTE_CAN_NULL = "0|0|0|0|1|1|0|0|0|0|0|1";
 
+    /**
+     * 每页最大的条数
+     */
+    Integer MAX_NUMBER_ONE_PAGE = 100;
+    /**
+     * 每页默认的条数
+     */
+    Integer DEFAULT_NUMBER_ONE_PAGE =20;
+
 }

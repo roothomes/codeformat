@@ -1,5 +1,6 @@
 package com.roothomes.common.web;
 
+import com.roothomes.common.util.IContant;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
@@ -19,12 +20,12 @@ public class MyBaseController extends BaseController
     {
         Sort sort = new Sort(Sort.Direction.DESC, "createDate");
         int pageNumber = 1;
-        int pageSize = 10;
+        int pageSize = IContant.DEFAULT_NUMBER_ONE_PAGE;
         if(dto.getPageNumber() > 0)
         {
                 pageNumber = dto.getPageNumber();
         }
-        if(dto.getPageSize() > 0 && dto.getPageSize() < 100)
+        if(dto.getPageSize() > 0 && dto.getPageSize() < IContant.MAX_NUMBER_ONE_PAGE)
         {
             pageSize = dto.getPageSize();
         }
