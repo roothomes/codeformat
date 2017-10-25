@@ -29,11 +29,11 @@ public class ${CLASSNAME} extends BaseDTO
 <#-- 属性的get set方法 -->
 <#list ATTRIBUTE as a>
     <#if a.desc??>/** ${a.desc} */</#if>
-    public void set${a.javaCode?substring(0)}(${a.type} ${a.javaCode}) {
+    public void set${a.javaCode?cap_first}(${a.type} ${a.javaCode}) {
         this.${a.javaCode} = ${a.javaCode};
     }
     <#if a.desc??>/** ${a.desc} */</#if>
-    public ${a.type} get${a.javaCode?substring(0)}() {
+    public ${a.type} get${a.javaCode?cap_first}() {
        return ${a.javaCode};
     }
 </#list>

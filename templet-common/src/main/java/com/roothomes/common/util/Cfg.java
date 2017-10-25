@@ -42,6 +42,56 @@ public class Cfg {
      */
     private String cfgJavaAttributeCode = "msgType|msg|title|contentType|url|hotspot";
     /**
+     * 属性新增的是否是否可以为空（0:不可为空；1:可以为空；）
+     */
+    private String cfgJavaAttributeCanNull = "0|0|0|0|1|0";
+    /**
+     * 设置属性的默认值
+     */
+    private String cfgJavaAttributeDefaultVal = "DEFAULT_VAL_MSG_TYPE_NOTICE|DEFAULT_VAL_MSG|DEFAULT_VAL_TITLE|DEFAULT_VAL_CONTENT_TYPE_MSG|DEFAULT_VAL_URL|DEFAULT_VAL_HOTSPOT_NO";
+    /****************  常量设置 start  ***********************/
+    /**
+     * 配置常量接口里面的常量的描述信息
+     */
+    private String cfgJavaContantDesc="项目类型-咨询|项目类型-公告|信息内容|标题|信息内容类型-信息|信息内容类型-链接|信息链接|热点-是|热点-否|缓存Key值";
+    /**
+     * 配置常量接口里面常量的类型
+     */
+    private String cfgJavaContantType =
+                "String|" + "String|" +
+                "String|" +
+                "String|" +
+                "String|" + "String|" +
+                "String|" +
+                "String|" + "String|" +
+                "String";
+    /**
+     * 配置常量接口里面常量的名称
+     */
+    private String cfgJavaContantCode =
+                    "DEFAULT_VAL_MSG_TYPE_NOTICE|" + "DEFAULT_VAL_MSG_TYPE_ADVICE|" +
+                    "DEFAULT_VAL_MSG|" +
+                    "DEFAULT_VAL_TITLE|" +
+                    "DEFAULT_VAL_CONTENT_TYPE_MSG|" + "DEFAULT_VAL_CONTENT_TYPE_URL|" +
+                    "DEFAULT_VAL_URL|" +
+                    "DEFAULT_VAL_HOTSPOT_YES|" + "DEFAULT_VAL_HOTSPOT_NO|" +
+                    "CACHE_PREFIX";
+    /**
+     * 配置常量接口里面常量的默认值
+     */
+    private String cfgJavaContantDefaultVal =
+                    "1|" + "2|" +
+                    "默认信息|" +
+                    "默认标题|" +
+                    "msg|" + "url|" +
+                    "#|" +
+                    "1|" + "0|Cache_Model_";
+
+    /****************  常量设置 end  ***********************/
+
+
+
+    /**
      * 模型的主键类型
      */
     private String cfgJavaPkIdType ="String";
@@ -183,5 +233,53 @@ public class Cfg {
 
     public void setCfgJavaPkIdType(String cfgJavaPkIdType) {
         this.cfgJavaPkIdType = cfgJavaPkIdType;
+    }
+
+    public String getCfgJavaAttributeCanNull() {
+        return cfgJavaAttributeCanNull;
+    }
+
+    public void setCfgJavaAttributeCanNull(String cfgJavaAttributeCanNull) {
+        this.cfgJavaAttributeCanNull = cfgJavaAttributeCanNull;
+    }
+
+    public String getCfgJavaAttributeDefaultVal() {
+        return cfgJavaAttributeDefaultVal;
+    }
+
+    public void setCfgJavaAttributeDefaultVal(String cfgJavaAttributeDefaultVal) {
+        this.cfgJavaAttributeDefaultVal = cfgJavaAttributeDefaultVal;
+    }
+
+    public String getCfgJavaContantDesc() {
+        return cfgJavaContantDesc;
+    }
+
+    public void setCfgJavaContantDesc(String cfgJavaContantDesc) {
+        this.cfgJavaContantDesc = cfgJavaContantDesc;
+    }
+
+    public String getCfgJavaContantType() {
+        return cfgJavaContantType;
+    }
+
+    public void setCfgJavaContantType(String cfgJavaContantType) {
+        this.cfgJavaContantType = cfgJavaContantType;
+    }
+
+    public String getCfgJavaContantCode() {
+        return cfgJavaContantCode;
+    }
+
+    public void setCfgJavaContantCode(String cfgJavaContantCode) {
+        this.cfgJavaContantCode = cfgJavaContantCode;
+    }
+
+    public String getCfgJavaContantDefaultVal() {
+        return cfgJavaContantDefaultVal;
+    }
+
+    public void setCfgJavaContantDefaultVal(String cfgJavaContantDefaultVal) {
+        this.cfgJavaContantDefaultVal = cfgJavaContantDefaultVal;
     }
 }

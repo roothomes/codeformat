@@ -1,6 +1,8 @@
 package com.roothomes.common.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,5 +46,31 @@ public class PackageUtil {
         map.put(DirEnum.p_application,getPackageBaseName);
         map.put(DirEnum.p_keygen,getPackageBaseName + "." + "util");
         return map;
+    }
+
+
+    public static List<TPackage> getBaseImportPackageList(Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap){
+        List<TPackage> listPackage = new ArrayList<TPackage>(4);
+        TPackage one = new TPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
+        one.setDesc("模型类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto));
+        one.setDesc("模型DTO类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
+        one.setDesc("模型Vo类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_contant) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_contant));
+        one.setDesc("模型常量类");
+        listPackage.add(one);
+        one = new TPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_util) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_util));
+        one.setDesc("模型常用方法类");
+        listPackage.add(one);
+        return listPackage;
     }
 }

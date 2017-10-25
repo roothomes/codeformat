@@ -13,6 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.google.common.base.Strings;
+import com.mysema.query.types.Predicate;
+import com.mysema.query.types.expr.BooleanExpression;
+import javax.transaction.Transactional;
 
 @Service
 public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
@@ -32,7 +35,53 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
 @Transactional
     public ${VO_CLASSNAME} create(${VO_CLASSNAME} vo) throws Exception
     {
-       return null;
+    <#list ATTRIBUTE_CAN_NULL as x>
+    <#-- ${ATTRIBUTE[x_index].javaCode} -->
+    <#if x=='0'>
+        <#if ATTRIBUTE[x_index].type =='String'>
+        if (Strings.isNullOrEmpty(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}())) {
+            vo.set${ATTRIBUTE[x_index].javaCode?cap_first}(${ATTRIBUTE_DEFAULT_VAL[x_index]});
+        }
+        <#elseif ATTRIBUTE[x_index].type =='Integer'>
+            Integer
+        </#if>
+    </#if>
+    </#list>
+
+        //基础字段默认值
+        if (null == vo.getCityId()) {
+            vo.setCityId(DEFAULT_CITY_ID);
+        }
+        if (Strings.isNullOrEmpty(vo.getStatus())) {
+            vo.setStatus(STATUS_INVALID);
+        }
+        if (Strings.isNullOrEmpty(vo.getPlantformId())) {
+            vo.setPlantformId(DEFAULT_PLANTFORM_ID);
+        }
+        if (Strings.isNullOrEmpty(vo.getOecdNo())) {
+            vo.setOecdNo(DEFAULT_OECD_NO);
+        }
+        if (null == vo.getEnableFlag()) {
+            vo.setEnableFlag(EnableFlag.Y);
+        }
+        if (null == vo.getCreateDate()) {
+            vo.setCreateDate(new Date());
+        }
+
+        //属性拷贝保存到数据库刷新缓存
+        ${MODEL_CLASSNAME} entity = new ${MODEL_CLASSNAME}();
+        BeanUtil.copyPropertiesIgnoreNullFilds(vo, entity, new String[] {});
+        <#if PK_ID_TYPE == 'String'>
+        entity.setId(String.valueOf(idGen.nextId()));
+        <#elseif PK_ID_TYPE == 'Long'>
+        entity.setId(idGen.nextId());
+        </#if>
+
+        entity.setCreateDate(new Date());
+        vo.setId(entity.getId());
+        dao.save(entity);
+        //flushCacheJob(entity);
+        return vo;
     }
     /**
      * 逻辑删除一个对象
@@ -101,4 +150,38 @@ public    List<${MODEL_CLASSNAME}> queryAll(${VO_CLASSNAME} vo)
 {
 return null;
 }
+
+    private void flushCacheJob(${MODEL_CLASSNAME} entity){
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                flushCache(entity);
+            }
+        };
+        r.run();
+    }
+    private String getCacheKey(${MODEL_CLASSNAME} entity) {
+        return CACHE_PREFIX + "${MODEL_CLASSNAME}_List";
+    }
+
+    /**
+     * 刷新类型的数据到数据库 （修改状态就需要刷新）
+     *
+     * @param itemType
+     */
+    private void flushCache(${MODEL_CLASSNAME} entity) {
+        List<BooleanExpression> predicates = new ArrayList<>();
+        predicates.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.enableFlag.eq(EnableFlag.Y));
+        predicates.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.status.eq(STATUS_VALID));
+
+        Predicate predicate = BooleanExpression.allOf(predicates.toArray(new BooleanExpression[predicates.size()]));
+        Sort sort = new Sort(Sort.Direction.ASC, "orderNumber");
+        Iterable<${MODEL_CLASSNAME}> page = dao.findAll(predicate, sort);
+        List<${MODEL_CLASSNAME}> list = new ArrayList<${MODEL_CLASSNAME}>();
+            page.forEach(one -> {
+                list.add(one);
+            });
+        cacheService.add(getCacheKey(entity), ${UTIL_CLASSNAME}.toJson(list));
+        LOG.debug("刷新数据到缓存：" + getCacheKey(entity) + " \n" + ${UTIL_CLASSNAME}.toJson(list));
+    }
 }

@@ -27,6 +27,10 @@ public interface IContant {
      */
     String K_PACKAGES = "PACKAGES";
     /**
+     * 属性能够为空
+     */
+    String K_ATTRIBUTE_CAN_NULL ="ATTRIBUTE_CAN_NULL";
+    /**
      * 导入到Java文件中的注解语句列表
      */
     String K_ANNOTATION="ANNOTATION";
@@ -60,6 +64,30 @@ public interface IContant {
      * CONTANT 模型类的名称
      */
     String K_CONTANT_CLASSNAME="CONTANT_CLASSNAME";
+    /**
+     * UTIL 模型类的名称
+     */
+    String K_UTIL_CLASSNAME="UTIL_CLASSNAME";
+
+    /**
+     * CONTANT_DESC模型类的名称
+     */
+    String K_CONTANT_CLASSNAME_DESC="CONTANT_CLASSNAME_DESC";
+
+    /**
+     * CONTANT_TYPE模型类的名称
+     */
+    String K_CONTANT_CLASSNAME_TYPE="CONTANT_CLASSNAME_TYPE";
+
+    /**
+     * CONTANT_CODE模型类的名称
+     */
+    String K_CONTANT_CLASSNAME_CODE="CONTANT_CLASSNAME_CODE";
+
+    /**
+     * CONTANT_DEFAULT_VAL模型类的名称
+     */
+    String K_CONTANT_CLASSNAME_DEFAULT_VAL="CONTANT_CLASSNAME_DEAFULT_VAL";
 
     /**
      * 模型的主键id的类型
@@ -87,6 +115,16 @@ public interface IContant {
      * 导入到Java文件中的属性语句列表
      */
     String K_ATTRIBUTE = "ATTRIBUTE";
+    /**
+     * serviceImpl里面设置属性的默认值集合Key
+     */
+    String K_ATTRIBUTE_DEFAULT_VAL = "ATTRIBUTE_DEFAULT_VAL";
+
+    /**
+     * 导入到Java文件中的base属性语句列表
+     */
+    String K_BASE_ATTRIBUTE = "BASE_ATTRIBUTE";
+
     /**
      * 数据库的表名称
      */
