@@ -9,11 +9,12 @@ import java.util.List;
  * @author roothomes
  * @date 2017-10-20
  */
-public class TAttribute {
+public class TempletAttribute {
     private String javaCode;
     private String desc;
     private String type;
     private String dbCode;
+    private String canNull;
 
     public void setJavaCode(String javaCode) {
         this.javaCode = javaCode;
@@ -47,4 +48,11 @@ public class TAttribute {
         return dbCode;
     }
 
+    public String getCanNull() {
+        return canNull;
+    }
+
+    public void setCanNull(String canNull) {
+        this.canNull = canNull;
+    }
 }

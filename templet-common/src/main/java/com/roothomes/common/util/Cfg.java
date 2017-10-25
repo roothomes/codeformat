@@ -9,7 +9,7 @@ public class Cfg {
     /**
      * 生成文件的基本目录 
      */
-    private String cfgOutputBaseDir = "D:\\git\\codeformat\\templet-common\\output\\";
+    private String cfgOutputBaseDir = "D:\\svn\\trade\\App_cncsen\\Src\\APEC_CJ213_TempletOut\\templetOut-server\\src\\main\\java\\";
 
     /** 项目组织唯一的标识符 */
     private String cfgGroupId="com.apec";

@@ -7,6 +7,7 @@ package com.roothomes.common.util;
 public enum DirEnum {
     p_dao,
     p_dto,
+    p_basemodel,
     p_model,
     p_vo,
     p_util,

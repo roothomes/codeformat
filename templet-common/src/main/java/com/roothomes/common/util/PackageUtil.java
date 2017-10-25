@@ -34,6 +34,7 @@ public class PackageUtil {
      */
     private static Map<DirEnum,String> generatePackagesCommon(String getPackageBaseName){
         Map<DirEnum,String> map = new HashMap<DirEnum,String>();
+        map.put(DirEnum.p_basemodel, getPackageBaseName + "." + "model");
         map.put(DirEnum.p_model, getPackageBaseName + "." + "model");
         map.put(DirEnum.p_dao, getPackageBaseName + "." + "dao");
         map.put(DirEnum.p_dto, getPackageBaseName + "." + "dto");
@@ -45,29 +46,30 @@ public class PackageUtil {
         map.put(DirEnum.p_contant, getPackageBaseName + "." + "constants");
         map.put(DirEnum.p_application,getPackageBaseName);
         map.put(DirEnum.p_keygen,getPackageBaseName + "." + "util");
+
         return map;
     }
 
 
-    public static List<TPackage> getBaseImportPackageList(Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap){
-        List<TPackage> listPackage = new ArrayList<TPackage>(4);
-        TPackage one = new TPackage();
+    public static List<TempletPackage> getBaseImportPackageList(Map<DirEnum,String> packageMap, Map<DirEnum,String> fileMap){
+        List<TempletPackage> listPackage = new ArrayList<TempletPackage>(4);
+        TempletPackage one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
         one.setDesc("模型类");
         listPackage.add(one);
-        one = new TPackage();
+        one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto));
         one.setDesc("模型DTO类");
         listPackage.add(one);
-        one = new TPackage();
+        one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
         one.setDesc("模型Vo类");
         listPackage.add(one);
-        one = new TPackage();
+        one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_contant) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_contant));
         one.setDesc("模型常量类");
         listPackage.add(one);
-        one = new TPackage();
+        one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_util) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_util));
         one.setDesc("模型常用方法类");
         listPackage.add(one);

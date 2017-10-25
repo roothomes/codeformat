@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 模型里面model的类，包的部分。
  */
-public class TPackage {
+public class TempletPackage {
     private String importPackage;
     private String desc;
 

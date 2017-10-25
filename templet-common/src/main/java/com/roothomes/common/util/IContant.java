@@ -126,6 +126,11 @@ public interface IContant {
     String K_BASE_ATTRIBUTE = "BASE_ATTRIBUTE";
 
     /**
+     * 导入到Java文件中的base属性是否可以为空列表
+     */
+    String K_BASE_ATTRIBUTE_CAN_NULL = "BASE_ATTRIBUTE_CAN_NULL";
+
+    /**
      * 数据库的表名称
      */
     String K_DBTABLENAME = "DBTABLENAME";
@@ -133,6 +138,11 @@ public interface IContant {
      * 数据库名称
      */
     String K_DBNAME="DBNAME";
+
+    /**
+     * java 类的basemodel的模板文件名称
+     */
+    String V_TEMPLET_FILE_BASEMODEL="temp_basemodel.ftlh";
 
     /**
      * java 类的model的模板文件名称
@@ -188,19 +198,24 @@ public interface IContant {
 
 
     /**
-     * 模型类中基础属性的名称;
+     * 模型类中基础属性的名称;(12个属性)
      */
     public String baseJavaAttributeCode = "id|status|enableFlag|createDate|createBy|lastUpdateBy|lastUpdateDate|plantformId|oecdNo|cityId|orderNumber|remarks";
     /**
-     * 数据库表基础字段名称
+     * 数据库表基础字段名称;(12个属性)
      * */
     public String baseDBColumnCode = "ID|STATUS|ENABLE_FLAG|CREATE_DATE|CREATE_BY|LAST_UPDATE_BY|LAST_UPDATE_DATE|PLANTFORM_ID|OECD_NO|CITY_ID|ORDER_NUMBER|REMARKS";
     /**
-     * Java基础属性名称
+     * Java基础属性名称;(12个属性)
      * */
     public String baseJavaAttributeDesc = "主键id|状态|逻辑删除|创建时间|创建人|最后修改人|最后修改时间|平台编号|组织编码|城市id|排序|备注";
     /**
-     * Java基础属性类型(支持基本数据类型)
+     * Java基础属性类型(支持基本数据类型);(12个属性)
      * */
     public String baseJavaAttributeType = "String|String|EnableFlag|Date|String|String|Date|String|String|Integer|Integer|String";
+    /**
+     * Java基础属性是否可以为空（0:不可为空；1:可以为空；）;(12个属性)
+     */
+    public String baseJavaAttributeCanNull = "0|0|0|0|1|1|0|0|0|0|0|1";
+
 }

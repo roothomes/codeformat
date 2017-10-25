@@ -36,10 +36,6 @@ public class TAnnotation {
         one.setName("@Entity");
         one.setDesc("JPA实体注解");
         list.add(one);
-//        one = new TAnnotation();
-//        one.setName("@Table(name = \"notice\", catalog = \"cncsen\")");
-//        one.setDesc("JPA表注解");
-//        list.add(one);
         one = new TAnnotation();
         one.setName("@DynamicUpdate");
         one.setDesc("hibernate动态更新");

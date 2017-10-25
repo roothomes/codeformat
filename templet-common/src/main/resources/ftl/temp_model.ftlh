@@ -27,11 +27,11 @@ public class ${CLASSNAME} extends BaseModel<${PK_ID_TYPE}>
     @Column(name = "${a.dbCode}")
     private ${a.type} ${a.javaCode};
 
-    public void set${a.javaCode?substring(0)}(${a.type} ${a.javaCode}) {
+    public void set${a.javaCode?cap_first}(${a.type} ${a.javaCode}) {
     this.${a.javaCode} = ${a.javaCode};
     }
 
-    public ${a.type} get${a.javaCode?substring(0)}() {
+    public ${a.type} get${a.javaCode?cap_first}() {
     return ${a.javaCode};
     }
 
