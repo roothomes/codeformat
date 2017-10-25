@@ -36,7 +36,8 @@ public class BuildUtil {
                 param.getCfgJavaAttributeCode(),
                 param.getCfgJavaAttributeDesc(),
                 param.getCfgJavaAttributeType(),
-                param.getCfgDBColumnCode());
+                param.getCfgDBColumnCode(),
+                param.getCfgJavaAttributeCanNull());
         root.put(IContant.K_ATTRIBUTE,listModel );
         /* 设置导入的包的信息 */
         List<TempletPackage> listPackage = TempletUtil.getModelClassImportPackages(param.getCfgJavaAttributeType());
@@ -248,7 +249,8 @@ public class BuildUtil {
                 param.getCfgJavaAttributeCode(),
                 param.getCfgJavaAttributeDesc(),
                 param.getCfgJavaAttributeType(),
-                param.getCfgDBColumnCode());
+                param.getCfgDBColumnCode(),
+                param.getCfgJavaAttributeCanNull());
         root.put(IContant.K_ATTRIBUTE,listModel );
 
         //单独设置基础属性
