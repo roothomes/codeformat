@@ -33,7 +33,7 @@ public class PackageUtil {
      * @author roothomes
      */
     private static Map<DirEnum,String> generatePackagesCommon(String getPackageBaseName){
-        Map<DirEnum,String> map = new HashMap<DirEnum,String>();
+        Map<DirEnum,String> map = new HashMap<DirEnum,String>(12);
         map.put(DirEnum.p_basemodel, getPackageBaseName + "." + "model");
         map.put(DirEnum.p_model, getPackageBaseName + "." + "model");
         map.put(DirEnum.p_dao, getPackageBaseName + "." + "dao");

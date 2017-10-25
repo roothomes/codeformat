@@ -8,11 +8,11 @@ import lombok.Data;
  * @author roothomes
  */
 @Data
-public class TClassModel {
+public class TempletClassModel {
 	/** 类编码名称 */
 	private String name;
 	/** 类名称说明 */
 	private String desc;
 	/** 属性列表 */
-	private List<TClassAttribute> attributes;
+	private List<TempletClassAttribute> attributes;
 }

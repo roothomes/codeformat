@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 内容摘要：框架基本实体类,所有的实体需集成该类
  * 完成日期：2016-07-14
  * 编码作者：
+ * @author ss
  */
 @MappedSuperclass
 @EntityListeners(

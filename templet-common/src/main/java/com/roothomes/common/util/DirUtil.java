@@ -31,7 +31,7 @@ public class DirUtil {
         }
         Map<DirEnum,String> mapPackages = PackageUtil.generatePackages(systemType,cfg.getCfgGroupId()+"." + cfg.getCfgArtifactId());
         Iterator<DirEnum> iter = mapPackages.keySet().iterator();
-        Map<DirEnum,String> mapFiles = new HashMap<DirEnum,String>();
+        Map<DirEnum,String> mapFiles = new HashMap<DirEnum,String>(12);
 
         while(iter.hasNext()){
             DirEnum e = iter.next();

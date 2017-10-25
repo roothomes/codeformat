@@ -8,6 +8,9 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author roothomes
+ */
 @Component
 public class SnowFlakeKeyGen implements EnvironmentAware{
 
@@ -31,8 +34,7 @@ public class SnowFlakeKeyGen implements EnvironmentAware{
     private long lastTimestamp = -1L;
 
     private final static long twepoch = 1452866247339L;
-    
-    static java.text.SimpleDateFormat df=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 
     public SnowFlakeKeyGen()
     {
@@ -122,6 +124,7 @@ public class SnowFlakeKeyGen implements EnvironmentAware{
         return new Date(((id>> timestampLeftShift) + twepoch)/1000*1000);
     }
     public static String getSimpleString(long id){
+        java.text.SimpleDateFormat df=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return df.format(new Date(((id>> timestampLeftShift) + twepoch)/1000*1000));
     }
 }

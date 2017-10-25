@@ -9,7 +9,7 @@ import java.util.List;
  * @author roothomes
  * @date 2017-10-20
  */
-public class TAnnotation {
+public class TempletAnnotation {
     private String name;
     private String desc;
 
@@ -29,18 +29,18 @@ public class TAnnotation {
         return name;
     }
 
-    public static List<TAnnotation> getTModelClassList() {
-        List<TAnnotation> list = new ArrayList<TAnnotation>();
-        TAnnotation one = null;
-        one = new TAnnotation();
+    public static List<TempletAnnotation> getTModelClassList() {
+        List<TempletAnnotation> list = new ArrayList<TempletAnnotation>();
+        TempletAnnotation one = null;
+        one = new TempletAnnotation();
         one.setName("@Entity");
         one.setDesc("JPA实体注解");
         list.add(one);
-        one = new TAnnotation();
+        one = new TempletAnnotation();
         one.setName("@DynamicUpdate");
         one.setDesc("hibernate动态更新");
         list.add(one);
-        one = new TAnnotation();
+        one = new TempletAnnotation();
         one.setName("@GenericGenerator(name = Constants.SYSTEM_GENERATOR, strategy = Constants.ASSIGNED)");
         one.setDesc("hibernate自动生成");
         list.add(one);

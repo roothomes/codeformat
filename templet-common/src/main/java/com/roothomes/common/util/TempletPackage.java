@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * 模型里面model的类，包的部分。
+ * @author roothomes
  */
 public class TempletPackage {
     private String importPackage;

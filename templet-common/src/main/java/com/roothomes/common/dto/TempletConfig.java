@@ -2,8 +2,11 @@ package com.roothomes.common.dto;
 
 import lombok.Data;
 
+/**
+ * @author roothomes
+ */
 @Data
-public class TConfig {
+public class TempletConfig {
 
 	private String templatePath; 
 }

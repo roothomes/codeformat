@@ -44,11 +44,11 @@ public class TempletUtil {
 
 
     public static List<TempletAttribute> getBaseModelAttributList(){
-        String[] javaCodes = IContant.baseJavaAttributeCode.split(IContant.K_SPLIT);
-        String[] descs = IContant.baseJavaAttributeDesc.split(IContant.K_SPLIT);
-        String[] types = IContant.baseJavaAttributeType.split(IContant.K_SPLIT);
-        String[] dbCodes =  IContant.baseDBColumnCode.split(IContant.K_SPLIT);
-        String[] canNulls = IContant.baseJavaAttributeCanNull.split(IContant.K_SPLIT);
+        String[] javaCodes = IContant.BASE_JAVA_ATTRIBUTE_CODE.split(IContant.K_SPLIT);
+        String[] descs = IContant.BASE_JAVA_ATTRIBUTE_DESC.split(IContant.K_SPLIT);
+        String[] types = IContant.BASE_JAVA_ATTRIBUTE_TYPE.split(IContant.K_SPLIT);
+        String[] dbCodes =  IContant.BASE_DB_COLUMN_CODE.split(IContant.K_SPLIT);
+        String[] canNulls = IContant.BASE_JAVA_ATTRIBUTE_CAN_NULL.split(IContant.K_SPLIT);
         List<TempletAttribute> list = new ArrayList<TempletAttribute>(javaCodes.length);
         for(int i=0;i<javaCodes.length;i++){
             TempletAttribute one = new TempletAttribute();

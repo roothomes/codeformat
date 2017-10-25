@@ -12,6 +12,9 @@ import com.apec.framework.mq.ConsumerConfig;
 import com.apec.framework.mq.ProducerConfig;
 import com.apec.framework.springcloud.SpringCloudConfig;
 
+/**
+ * @author roothomes
+ */
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableScheduling

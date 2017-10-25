@@ -1,5 +1,6 @@
 package com.roothomes.common.service.impl;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,11 +9,12 @@ import com.apec.framework.springcloud.SpringCloudClient;
 
 /**
  * 调用其它依赖服务
+ * @author roothomes
  */
 @Service
 public class RpcServiceImpl {
 	
-	private static final org.slf4j.Logger _log = LoggerFactory.getLogger(RpcServiceImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RpcServiceImpl.class);
  
 	@Autowired
 	SpringCloudClient springCloudClient;
@@ -22,7 +24,7 @@ public class RpcServiceImpl {
         long s = System.currentTimeMillis();
         String json = springCloudClient.post(url,param);
         long e = System.currentTimeMillis();
-        _log.debug("rpc success! responseTime:{}ms, url:{}, param:{}, res:{}",e-s,url,param,json);
+        LOG.debug("rpc success! responseTime:{}ms, url:{}, param:{}, res:{}",e-s,url,param,json);
         return json;
     }
     
@@ -31,7 +33,7 @@ public class RpcServiceImpl {
         long s = System.currentTimeMillis();
         String json = springCloudClient.get(url);
         long e = System.currentTimeMillis();
-        _log.debug("rpc success! responseTime:{}ms, url:{}, param:{}, res:{}",e-s,url,json);
+        LOG.debug("rpc success! responseTime:{}ms, url:{}, param:{}, res:{}",e-s,url,json);
         return json;
     }
 	

@@ -7,7 +7,7 @@ import lombok.Data;
  * @author roothomes
  */
 @Data
-public class TClassAttribute {
+public class TempletClassAttribute {
 	/** 类属性编码名称 */
 	private String attributeCode;
 	/** 类属性说明 */

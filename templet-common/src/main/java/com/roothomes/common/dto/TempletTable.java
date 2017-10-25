@@ -4,10 +4,13 @@ import java.util.List;
 
 import lombok.Data;
 
+/**
+ * @author roothomes
+ */
 @Data
-public class TTable {
+public class TempletTable {
 
 	private String name;
 	private String desc;
-	private List<TTableColumn> columns;
+	private List<TempletTableColumn> columns;
 }

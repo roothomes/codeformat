@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author roothomes
+ */
 public class BuildUtil {
 
 
@@ -50,8 +53,8 @@ public class BuildUtil {
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
         /* 设置注解列表 */
-        List<TAnnotation> list = TAnnotation.getTModelClassList();
-        TAnnotation  one = new TAnnotation();
+        List<TempletAnnotation> list = TempletAnnotation.getTModelClassList();
+        TempletAnnotation one = new TempletAnnotation();
         one.setName("@Table(name = \""+param.getCfgDBTableName()+"\", catalog = \""+param.getCfgDBName()+"\")");
         one.setDesc("JPA表注解");
         list.add(one);
@@ -76,7 +79,7 @@ public class BuildUtil {
                 param.getCfgDBColumnCode());
         root.put(IContant.K_ATTRIBUTE,listDTO );
          /* 设置导入的包的信息 */
-        root.put(IContant.K_PACKAGES, TempletUtil.getDTOClassImportPackages(IContant.baseJavaAttributeType));
+        root.put(IContant.K_PACKAGES, TempletUtil.getDTOClassImportPackages(IContant.BASE_JAVA_ATTRIBUTE_TYPE));
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
@@ -100,7 +103,7 @@ public class BuildUtil {
                 param.getCfgDBColumnCode());
         root.put(IContant.K_ATTRIBUTE,listDTO );
          /* 设置导入的包的信息 */
-        root.put(IContant.K_PACKAGES, TempletUtil.getDTOClassImportPackages(IContant.baseJavaAttributeType));
+        root.put(IContant.K_PACKAGES, TempletUtil.getDTOClassImportPackages(IContant.BASE_JAVA_ATTRIBUTE_TYPE));
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
@@ -142,7 +145,7 @@ public class BuildUtil {
         root.put(IContant.K_CONTANT_CLASSNAME_DEFAULT_VAL,param.getCfgJavaContantDefaultVal().split(IContant.K_SPLIT));
 
         /* Get the template (uses cache internally) */
-        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_Contant);
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_CONTANT);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
         temp.process(root, out);
@@ -290,7 +293,7 @@ public class BuildUtil {
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
         /* Get the template (uses cache internally) */
-        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_Application);
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_APPLICATION);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
         temp.process(root, out);
@@ -302,7 +305,7 @@ public class BuildUtil {
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
         /* Get the template (uses cache internally) */
-        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_KeyGen);
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_KEYGEN);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
         temp.process(root, out);
@@ -329,7 +332,7 @@ public class BuildUtil {
         /* You usually do these for MULTIPLE TIMES in the application life-cycle:   */
 
         /* Create a data-model */
-        Map root = new HashMap();
+        Map root = new HashMap(10);
         //设置GroupID项目组织唯一的标识符，用于包结构等
         root.put(IContant.K_GROUPID, param.getCfgGroupId());
         /*设置ArtifactID就是项目的唯一的标识符，用于包结构等*/

@@ -9,6 +9,9 @@ import com.apec.framework.common.util.JsonUtil;
 import com.apec.framework.dto.BaseDTO;
 
 
+/**
+ * @author roothomes
+ */
 public class MyBaseController extends BaseController
 {
 
@@ -28,15 +31,15 @@ public class MyBaseController extends BaseController
         PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, sort);
         return pageRequest;
     }
-    
+    @Override
     public <T> T getFormJSON(String json,Class<T> clz)
     {
         Object formJSOn = JsonUtil.getValueBykey(json, "formJSON");
-        if(null==formJSOn) //服务调用
+        if(null==formJSOn)
         {
             return JsonUtil.parseObject(json, clz);
         }
-        else //面面调用
+        else
         {
             PageJSON<T> pageJSON = getPageJSON(json, clz);
             return pageJSON.getFormJSON();
@@ -46,11 +49,11 @@ public class MyBaseController extends BaseController
     public String getUserId(String json)
     {
         Object formJSOn = JsonUtil.getValueBykey(json, "formJSON");
-        if(null==formJSOn) //服务调用
+        if(null==formJSOn)
         {
             return "0";
         }
-        else //面面调用
+        else
         {
             PageJSON<Object> pageJSON = getPageJSON(json, Object.class);
             return getUserNo(pageJSON);
