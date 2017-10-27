@@ -18,6 +18,7 @@ public interface IContant {
      * ArtifactID就是项目的唯一的标识符，用于包结构等
      */
     String K_ARTIFACTID="ARTIFACTID";
+
     /**
      * 生成文件的包空间
      */
@@ -38,6 +39,10 @@ public interface IContant {
      * 类名称
      */
     String K_CLASSNAME = "CLASSNAME";
+    /**
+     * 类的描述
+     */
+    String K_CLASSNAME_DESC="CLASSNAME_DESC";
     /**
      * MODEL 模型类的名称
      */
@@ -101,7 +106,7 @@ public interface IContant {
     /**
      * 创建人
      */
-    String K_CREATE_AUTHOR="CREATE_AUTHOR";
+    String K_CREAT_AUTHOR ="CREAT_AUTHOR";
     /**
      * 创建时间
      */
@@ -226,5 +231,6 @@ public interface IContant {
      * 每页默认的条数
      */
     Integer DEFAULT_NUMBER_ONE_PAGE =20;
+
 
 }

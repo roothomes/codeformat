@@ -23,6 +23,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_basemodel;
          /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"基础模型类,里面包含基础模型属性，以及属性的get set方法");
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_BASEMODEL);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
@@ -34,6 +36,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_model;
          /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型Pojo类,里面包含业务模型的属性，以及该属性的get set方法");
         /* 设置属性 */
         List<TempletAttribute> listModel = TempletUtil.getModelAttributeList(
                 param.getCfgJavaAttributeCode(),
@@ -71,6 +75,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_dto;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型Dto类,里面包含业务模型的属性，以及该属性的get set方法");
         /* 设置属性 */
         List<TempletAttribute> listDTO = TempletUtil.getDTOAttributeList(
                 param.getCfgJavaAttributeCode(),
@@ -95,6 +101,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_vo;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型Vo类,里面包含业务模型的属性，以及该属性的get set方法");
         /* 设置属性 */
         List<TempletAttribute> listDTO = TempletUtil.getDTOAttributeList(
                 param.getCfgJavaAttributeCode(),
@@ -117,6 +125,9 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_dao;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型Dao类,里面包含业务模型定制的方法");
+
         List<TempletPackage> listPackage = new ArrayList<TempletPackage>(1);
         TempletPackage one = new TempletPackage();
         one.setImportPackage("import " + packageMap.get(DirEnum.p_model) + "." +param.getCfgPojoName() + ";");
@@ -137,6 +148,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_contant;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型常量类,包含各种常量信息");
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
         root.put(IContant.K_CONTANT_CLASSNAME_DESC,param.getCfgJavaContantDesc().split(IContant.K_SPLIT));
@@ -155,6 +168,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_util;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型Util类,里面包含业务常用的方法");
         List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
         TempletPackage one = null;
         one = new TempletPackage();
@@ -177,6 +192,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_service;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型Service接口类,里面包含新增、删除、单个查询、模糊查询、分页查询的基础方法的定义");
         List<TempletPackage> listPackage = new ArrayList<TempletPackage>(4);
         TempletPackage one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
@@ -208,6 +225,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_serviceimpl;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型Service实现类,里面包含新增、删除、单个查询、模糊查询、分页查询的基础方法的定义");
         List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
         TempletPackage one = null;
         one = new TempletPackage();
@@ -258,6 +277,7 @@ public class BuildUtil {
 
         //单独设置基础属性
         root.put(IContant.K_BASE_ATTRIBUTE, TempletUtil.getBaseModelAttributList());
+        root.put(IContant.K_BASE_ATTRIBUTE_CAN_NULL, IContant.BASE_JAVA_ATTRIBUTE_CAN_NULL.split(IContant.K_SPLIT));
         //设置默认的属性值
         root.put(IContant.K_ATTRIBUTE_DEFAULT_VAL,param.getCfgJavaAttributeDefaultVal().split(IContant.K_SPLIT));
         root.put(IContant.K_ATTRIBUTE_CAN_NULL,param.getCfgJavaAttributeCanNull().split(IContant.K_SPLIT));
@@ -274,6 +294,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_application;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务启动类");
         List<TempletPackage> listPackage = new ArrayList<TempletPackage>(3);
         TempletPackage one = new TempletPackage();
         one.setImportPackage("com.apec.framework.base.BaseApplication");
@@ -301,9 +323,13 @@ public class BuildUtil {
 
     public static void buildJavaFile4SnowFlakeKeyGen(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
         DirEnum fileType = DirEnum.p_keygen;
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"主键生成类");
+
         root.put("workerId","@Value(\"${workerId}\")");
         /* 包名称 */
-        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));/* 生成类文件的注释中的描述信息 */
+
         /* Get the template (uses cache internally) */
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_KEYGEN);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
@@ -342,7 +368,7 @@ public class BuildUtil {
         root.put(IContant.K_CLASSNAME,param.getCfgPojoName());
         /* 设置模型的描述信息 */
         root.put(IContant.K_MODELDESC,param.getCfgModelDesc());
-        root.put(IContant.K_CREATE_AUTHOR,param.getCfgCreatAuthor());
+        root.put(IContant.K_CREAT_AUTHOR,param.getCfgCreatAuthor());
         root.put(IContant.K_CREAT_DATE,param.getCfgCreatDate());
         /* 设置模型属性名称 */
         root.put(IContant.K_MODEL_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_model));

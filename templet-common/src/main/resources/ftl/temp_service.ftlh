@@ -8,12 +8,19 @@ import ${p.importPackage};
 import java.util.*;
 import org.springframework.data.domain.PageRequest;
 
-
+/**
+ * 类 编 号：
+ * 类 名 称：${CLASSNAME}
+ * 内容摘要：${CLASSNAME_DESC}
+ * @author ${CREAT_AUTHOR}
+ * @date ${CREAT_DATE}
+ */
 public interface ${CLASSNAME} {
     /**
      * 创建一个对象
      * @param vo 对象
      * @return
+	 * @throws Exception
      */
     ${VO_CLASSNAME} create(${VO_CLASSNAME} vo) throws Exception;
     /**
@@ -49,7 +56,16 @@ public interface ${CLASSNAME} {
      * @param pageRequest 分页请求
      * @return
      */
-    PageDTO<${MODEL_CLASSNAME}> seachPage(${VO_CLASSNAME} vo, PageRequest pageRequest);
+    PageDTO<${DTO_CLASSNAME}> seachPageDto(${VO_CLASSNAME} vo, PageRequest pageRequest);
+	
+	/**
+     * 分页查询数据
+     * @param vo 查询模型
+     * @param pageRequest 分页请求
+     * @return
+     */
+    PageDTO<${MODEL_CLASSNAME}> seachPageModel(${VO_CLASSNAME} vo, PageRequest pageRequest);
+	
     /**
      * 根据主键查询对象
      * @param id 主键id

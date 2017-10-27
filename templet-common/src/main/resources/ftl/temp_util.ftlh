@@ -11,7 +11,13 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 <#list PACKAGES as p>
 import ${p.importPackage};
 </#list>
-
+/**
+ * 类 编 号：
+ * 类 名 称：${CLASSNAME}
+ * 内容摘要：${CLASSNAME_DESC}
+ * @author ${CREAT_AUTHOR}
+ * @date ${CREAT_DATE}
+ */
 public class ${CLASSNAME} implements ${CONTANT_CLASSNAME}{
 
     private static ObjectMapper mapper = new ObjectMapper();

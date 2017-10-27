@@ -26,8 +26,8 @@ import java.util.Date;
  * 类 编 号：BL_PU6030202_BaseModel
  * 类 名 称：BaseModel
  * 内容摘要：框架基本实体类,所有的实体需集成该类
- * 完成日期：2016-07-14
- * 编码作者：
+ * @author ${CREAT_AUTHOR}
+ * @date ${CREAT_DATE}
  */
 @MappedSuperclass
 @EntityListeners(

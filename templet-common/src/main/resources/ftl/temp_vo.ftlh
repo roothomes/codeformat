@@ -6,11 +6,13 @@ package ${PACKAGE};
 ${p.importPackage}
 </#list>
 
+
 /**
- * <#if MODELDESC??> ${MODELDESC}</#if>
- * @author <#if CREATE_AUTHOR??> ${CREATE_AUTHOR}</#if>
- * @version V1.0
- * @date <#if CREAT_DATE??> ${CREAT_DATE}</#if>
+ * 类 编 号：
+ * 类 名 称：${CLASSNAME}
+ * 内容摘要：${CLASSNAME_DESC}
+ * @author ${CREAT_AUTHOR}
+ * @date ${CREAT_DATE}
  */
 public class ${CLASSNAME} extends BaseDTO
 {
@@ -38,5 +40,8 @@ public class ${CLASSNAME} extends BaseDTO
     }
 </#list>
 
-
+    @Override
+    public String toString() {
+    	return JsonUtil.toJSONString(this);
+    }
 }

@@ -15,6 +15,14 @@ ${p.importPackage}
     </#if>
 ${a.name}
 </#list>
+
+/**
+ * 类 编 号：
+ * 类 名 称：${CLASSNAME}
+ * 内容摘要：${CLASSNAME_DESC}
+ * @author ${CREAT_AUTHOR}
+ * @date ${CREAT_DATE}
+ */
 public class ${CLASSNAME} extends BaseModel<${PK_ID_TYPE}>
 {
     private static final long serialVersionUID = 1L;
@@ -36,5 +44,8 @@ public class ${CLASSNAME} extends BaseModel<${PK_ID_TYPE}>
     }
 
 </#list>
-
+    @Override
+    public String toString() {
+    	return JsonUtil.toJSONString(this);
+    }
 }

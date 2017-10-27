@@ -114,6 +114,11 @@ public class TempletUtil {
         one.setImportPackage("import com.apec.framework.common.Constants;");
         one.setDesc("平台常量类");
         packages.add(one);
+
+        one = new TempletPackage();
+        one.setImportPackage("import com.apec.framework.common.util.JsonUtil;");
+        one.setDesc("JSON转换类");
+        packages.add(one);
         return packages;
     }
 
@@ -160,6 +165,12 @@ public class TempletUtil {
         one.setImportPackage("import com.apec.framework.dto.BaseDTO;");
         one.setDesc("继承的基础分页类");
         packages.add(one);
+
+        one = new TempletPackage();
+        one.setImportPackage("import com.apec.framework.common.util.JsonUtil;");
+        one.setDesc("JSON转换类");
+        packages.add(one);
+
         return packages;
     }
     public static List<TempletPackage> getDTOClassImportPackages(String modelType){

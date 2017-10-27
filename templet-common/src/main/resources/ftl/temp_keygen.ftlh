@@ -8,21 +8,29 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+/**
+ * 类 编 号：
+ * 类 名 称：${CLASSNAME}
+ * 内容摘要：${CLASSNAME_DESC}
+ * @author ${CREAT_AUTHOR}
+ * @date ${CREAT_DATE}
+ */
+
 @Component
 public class SnowFlakeKeyGen implements EnvironmentAware{
 
-    private static final long workerIdBits = 6L;
+    private static final long WORKER_ID_BITS = 6L;
 
-    private static final long maxWorkerId = -1L ^ (-1L << workerIdBits);
+    private static final long MAX_WORKER_ID = -1L ^ (-1L << WORKER_ID_BITS);
 
-    private static final long sequenceBits = 6L;
+    private static final long SEQUENCE_BITS = 6L;
 
-    private static final long workerIdShift = 6L;
+    private static final long WORKER_ID_SHIFT = 6L;
 
-    private static final long timestampLeftShift = sequenceBits + workerIdBits;
+    private static final long TIMESTAMP_LEFT_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS;
 
-    private final long sequenceMask = -1L ^ (-1L << sequenceBits);
-
+    private final long sequenceMask = -1L ^ (-1L << SEQUENCE_BITS);
+	
     ${workerId}
     private long workerId;
 
@@ -30,36 +38,34 @@ public class SnowFlakeKeyGen implements EnvironmentAware{
 
     private long lastTimestamp = -1L;
 
-    private final static long twepoch = 1452866247339L;
-
-    static java.text.SimpleDateFormat df=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final static long TWEPOCH = 1452866247339L;
 
     public SnowFlakeKeyGen()
     {
-        if(workerId > maxWorkerId || workerId < 0)
+        if(workerId > MAX_WORKER_ID || workerId < 0)
         {
             throw new IllegalArgumentException(
-             String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
+                    String.format("worker Id can't be greater than %d or less than 0", MAX_WORKER_ID));
         }
     }
-
+    
     @Override
     public void setEnvironment(Environment environment)
     {
         workerId=NumberUtils.toLong(environment.getProperty("workerId"));
-        if(workerId > maxWorkerId || workerId < 0)
+        if(workerId > MAX_WORKER_ID || workerId < 0)
         {
             throw new IllegalArgumentException(
-            String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
+                    String.format("worker Id can't be greater than %d or less than 0", MAX_WORKER_ID));
         }
     }
 
     public SnowFlakeKeyGen(long workerId)
     {
-        if(workerId > maxWorkerId || workerId < 0)
+        if(workerId > MAX_WORKER_ID || workerId < 0)
         {
             throw new IllegalArgumentException(
-            String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
+                    String.format("worker Id can't be greater than %d or less than 0", MAX_WORKER_ID));
         }
         this.workerId=workerId;
     }
@@ -70,8 +76,8 @@ public class SnowFlakeKeyGen implements EnvironmentAware{
         if(timestamp < lastTimestamp)
         {
             throw new RuntimeException(
-            String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds",
-            lastTimestamp - timestamp));
+                    String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds",
+                            lastTimestamp - timestamp));
         }
         if(lastTimestamp == timestamp)
         {
@@ -87,7 +93,7 @@ public class SnowFlakeKeyGen implements EnvironmentAware{
         }
 
         lastTimestamp = timestamp;
-        return (timestamp - twepoch << timestampLeftShift) | (workerId << workerIdShift) | sequence;
+        return (timestamp - TWEPOCH << TIMESTAMP_LEFT_SHIFT) | (workerId << WORKER_ID_SHIFT) | sequence;
     }
 
     protected long tilNextMillis(long lastTimestamp)
@@ -104,24 +110,27 @@ public class SnowFlakeKeyGen implements EnvironmentAware{
     {
         return System.currentTimeMillis();
     }
-
+    
     public static long minId(Date date){
-        return (date.getTime() - twepoch << timestampLeftShift) | (0 << workerIdShift) | 0;
+        return (date.getTime() - TWEPOCH << TIMESTAMP_LEFT_SHIFT) | (0 << WORKER_ID_SHIFT) | 0;
     }
-
+    
     public static long maxId(Date date){
-        int w=(-1 ^ (-1 << workerIdBits))<<workerIdShift;
-        int s=(-1 ^ (-1 << sequenceBits));
-        return (date.getTime() - twepoch << timestampLeftShift) | w | s;
+        int w=(-1 ^ (-1 << WORKER_ID_BITS))<< WORKER_ID_SHIFT;
+        int s=(-1 ^ (-1 << SEQUENCE_BITS));
+        return (date.getTime() - TWEPOCH << TIMESTAMP_LEFT_SHIFT) | w | s;
     }
-
+    
     public static Date getDate(long id){
-        return new Date((id>> timestampLeftShift) + twepoch );
+        return new Date((id>> TIMESTAMP_LEFT_SHIFT) + TWEPOCH);
     }
+	
     public static Date getSimpleDate(long id){
-        return new Date(((id>> timestampLeftShift) + twepoch)/1000*1000);
+        return new Date(((id>> TIMESTAMP_LEFT_SHIFT) + TWEPOCH)/1000*1000);
     }
+	
     public static String getSimpleString(long id){
-        return df.format(new Date(((id>> timestampLeftShift) + twepoch)/1000*1000));
+        java.text.SimpleDateFormat df=new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return df.format(new Date(((id>> TIMESTAMP_LEFT_SHIFT) + TWEPOCH)/1000*1000));
     }
 }

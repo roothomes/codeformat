@@ -12,6 +12,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import ${p.importPackage};
 </#list>
 
+
+/**
+ * 类 编 号：
+ * 类 名 称：${CLASSNAME}
+ * 内容摘要：${CLASSNAME_DESC}
+ * @author ${CREAT_AUTHOR}
+ * @date ${CREAT_DATE}
+ */
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableScheduling

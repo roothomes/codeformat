@@ -18,6 +18,14 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 类 编 号：
+ * 类 名 称：${CLASSNAME}
+ * 内容摘要：${CLASSNAME_DESC}
+ * @author ${CREAT_AUTHOR}
+ * @date ${CREAT_DATE}
+ */
+
 @Service
 public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
     private static final Logger LOG =  LoggerFactory.getLogger( ${CLASSNAME}.class);
@@ -136,17 +144,45 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
     public Notice updateObject(Notice vo) {
         ${MODEL_CLASSNAME} entity = dao.findOne(vo.getId());
         if(null == entity){
-        LOG.error("查询数据为空,id={}",vo.getId());
-        return null;
+			LOG.error("查询数据为空,id={}",vo.getId());
+			return null;
         }
+		//模块属性设置
 <#list ATTRIBUTE_CAN_NULL as x>
     <#if x=='0'>
         <#if ATTRIBUTE[x_index].type =='String'>
         if (!Strings.isNullOrEmpty(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}())) {
-        entity.set${ATTRIBUTE[x_index].javaCode?cap_first}(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}());
+			entity.set${ATTRIBUTE[x_index].javaCode?cap_first}(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}());
         }
         <#elseif ATTRIBUTE[x_index].type =='Integer'>
+        if (null != vo.get${ATTRIBUTE[x_index].javaCode?cap_first}()) {
+			entity.set${ATTRIBUTE[x_index].javaCode?cap_first}(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}());
+        }
+        <#else>
+        if (null != vo.get${ATTRIBUTE[x_index].javaCode?cap_first}()) {
+			entity.set${ATTRIBUTE[x_index].javaCode?cap_first}(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}());
+        }
+        
+        </#if>
+    </#if>
+</#list>
 
+		//基础属性设置
+<#list BASE_ATTRIBUTE_CAN_NULL as x>
+    <#if x=='0'>
+        <#if BASE_ATTRIBUTE[x_index].type =='String'>
+        if (!Strings.isNullOrEmpty(vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}())) {
+			entity.set${BASE_ATTRIBUTE[x_index].javaCode?cap_first}(vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}());
+        }
+        <#elseif BASE_ATTRIBUTE[x_index].type =='Integer'>
+        if (null != vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}()) {
+			entity.set${BASE_ATTRIBUTE[x_index].javaCode?cap_first}(vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}());
+        }
+        <#else>
+        if (null != vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}()) {
+			entity.set${BASE_ATTRIBUTE[x_index].javaCode?cap_first}(vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}());
+        }
+        
         </#if>
     </#if>
 </#list>
@@ -158,6 +194,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
      * @param id 主键id
      * @return
      */
+	@Override
     public ${MODEL_CLASSNAME} findOne(${PK_ID_TYPE} id)
     {
         ${MODEL_CLASSNAME} entity = dao.findOne(id);
@@ -171,21 +208,53 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
      * @return
      */
     @Override
-    public PageDTO<${MODEL_CLASSNAME}> seachPage(${VO_CLASSNAME} vo, PageRequest pageRequest)
+    public PageDTO<${DTO_CLASSNAME}> seachPageDto(${VO_CLASSNAME} vo, PageRequest pageRequest)
     {
-     return null;
+		Page<${MODEL_CLASSNAME}> page = dao.findAll(getInputCondition(vo), pageRequest);
+		PageDTO<${DTO_CLASSNAME}> pageDto = new PageDTO<${DTO_CLASSNAME}>();
+		List<${DTO_CLASSNAME}> list = new ArrayList<${DTO_CLASSNAME}>();
+		for (${MODEL_CLASSNAME} tem : page) {
+			${DTO_CLASSNAME} dto = new ${DTO_CLASSNAME}();
+			BeanUtil.copyPropertiesIgnoreNullFilds(tem, dto);
+			list.add(dto);
+		}
+		pageDto.setNumber(page.getNumber());
+		pageDto.setTotalElements(page.getTotalElements());
+		pageDto.setTotalPages(page.getTotalPages());
+		pageDto.setRows(list);
+		return pageDto;
     }
 
+	@Override
+    public PageDTO<${MODEL_CLASSNAME}> seachPageModel(${VO_CLASSNAME} vo, PageRequest pageRequest)
+	{
+		Page<Notice> page = dao.findAll(getInputCondition(vo), pageRequest);
+		PageDTO<Notice> pageDto = new PageDTO<Notice>();		
+		pageDto.setNumber(page.getNumber());
+		pageDto.setTotalElements(page.getTotalElements());
+		pageDto.setTotalPages(page.getTotalPages());
+		pageDto.setRows(page.getContent());
+		return pageDto;
+	}
 
-    /**
-     * 查询数据列表
-     * @param vo
-     * @return
-     */
-    public    List<${MODEL_CLASSNAME}> queryAll(${VO_CLASSNAME} vo)
+	@Override
+    public List<${MODEL_CLASSNAME}> queryAll(${VO_CLASSNAME} vo)
     {
-        return null;
+		${MODEL_CLASSNAME} entity = new ${MODEL_CLASSNAME}();
+		BeanUtil.copyProperties(vo, entity);
+		return queryAllModel(entity);
     }
+	
+	public List<${MODEL_CLASSNAME}> queryAllModel(${MODEL_CLASSNAME} entity) {
+		Iterable<${MODEL_CLASSNAME}> iterable = dao.findAll(getInputConditionModel(entity));
+		Iterator<${MODEL_CLASSNAME}> iterator = iterable.iterator();
+		List<${MODEL_CLASSNAME}> list = new ArrayList<${MODEL_CLASSNAME}>();
+		while (iterator.hasNext()) {
+			${MODEL_CLASSNAME} img = iterator.next();
+			list.add(img);
+		}
+		return list;
+	}
 
     private void flushCacheJob(${MODEL_CLASSNAME} entity){
         Runnable r = new Runnable() {
@@ -220,4 +289,92 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         cacheService.add(getCacheKey(entity), ${UTIL_CLASSNAME}.toJson(list));
         LOG.debug("刷新数据到缓存：" + getCacheKey(entity) + " \n" + ${UTIL_CLASSNAME}.toJson(list));
     }
+
+    private List<BooleanExpression> getBooleanExpressionList4Base(${MODEL_CLASSNAME} entity) {
+        List<BooleanExpression> list = new ArrayList<BooleanExpression>();
+        if (null != entity.getId()) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.id.eq(entity.getId()));
+        }
+        if (null == entity.getEnableFlag()) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.enableFlag.eq(EnableFlag.Y));
+        } else {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.enableFlag.eq(entity.getEnableFlag()));
+        }
+
+        if (null != entity.getCityId()) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.cityId.eq(entity.getCityId()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getStatus())) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.status.eq(entity.getStatus()));
+        }
+
+        if (null != entity.getCreateDate()) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.createDate.eq(entity.getCreateDate()));
+        }
+        if (null != entity.getLastUpdateDate()) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.lastUpdateDate.eq(entity.getLastUpdateDate()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getCreateBy())) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.createBy.eq(entity.getCreateBy()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getLastUpdateBy())) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.lastUpdateBy.eq(entity.getLastUpdateBy()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getPlantformId())) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.plantformId.eq(entity.getPlantformId()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getOecdNo())) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.oecdNo.eq(entity.getOecdNo()));
+        }
+        if (null != entity.getOrderNumber()) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.orderNumber.eq(entity.getOrderNumber()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getRemarks())) {
+            list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.remarks.eq(entity.getRemarks()));
+        }
+        return list;
+    }
+	
+	private List<BooleanExpression> getBooleanExpressionList4Model(${MODEL_CLASSNAME} entity) {
+		List<BooleanExpression> list = getBooleanExpressionList4Base(entity);
+		
+<#list ATTRIBUTE_CAN_NULL as x>
+<#if x=='0'>
+	<#if ATTRIBUTE[x_index].type =='String'>
+		if (!Strings.isNullOrEmpty(entity.get${ATTRIBUTE[x_index].javaCode?cap_first}())) {
+			list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.${ATTRIBUTE[x_index].javaCode?uncap_first}.like("%" + entity.get${ATTRIBUTE[x_index].javaCode?cap_first}() + "%"));
+		}
+	<#elseif ATTRIBUTE[x_index].type =='Integer'>
+		if (null != entity.get${ATTRIBUTE[x_index].javaCode?cap_first}()) {
+			list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.${ATTRIBUTE[x_index].javaCode?uncap_first}.eq(entity.get${ATTRIBUTE[x_index].javaCode?cap_first}()));
+		}
+	<#else>
+		if (null != entity.get${ATTRIBUTE[x_index].javaCode?cap_first}()) {
+			list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.${ATTRIBUTE[x_index].javaCode?uncap_first}.eq(entity.get${ATTRIBUTE[x_index].javaCode?cap_first}()));
+		}
+	</#if>
+</#if>
+</#list>
+
+		return list;
+	}
+
+	private Predicate getInputConditionModel(${MODEL_CLASSNAME} entity) {
+		List<BooleanExpression> predicates = getBooleanExpressionList4Model(entity);
+		return BooleanExpression.allOf(predicates.toArray(new BooleanExpression[predicates.size()]));
+	}
+	
+	private Predicate getInputCondition(${VO_CLASSNAME} vo) {
+		${MODEL_CLASSNAME} entity = new ${MODEL_CLASSNAME}();
+		BeanUtil.copyProperties(vo, entity);
+		Predicate predicate = getInputConditionModel(entity);
+		return predicate;
+	}
+	
+	private Predicate getInputCondition(${DTO_CLASSNAME} dto) {
+		${MODEL_CLASSNAME} entity = new ${MODEL_CLASSNAME}();
+		BeanUtil.copyProperties(dto, entity);
+		Predicate predicate = getInputConditionModel(entity);
+		return predicate;
+	}
 }
