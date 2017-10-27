@@ -44,6 +44,63 @@ public class ${CLASSNAME} extends BaseModel<${PK_ID_TYPE}>
     }
 
 </#list>
+
+@Column(name = "ORDER_NUMBER")
+private Integer orderNumber;
+
+@Column(name = "CITY_ID")
+private Integer cityId;
+
+@Column(name = "PLANTFORM_ID")
+private String plantformId;
+
+@Column(name = "OECD_NO")
+private String oecdNo;
+
+@Column(name = "REMARKS")
+private String remarks;
+
+
+
+public Integer getOrderNumber() {
+return orderNumber;
+}
+
+public void setOrderNumber(Integer orderNumber) {
+this.orderNumber = orderNumber;
+}
+
+public Integer getCityId() {
+return cityId;
+}
+
+public void setCityId(Integer cityId) {
+this.cityId = cityId;
+}
+
+public String getPlantformId() {
+return plantformId;
+}
+
+public void setPlantformId(String plantformId) {
+this.plantformId = plantformId;
+}
+
+public String getOecdNo() {
+return oecdNo;
+}
+
+public void setOecdNo(String oecdNo) {
+this.oecdNo = oecdNo;
+}
+
+public String getRemarks() {
+return remarks;
+}
+
+public void setRemarks(String remarks) {
+this.remarks = remarks;
+}
     @Override
     public String toString() {
     	return JsonUtil.toJSONString(this);

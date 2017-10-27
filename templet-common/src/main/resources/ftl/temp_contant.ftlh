@@ -27,7 +27,14 @@ public interface ${CLASSNAME}{
      * 默认排序
      */
     Integer DEFAULT_ORDER_NUMBER = 0;
-
+    /**
+     * 每页最大条数
+     */
+	Integer MAX_NUMBER_ONE_PAGE = 100;
+	/**
+     * 每页最大条数
+     */
+	Integer DEFAULT_NUMBER_ONE_PAGE = 100;
     /**
      * 失效
      */

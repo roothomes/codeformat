@@ -141,7 +141,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
      * @return
      */
     @Override
-    public Notice updateObject(Notice vo) {
+    public ${MODEL_CLASSNAME} updateObject(${MODEL_CLASSNAME} vo) {
         ${MODEL_CLASSNAME} entity = dao.findOne(vo.getId());
         if(null == entity){
 			LOG.error("查询数据为空,id={}",vo.getId());
@@ -228,8 +228,8 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
 	@Override
     public PageDTO<${MODEL_CLASSNAME}> seachPageModel(${VO_CLASSNAME} vo, PageRequest pageRequest)
 	{
-		Page<Notice> page = dao.findAll(getInputCondition(vo), pageRequest);
-		PageDTO<Notice> pageDto = new PageDTO<Notice>();		
+		Page<${MODEL_CLASSNAME}> page = dao.findAll(getInputCondition(vo), pageRequest);
+		PageDTO<${MODEL_CLASSNAME}> pageDto = new PageDTO<${MODEL_CLASSNAME}>();		
 		pageDto.setNumber(page.getNumber());
 		pageDto.setTotalElements(page.getTotalElements());
 		pageDto.setTotalPages(page.getTotalPages());

@@ -17,8 +17,10 @@ public enum DirEnum {
     p_vo,
     /** 模型Util包 */
     p_util,
-    /** 模型一般业务控制包文件 */
-    p_web,
+    /** 基础控制类文件 */
+    p_basecontroller,
+    /** 模型一般业务控制类文件 */
+    p_controller,
     /** 模型的一般业务接口包 */
     p_service,
     /** 模型的一般业务实现类包 */

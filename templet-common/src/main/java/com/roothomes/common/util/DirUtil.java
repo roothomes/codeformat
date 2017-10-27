@@ -54,7 +54,9 @@ public class DirUtil {
                 fileName =cfg.getCfgPojoName() + "DAO" + IContant.JAVA_EXTENSION_NAME;
             }else if(DirEnum.p_util.equals(e)){
                 fileName = cfg.getCfgPojoName() + "Util" + IContant.JAVA_EXTENSION_NAME;
-            }else if(DirEnum.p_web.equals(e)){
+            }else if(DirEnum.p_basecontroller.equals(e)){
+                fileName = "MyBaseController" + IContant.JAVA_EXTENSION_NAME;
+            }else if(DirEnum.p_controller.equals(e)){
                 fileName = cfg.getCfgPojoName() + "Controller" + IContant.JAVA_EXTENSION_NAME;
             }else if(DirEnum.p_service.equals(e)){
                 fileName = cfg.getCfgPojoName() + "Service" + IContant.JAVA_EXTENSION_NAME;

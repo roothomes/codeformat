@@ -49,7 +49,7 @@ public class BuildUtil {
         /* 设置导入的包的信息 */
         List<TempletPackage> listPackage = TempletUtil.getModelClassImportPackages(param.getCfgJavaAttributeType());
         TempletPackage packae = new TempletPackage();
-        packae.setImportPackage("import " + packageMap.get(DirEnum.p_basemodel) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_basemodel) + ";");
+        packae.setImportPackage("import com.apec.framework.jpa.model.BaseModel;");
         packae.setDesc("模型的基础继承类");
         listPackage.add(packae);
         root.put(IContant.K_PACKAGES,listPackage);
@@ -219,6 +219,99 @@ public class BuildUtil {
         temp.process(root, out);
     }
 
+    /**
+     * 生成基础控制类主方法
+     * @param param
+     * @param cfg
+     * @param root
+     * @param packageMap
+     * @param fileMap
+     * @throws Exception
+     */
+    public static void buildJavaFile4BaseController(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_basecontroller;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型BaseController类");
+        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
+        TempletPackage one = null;
+        one = new TempletPackage();
+        one.setImportPackage("org.springframework.data.domain.PageRequest");
+        one.setDesc("");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage("org.springframework.data.domain.Sort");
+        one.setDesc("");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage("com.apec.framework.base.BaseController");
+        one.setDesc("");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage("com.apec.framework.common.PageJSON");
+        one.setDesc("");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage("com.apec.framework.common.util.JsonUtil");
+        one.setDesc("");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage("com.apec.framework.dto.BaseDTO");
+        one.setDesc("");
+        listPackage.add(one);
+
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_BASECONTROLLER);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildJavaFile4Controller(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_controller;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型BaseController类");
+        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
+        TempletPackage one = null;
+        one = new TempletPackage();
+        one.setImportPackage("org.springframework.data.domain.PageRequest");
+        one.setDesc("");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_service) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
+        one.setDesc("");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage("com.apec.framework.common.PageJSON");
+        one.setDesc("");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage("com.apec.framework.common.util.JsonUtil");
+        one.setDesc("");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage("com.apec.framework.dto.BaseDTO");
+        one.setDesc("");
+        listPackage.add(one);
+
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_CONTROLLER);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
 
 
     public static void buildJavaFile4ServiceImpl(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
@@ -378,6 +471,8 @@ public class BuildUtil {
         root.put(IContant.K_SERVICE_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
         root.put(IContant.K_CONTANT_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_contant));
         root.put(IContant.K_UTIL_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_util));
+        root.put(IContant.K_BASECONTROLLER_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_basecontroller));
+        root.put(IContant.K_CONTROLLER_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_controller));
         root.put(IContant.K_PK_ID_TYPE,param.getCfgJavaPkIdType());
 
         buildJavaFile4BaseModel(param,cfg,root,packageMap,fileMap);
@@ -390,6 +485,8 @@ public class BuildUtil {
         buildJavaFile4Util(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Service(param,cfg,root,packageMap,fileMap);
         buildJavaFile4ServiceImpl(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4BaseController(param,cfg,root,packageMap,fileMap);
+        buildJavaFile4Controller(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Application(param,cfg,root,packageMap,fileMap);
 
     }

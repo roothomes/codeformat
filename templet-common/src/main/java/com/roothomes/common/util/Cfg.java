@@ -9,14 +9,14 @@ public class Cfg {
     /**
      * 生成文件的基本目录 
      */
-    private String cfgOutputBaseDir = "D:\\svn\\trade\\App_cncsen\\Src\\APEC_CJ213_TempletOut\\templetOut-server\\src\\main\\java\\";
+    private String cfgOutputBaseDir = "D:\\svn\\trade\\App_cncsen\\Src\\APEC_CJ209_UploadFile2\\uploadfile-server\\src\\main\\java\\";
 
     /** 项目组织唯一的标识符 */
     private String cfgGroupId="com.apec";
     /** 项目的唯一的标识符 */
-    private String cfgArtifactId="notice";
+    private String cfgArtifactId="uploadfile";
     /** POJO中模型类的名称 */
-    private String cfgPojoName = "Notice";
+    private String cfgPojoName = "UploadFiles";
     /** 模型的描述 */
     private String cfgModelDesc = "咨询信息管理(用于公告、咨询等文字类型)";
     /** 创建人 */
@@ -97,7 +97,7 @@ public class Cfg {
     private String cfgJavaPkIdType ="String";
 
     /** 数据库表名称 */
-    private String cfgDBTableName="notice";
+    private String cfgDBTableName="notice_testx";
     /** 数据库名称 */
     private String cfgDBName = "cncsen";
 

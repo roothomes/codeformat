@@ -33,7 +33,7 @@ public class PackageUtil {
      * @author roothomes
      */
     private static Map<DirEnum,String> generatePackagesCommon(String getPackageBaseName){
-        Map<DirEnum,String> map = new HashMap<DirEnum,String>(12);
+        Map<DirEnum,String> map = new HashMap<DirEnum,String>(13);
         map.put(DirEnum.p_basemodel, getPackageBaseName + "." + "model");
         map.put(DirEnum.p_model, getPackageBaseName + "." + "model");
         map.put(DirEnum.p_dao, getPackageBaseName + "." + "dao");
@@ -42,7 +42,8 @@ public class PackageUtil {
         map.put(DirEnum.p_serviceimpl, getPackageBaseName + "." + "service" + "." +"impl");
         map.put(DirEnum.p_util, getPackageBaseName + "." + "util");
         map.put(DirEnum.p_vo, getPackageBaseName + "." + "vo");
-        map.put(DirEnum.p_web, getPackageBaseName + "." + "web");
+        map.put(DirEnum.p_basecontroller, getPackageBaseName + "." + "web");
+        map.put(DirEnum.p_controller, getPackageBaseName + "." + "web");
         map.put(DirEnum.p_contant, getPackageBaseName + "." + "constants");
         map.put(DirEnum.p_application,getPackageBaseName);
         map.put(DirEnum.p_keygen,getPackageBaseName + "." + "util");
@@ -50,7 +51,12 @@ public class PackageUtil {
         return map;
     }
 
-
+    /**
+     * 导入基础的 model、dto、vo、contant、util类
+     * @param packageMap 包的map集合
+     * @param fileMap 文件map集合
+     * @return
+     */
     public static List<TempletPackage> getBaseImportPackageList(Map<DirEnum,String> packageMap, Map<DirEnum,String> fileMap){
         List<TempletPackage> listPackage = new ArrayList<TempletPackage>(4);
         TempletPackage one = new TempletPackage();

@@ -69,6 +69,16 @@ public interface IContant {
      * CONTANT 模型类的名称
      */
     String K_CONTANT_CLASSNAME="CONTANT_CLASSNAME";
+
+    /**
+     * BASECONTROLLER 模型类的名称
+     */
+    String K_BASECONTROLLER_CLASSNAME="BASECONTROLLER_CLASSNAME";
+    /**
+     * CONTROLLER 模型类的名称
+     */
+    String K_CONTROLLER_CLASSNAME="CONTROLLER_CLASSNAME";
+
     /**
      * UTIL 模型类的名称
      */
@@ -194,7 +204,14 @@ public interface IContant {
      * java 类的keygen的模板文件名称
      */
     String V_TEMPLET_FILE_KEYGEN ="temp_keygen.ftlh";
-
+    /**
+     * java 类的controller的模板文件名称
+     */
+    String V_TEMPLET_FILE_CONTROLLER="temp_controller.ftlh";
+    /**
+     * java 类的basecontroller的模板文件名称
+     */
+    String V_TEMPLET_FILE_BASECONTROLLER="temp_basecontroller.ftlh";
 
     /**
      * 模板文件的基础路径
