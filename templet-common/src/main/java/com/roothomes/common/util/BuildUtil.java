@@ -445,7 +445,7 @@ public class BuildUtil {
 
         root.put("workerId","@Value(\"${workerId}\")");
         /* 包名称 */
-        root.put(IContant.K_PACKAGE, packageMap.get(fileType));/* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
         /* 获取文件序列号 */
         root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
 
