@@ -12,14 +12,14 @@ import java.util.Map;
 public class PackageUtil {
     /**
      * 生成业务包的路径集合
-     * @param systemtype
-     * @param packageBaseName
+     * @param systemtype 系统类型
+     * @param param 配置参数对象
      * @return
      * @author roothomes
      */
-    public static Map<DirEnum,String> generatePackages(SystemEnum systemtype, String packageBaseName){
+    public static Map<DirEnum,String> generatePackages(SystemEnum systemtype, Cfg param){
        if(SystemEnum.spring_boots.equals(systemtype)){
-           return generatePackagesCommon(packageBaseName);
+           return generatePackagesCommon(param);
        }else{
            System.err.println("未定义" + systemtype.name());
            return null;
@@ -28,11 +28,12 @@ public class PackageUtil {
 
     /**
      * 生成业务文件的包的路径集合
-     * @param getPackageBaseName
+     * @param param 配置参数对象
      * @return
      * @author roothomes
      */
-    private static Map<DirEnum,String> generatePackagesCommon(String getPackageBaseName){
+    private static Map<DirEnum,String> generatePackagesCommon(Cfg param){
+        String getPackageBaseName = param.getCfgGroupId() +"." + param.getCfgArtifactId();
         Map<DirEnum,String> map = new HashMap<DirEnum,String>(13);
         map.put(DirEnum.p_basemodel, getPackageBaseName + "." + "model");
         map.put(DirEnum.p_model, getPackageBaseName + "." + "model");
@@ -45,8 +46,33 @@ public class PackageUtil {
         map.put(DirEnum.p_basecontroller, getPackageBaseName + "." + "web");
         map.put(DirEnum.p_controller, getPackageBaseName + "." + "web");
         map.put(DirEnum.p_contant, getPackageBaseName + "." + "constants");
-        map.put(DirEnum.p_application,getPackageBaseName);
+        map.put(DirEnum.p_application,param.getCfgGroupId());
         map.put(DirEnum.p_keygen,getPackageBaseName + "." + "util");
+
+        return map;
+    }
+
+    /**
+     * 获取模型对象序列号
+     * @param param
+     * @return
+     */
+    public static Map<DirEnum,String> generateClassSerialNo(Cfg param){
+        String baseSerialNo = param.getCfgSerialNo();
+        Map<DirEnum,String> map = new HashMap<DirEnum,String>(13);
+        map.put(DirEnum.p_basemodel, baseSerialNo + "_" + "basemodel");
+        map.put(DirEnum.p_model, baseSerialNo + "_" + "model");
+        map.put(DirEnum.p_dao, baseSerialNo + "_" + "dao");
+        map.put(DirEnum.p_dto, baseSerialNo + "_" + "dto");
+        map.put(DirEnum.p_service, baseSerialNo + "_" + "service");
+        map.put(DirEnum.p_serviceimpl, baseSerialNo + "_" + "serviceimpl");
+        map.put(DirEnum.p_util, baseSerialNo + "_" + "util");
+        map.put(DirEnum.p_vo, baseSerialNo + "_" + "vo");
+        map.put(DirEnum.p_basecontroller, baseSerialNo + "_" + "basecontroller");
+        map.put(DirEnum.p_controller, baseSerialNo + "_" + "controller");
+        map.put(DirEnum.p_contant, baseSerialNo + "_" + "constants");
+        map.put(DirEnum.p_application,baseSerialNo + "_" + "application");
+        map.put(DirEnum.p_keygen,baseSerialNo + "_" + "keygen");
 
         return map;
     }

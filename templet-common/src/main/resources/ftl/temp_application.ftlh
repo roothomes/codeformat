@@ -14,7 +14,7 @@ import ${p.importPackage};
 
 
 /**
- * 类 编 号：
+ * 类 编 号：${CLASS_SERIALNO}
  * 类 名 称：${CLASSNAME}
  * 内容摘要：${CLASSNAME_DESC}
  * @author ${CREAT_AUTHOR}

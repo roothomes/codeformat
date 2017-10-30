@@ -24,6 +24,10 @@ public interface IContant {
      */
     String K_PACKAGE = "PACKAGE";
     /**
+     * 类的序列号
+     */
+    String K_CLASS_SERIALNO="CLASS_SERIALNO";
+    /**
      * 导入的Java文件的包语句列表
      */
     String K_PACKAGES = "PACKAGES";

@@ -25,7 +25,7 @@ import com.apec.project.common.constants.JSConstants;
 import ${p.importPackage};
 </#list>
 /**
- * 类 编 号：
+ * 类 编 号：${CLASS_SERIALNO}
  * 类 名 称：${CLASSNAME}
  * 内容摘要：${CLASSNAME_DESC}
  * @author ${CREAT_AUTHOR}
@@ -41,9 +41,11 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(${CONTROLLER_CLASSNAME}.class);
 	
 	/**
-	 * 查询列表
-	 * @param json
+	 * 分页查询模型列表
+	 * @param json JSON请求参数
 	 * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
 	 */
 	@RequestMapping(value = "/selectListByPage", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public ResultData<PageDTO<${DTO_CLASSNAME}>> seachList(@RequestBody String json) {
@@ -56,7 +58,7 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 			resultData.setSucceed(true);
 			resultData.setData(data);
 		} catch (Exception e) {
-			LOG.error("seachList ", e);
+			LOG.error("selectListByPage", e);
 			resultData.setSucceed(false);
 			resultData.setErrorCode(Constants.SYS_ERROR);
 			resultData.setErrorMsg(SpringUtil.getMessage(Constants.SYS_ERROR));
@@ -65,9 +67,11 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 	}
 	
 	/**
-	 * 查询最新对象信息
-	 * @param json
+	 * 根据主键id查询模型
+	 * @param json JSON请求参数
 	 * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
 	 */
 	@RequestMapping(value = "/selectById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public ResultData<${MODEL_CLASSNAME}> selectById(@RequestBody String json) {
@@ -79,7 +83,7 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 			resultData.setSucceed(true);
 			resultData.setData(reObj);
 		} catch (Exception e) {
-			LOG.error("seachList ", e);
+			LOG.error("selectById", e);
 			resultData.setSucceed(false);
 			resultData.setErrorCode(Constants.SYS_ERROR);
 			resultData.setErrorMsg(SpringUtil.getMessage(Constants.SYS_ERROR));
@@ -88,9 +92,11 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 	}
 	
 	/**
-	 * 添加信息
-	 * @param json
+	 * 添加一条模型对象
+	 * @param json JSON请求参数
 	 * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
 	 */
 	@RequestMapping(value = "/insert", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public ResultData<${VO_CLASSNAME}> insert(@RequestBody String json) {
@@ -105,7 +111,7 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 			resultData.setSucceed(true);
 			resultData.setData(data);
 		} catch (Exception e) {
-			LOG.error("add ", e);
+			LOG.error("insert ", e);
 			resultData.setSucceed(false);
 			resultData.setErrorCode(Constants.SYS_ERROR);
 			resultData.setErrorMsg(e.getMessage());
@@ -113,6 +119,14 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 		return resultData;
 	}
 	
+		
+	/**
+	 * 根据主键id更新模型
+	 * @param json JSON请求参数
+	 * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
+	 */
 	@RequestMapping(value = "/updateById", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public ResultData<${MODEL_CLASSNAME}> updateById(@RequestBody String json) {
 		ResultData<${MODEL_CLASSNAME}> resultData = new ResultData<${MODEL_CLASSNAME}>();
@@ -126,7 +140,7 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 			resultData.setSucceed(true);
 			resultData.setData(data);
 		} catch (Exception e) {
-			LOG.error("update ", e);
+			LOG.error("updateById", e);
 			resultData.setSucceed(false);
 			resultData.setErrorCode(Constants.SYS_ERROR);
 			resultData.setErrorMsg(SpringUtil.getMessage(Constants.SYS_ERROR));
@@ -134,6 +148,13 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 		return resultData;
 	}
 	
+	/**
+	 * 根据主键id逻辑删除模型
+	 * @param json JSON请求参数
+	 * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
+	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public ResultData<${VO_CLASSNAME}> delete(@RequestBody String json) {
 		ResultData<${VO_CLASSNAME}> resultData = new ResultData<${VO_CLASSNAME}>();
@@ -154,7 +175,13 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 		return resultData;
 	}
 	
-	
+	/**
+	 * 根据条件模型集合
+	 * @param json JSON请求参数
+	 * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
+	 */
 	@RequestMapping(value = "/selectList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public ResultData<List<${MODEL_CLASSNAME}>> selectList(@RequestBody String json) {
 		LOG.debug("selectList:{}",json);
@@ -165,7 +192,7 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 			resultData.setSucceed(true);
 			resultData.setData(data);
 		} catch (Exception e) {
-			LOG.error("seachAll ", e);
+			LOG.error("selectList ", e);
 			resultData.setSucceed(false);
 			resultData.setErrorCode(Constants.SYS_ERROR);
 			resultData.setErrorMsg(SpringUtil.getMessage(Constants.SYS_ERROR));
@@ -173,6 +200,13 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 		return resultData;
 	}
 	
+	/**
+	 * 根据主键id更新模型状态
+	 * @param json JSON请求参数
+	 * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
+	 */
 	@RequestMapping(value = "/updateStatus", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public ResultData<${MODEL_CLASSNAME}> updateStatus(@RequestBody String json) {
 		LOG.debug("updateStatus:{}",json);
@@ -191,4 +225,53 @@ public class ${CLASSNAME}  extends ${BASECONTROLLER_CLASSNAME}  {
 		return resultData;
 	}
 	
+	/**
+	 * 根据主键id更新模型排序值
+	 * @param json JSON请求参数
+	 * @return
+	 * @author roothomes
+	 * @date 2017-10-30
+	 */
+	@RequestMapping(value = "/updateOrderNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public ResultData<${MODEL_CLASSNAME}> updateOrderNumber(@RequestBody String json) {
+		LOG.debug("updateOrderNumber:{}",json);
+		ResultData<${MODEL_CLASSNAME}> resultData = new ResultData<${MODEL_CLASSNAME}>();
+		try {
+			${MODEL_CLASSNAME} entity = getFormJSON(json, ${MODEL_CLASSNAME}.class);
+			${MODEL_CLASSNAME} data = service.updateOrderNumber(entity.getId(),entity.getOrderNumber());
+			resultData.setSucceed(true);
+			resultData.setData(data);
+		} catch (Exception e) {
+			LOG.error("updateOrderNumber ", e);
+			resultData.setSucceed(false);
+			resultData.setErrorCode(Constants.SYS_ERROR);
+			resultData.setErrorMsg(SpringUtil.getMessage(Constants.SYS_ERROR));
+		}
+		return resultData;
+	}
+	
+	/**
+	 * 刷新数据缓存
+	 * @param json JSON请求参数
+	 * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
+	 */
+	@RequestMapping(value = "/flushCacheJob", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public ResultData<${MODEL_CLASSNAME}> flushCacheJob(@RequestBody String json) {
+		LOG.debug("flushCacheJob:{}",json);
+		ResultData<${MODEL_CLASSNAME}> resultData = new ResultData<${MODEL_CLASSNAME}>();
+		try {
+			${MODEL_CLASSNAME} entity = getFormJSON(json, ${MODEL_CLASSNAME}.class);
+			service.flushCacheJob(entity);
+			resultData.setSucceed(true);
+			resultData.setData(entity);
+		} catch (Exception e) {
+			LOG.error("flushCacheJob ", e);
+			resultData.setSucceed(false);
+			resultData.setErrorCode(Constants.SYS_ERROR);
+			resultData.setErrorMsg(SpringUtil.getMessage(Constants.SYS_ERROR));
+		}
+		return resultData;
+	}
 }

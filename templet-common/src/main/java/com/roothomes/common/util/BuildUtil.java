@@ -23,6 +23,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_basemodel;
          /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"基础模型类,里面包含基础模型属性，以及属性的get set方法");
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_BASEMODEL);
@@ -36,6 +38,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_model;
          /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Pojo类,里面包含业务模型的属性，以及该属性的get set方法");
         /* 设置属性 */
@@ -75,6 +79,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_dto;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Dto类,里面包含业务模型的属性，以及该属性的get set方法");
         /* 设置属性 */
@@ -101,6 +107,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_vo;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Vo类,里面包含业务模型的属性，以及该属性的get set方法");
         /* 设置属性 */
@@ -125,6 +133,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_dao;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Dao类,里面包含业务模型定制的方法");
 
@@ -148,6 +158,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_contant;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型常量类,包含各种常量信息");
         // 设置类名称
@@ -168,6 +180,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_util;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Util类,里面包含业务常用的方法");
         List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
@@ -192,6 +206,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_service;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Service接口类,里面包含新增、删除、单个查询、模糊查询、分页查询的基础方法的定义");
         List<TempletPackage> listPackage = new ArrayList<TempletPackage>(4);
@@ -232,6 +248,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_basecontroller;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型BaseController类");
         List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
@@ -276,6 +294,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_controller;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型BaseController类");
         List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
@@ -318,6 +338,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_serviceimpl;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Service实现类,里面包含新增、删除、单个查询、模糊查询、分页查询的基础方法的定义");
         List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
@@ -387,6 +409,8 @@ public class BuildUtil {
         DirEnum fileType = DirEnum.p_application;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务启动类");
         List<TempletPackage> listPackage = new ArrayList<TempletPackage>(3);
@@ -422,6 +446,8 @@ public class BuildUtil {
         root.put("workerId","@Value(\"${workerId}\")");
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));/* 生成类文件的注释中的描述信息 */
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
 
         /* Get the template (uses cache internally) */
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_KEYGEN);
@@ -433,10 +459,9 @@ public class BuildUtil {
     public static void main(String[] args) throws Exception {
 
         Cfg param = new Cfg();
-        Map<DirEnum,String> packageMap = PackageUtil.generatePackages(
-                SystemEnum.spring_boots,param.getCfgGroupId() +"." + param.getCfgArtifactId());
+        Map<DirEnum,String> packageMap = PackageUtil.generatePackages(SystemEnum.spring_boots,param);
         Map<DirEnum,String> fileMap = DirUtil.getFilePathMap(SystemEnum.spring_boots,param);
-
+        Map<DirEnum,String> serialNoMap = PackageUtil.generateClassSerialNo(param);
         /* ------------------------------------------------------------------------ */
         /* You should do this ONLY ONCE in the whole application life-cycle:        */
 
@@ -475,7 +500,7 @@ public class BuildUtil {
         root.put(IContant.K_CONTROLLER_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_controller));
         root.put(IContant.K_PK_ID_TYPE,param.getCfgJavaPkIdType());
 
-        buildJavaFile4BaseModel(param,cfg,root,packageMap,fileMap);
+//        buildJavaFile4BaseModel(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Model(param,cfg,root,packageMap,fileMap);
         buildJavaFile4DTO(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Vo(param,cfg,root,packageMap,fileMap);

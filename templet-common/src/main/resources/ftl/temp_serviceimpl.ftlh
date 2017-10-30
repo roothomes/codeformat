@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 类 编 号：
+ * 类 编 号：${CLASS_SERIALNO}
  * 类 名 称：${CLASSNAME}
  * 内容摘要：${CLASSNAME_DESC}
  * @author ${CREAT_AUTHOR}
@@ -35,11 +35,8 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
     private SnowFlakeKeyGen idGen;
     @Autowired
     private CacheService cacheService;
-    /**
-     * 创建一个对象
-     * @param vo 对象
-     * @return
-     */
+
+	
     @Override
     @Transactional
     public ${VO_CLASSNAME} create(${VO_CLASSNAME} vo) throws Exception
@@ -92,11 +89,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         //flushCacheJob(entity);
         return vo;
     }
-    /**
-     * 逻辑删除一个对象
-     * @param id 主键id
-     * @return
-     */
+
     @Override
     public void delete(${PK_ID_TYPE} id)
     {
@@ -105,12 +98,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         dao.saveAndFlush(entity);
         flushCacheJob(entity);
     }
-    /**
-     * 更新排序
-     * @param id 主键id
-     * @param orderNumber
-     * @return
-     */
+
     @Override
     public  ${MODEL_CLASSNAME} updateOrderNumber(${PK_ID_TYPE} id, Integer orderNumber)
     {
@@ -120,12 +108,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         flushCacheJob(entity);
         return entity;
     }
-    /**
-     * 更新状态
-     * @param id 主键id
-     * @param status 状态
-     * @return
-     */
+
     @Override
     public  ${MODEL_CLASSNAME} updateStatus(${PK_ID_TYPE} id, String status)
     {
@@ -135,11 +118,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         flushCacheJob(entity);
         return entity;
     }
-    /**
-     * 更新对象模型
-     * @param vo 对象
-     * @return
-     */
+
     @Override
     public ${MODEL_CLASSNAME} updateObject(${MODEL_CLASSNAME} vo) {
         ${MODEL_CLASSNAME} entity = dao.findOne(vo.getId());
@@ -189,11 +168,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         return entity;
     }
 	
-    /**
-     * 根据主键查询对象
-     * @param id 主键id
-     * @return
-     */
+
 	@Override
     public ${MODEL_CLASSNAME} findOne(${PK_ID_TYPE} id)
     {
@@ -201,12 +176,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         return entity;
     }
 	
-    /**
-     * 分页查询数据
-     * @param vo 查询模型
-     * @param pageRequest 分页请求
-     * @return
-     */
+
     @Override
     public PageDTO<${DTO_CLASSNAME}> seachPageDto(${VO_CLASSNAME} vo, PageRequest pageRequest)
     {
@@ -255,8 +225,9 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
 		}
 		return list;
 	}
-
-    private void flushCacheJob(${MODEL_CLASSNAME} entity){
+	
+   @Override
+    public void flushCacheJob(${MODEL_CLASSNAME} entity){
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -265,14 +236,21 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         };
         r.run();
     }
+	
+    /**
+     * 获取对象的缓存Key
+     * @param entity 对象
+     * @return
+     */
     private String getCacheKey(${MODEL_CLASSNAME} entity) {
         return CACHE_PREFIX + "${MODEL_CLASSNAME}_List";
     }
 
     /**
      * 刷新类型的数据到数据库 （修改状态就需要刷新）
-     *
-     * @param itemType
+     * @param entity
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
      */
     private void flushCache(${MODEL_CLASSNAME} entity) {
         List<BooleanExpression> predicates = new ArrayList<>();
@@ -289,7 +267,14 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         cacheService.add(getCacheKey(entity), ${UTIL_CLASSNAME}.toJson(list));
         LOG.debug("刷新数据到缓存：" + getCacheKey(entity) + " \n" + ${UTIL_CLASSNAME}.toJson(list));
     }
-
+	
+    /**
+     * 获取基础模型的JPA查询列表表达式
+     * @param entity 对象
+     * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
+     */
     private List<BooleanExpression> getBooleanExpressionList4Base(${MODEL_CLASSNAME} entity) {
         List<BooleanExpression> list = new ArrayList<BooleanExpression>();
         if (null != entity.getId()) {
@@ -335,6 +320,13 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         return list;
     }
 	
+    /**
+     * 获取对象模型的JPA查询列表表达式
+     * @param entity 对象
+     * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
+     */
 	private List<BooleanExpression> getBooleanExpressionList4Model(${MODEL_CLASSNAME} entity) {
 		List<BooleanExpression> list = getBooleanExpressionList4Base(entity);
 		
@@ -358,12 +350,26 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
 
 		return list;
 	}
-
+	
+    /**
+     * 获取对象模型的JPA查询断言
+     * @param entity 模型对象
+     * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
+     */
 	private Predicate getInputConditionModel(${MODEL_CLASSNAME} entity) {
 		List<BooleanExpression> predicates = getBooleanExpressionList4Model(entity);
 		return BooleanExpression.allOf(predicates.toArray(new BooleanExpression[predicates.size()]));
 	}
 	
+    /**
+     * 获取Vo对象的JPA查询断言
+     * @param vo VO对象
+     * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
+     */
 	private Predicate getInputCondition(${VO_CLASSNAME} vo) {
 		${MODEL_CLASSNAME} entity = new ${MODEL_CLASSNAME}();
 		BeanUtil.copyProperties(vo, entity);
@@ -371,6 +377,13 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
 		return predicate;
 	}
 	
+    /**
+     * 获取Dto对象的JPA查询断言
+     * @param dto DTO对象
+     * @return
+     * @author ${CREAT_AUTHOR}
+     * @date ${CREAT_DATE}
+     */
 	private Predicate getInputCondition(${DTO_CLASSNAME} dto) {
 		${MODEL_CLASSNAME} entity = new ${MODEL_CLASSNAME}();
 		BeanUtil.copyProperties(dto, entity);

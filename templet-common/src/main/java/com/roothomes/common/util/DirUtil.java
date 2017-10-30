@@ -29,7 +29,7 @@ public class DirUtil {
             file.mkdirs();
             System.out.println("创建基础目录" + cfg.getCfgOutputBaseDir());
         }
-        Map<DirEnum,String> mapPackages = PackageUtil.generatePackages(systemType,cfg.getCfgGroupId()+"." + cfg.getCfgArtifactId());
+        Map<DirEnum,String> mapPackages = PackageUtil.generatePackages(systemType,cfg);
         Iterator<DirEnum> iter = mapPackages.keySet().iterator();
         Map<DirEnum,String> mapFiles = new HashMap<DirEnum,String>(12);
 

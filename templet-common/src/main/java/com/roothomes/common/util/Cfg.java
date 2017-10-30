@@ -9,21 +9,26 @@ public class Cfg {
     /**
      * 生成文件的基本目录 
      */
-    private String cfgOutputBaseDir = "D:\\svn\\trade\\App_cncsen\\Src\\APEC_CJ209_UploadFile2\\uploadfile-server\\src\\main\\java\\";
+    private String cfgOutputBaseDir = "D:\\svn\\trade\\App_cncsen\\Src\\APEC_CJ209_NoticeX\\noticex-server\\src\\main\\java\\";
+//    private String cfgOutputBaseDir = "D:\\svn\\trade\\App_cncsen\\Src\\APEC_CJ209_UploadFile\\uploadfile-server\\src\\main\\java\\";
 
     /** 项目组织唯一的标识符 */
     private String cfgGroupId="com.apec";
     /** 项目的唯一的标识符 */
     private String cfgArtifactId="uploadfile";
     /** POJO中模型类的名称 */
-    private String cfgPojoName = "UploadFiles";
+    private String cfgPojoName = "Uploadfiles";
+    /**
+     * 模型对象序列号
+     */
+    private String cfgSerialNo = "BL_PU6030202_1000";
     /** 模型的描述 */
     private String cfgModelDesc = "咨询信息管理(用于公告、咨询等文字类型)";
     /** 创建人 */
     private String cfgCreatAuthor = "roothomes";
 
     /** 创建时间 */
-    private String cfgCreatDate = "2017-10-24";
+    private String cfgCreatDate = "2017-10-30";
 
     /**
      * Java属性名称
@@ -281,5 +286,13 @@ public class Cfg {
 
     public void setCfgJavaContantDefaultVal(String cfgJavaContantDefaultVal) {
         this.cfgJavaContantDefaultVal = cfgJavaContantDefaultVal;
+    }
+
+    public String getCfgSerialNo() {
+        return cfgSerialNo;
+    }
+
+    public void setCfgSerialNo(String cfgSerialNo) {
+        this.cfgSerialNo = cfgSerialNo;
     }
 }
