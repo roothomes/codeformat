@@ -9,15 +9,36 @@ public class Cfg {
     /**
      * 生成文件的基本目录 
      */
-    private String cfgOutputBaseDir = "D:\\svn\\trade\\App_cncsen\\Src\\APEC_CJ209_NoticeX\\noticex-server\\src\\main\\java\\";
+    private String cfgOutputBaseDir = "D:\\svn\\trade\\App_cncsen\\Src\\";
+//    private String cfgOutputBaseDir = "D:\\svn\\trade\\App_cncsen\\Src\\APEC_CJ209_NoticeX\\noticex-server\\src\\main\\java\\";
 //    private String cfgOutputBaseDir = "D:\\svn\\trade\\App_cncsen\\Src\\APEC_CJ209_UploadFile\\uploadfile-server\\src\\main\\java\\";
+
+    /**
+     * 模型依赖的父工程的项目组织唯一的标识符
+     */
+    private String cfgParentPomGroupId="com.apec";
+    /**
+     * 模型依赖的父工程的项目的唯一的标识符
+     */
+    private String cfgParentPomArtifactId="framework-parent";
+    /**
+     * 模型依赖的父工程的项目的版本号
+     */
+    private String cfgParentPomVersion="1.0.1-RELEASE";
+    /**
+     * 模型依赖的父工程的项目路径
+     */
+    private String cfgParentPomRelativePath="../APEC_CJ001_Framework/pom.xml";
 
     /** 项目组织唯一的标识符 */
     private String cfgGroupId="com.apec";
     /** 项目的唯一的标识符 */
-    private String cfgArtifactId="uploadfile";
+    private String cfgArtifactId="uploadfileX";
     /** POJO中模型类的名称 */
-    private String cfgPojoName = "Uploadfiles";
+    private String cfgPojoName = "UploadfilesX";
+    /** 版本号 */
+    private String cfgVersion = "1.0-RELEASE";
+
     /**
      * 模型对象序列号
      */
@@ -106,6 +127,24 @@ public class Cfg {
     /** 数据库名称 */
     private String cfgDBName = "cncsen";
 
+
+    private String cfgDevJdbcUrl = "jdbc:mysql://192.168.7.28:3306/cncsen?useUnicode=true&characterEncoding=utf8&useSSL=false&useLocalSessionState=true";
+    private String cfgDevJdbcUserName = "root";
+    private String cfgDevJdbcUserPwd = "123456";
+    private String cfgDevEurekaIp = "192.168.7.203";
+    private String cfgDevEurekaPort = "1111";
+    private String cfgDevEurekaInstanceHostname="192.168.7.203:1111";
+
+
+
+
+    /** 服务器端口 */
+    private String cfgServerPort = "30050";
+    private String cfgWorkerId="11";
+    private String cfgEurekaClientServiceUrlDefaultZone="http://${eureka.instance.hostname}/eureka/";
+    private String cfgEurekaInstanceInstanceId = "${spring.cloud.client.ipAddress}:${server.port}";
+
+
     /**
      * 是否初始化目录列表
      */
@@ -141,6 +180,14 @@ public class Cfg {
 
     public void setCfgPojoName(String cfgPojoName) {
         this.cfgPojoName = cfgPojoName;
+    }
+
+    public String getCfgVersion() {
+        return cfgVersion;
+    }
+
+    public void setCfgVersion(String cfgVersion) {
+        this.cfgVersion = cfgVersion;
     }
 
     public String getCfgJavaAttributeCode() {
@@ -294,5 +341,117 @@ public class Cfg {
 
     public void setCfgSerialNo(String cfgSerialNo) {
         this.cfgSerialNo = cfgSerialNo;
+    }
+
+    public String getCfgParentPomGroupId() {
+        return cfgParentPomGroupId;
+    }
+
+    public void setCfgParentPomGroupId(String cfgParentPomGroupId) {
+        this.cfgParentPomGroupId = cfgParentPomGroupId;
+    }
+
+    public String getCfgParentPomArtifactId() {
+        return cfgParentPomArtifactId;
+    }
+
+    public void setCfgParentPomArtifactId(String cfgParentPomArtifactId) {
+        this.cfgParentPomArtifactId = cfgParentPomArtifactId;
+    }
+
+    public String getCfgParentPomVersion() {
+        return cfgParentPomVersion;
+    }
+
+    public void setCfgParentPomVersion(String cfgParentPomVersion) {
+        this.cfgParentPomVersion = cfgParentPomVersion;
+    }
+
+    public String getCfgParentPomRelativePath() {
+        return cfgParentPomRelativePath;
+    }
+
+    public void setCfgParentPomRelativePath(String cfgParentPomRelativePath) {
+        this.cfgParentPomRelativePath = cfgParentPomRelativePath;
+    }
+
+    public String getCfgDevJdbcUrl() {
+        return cfgDevJdbcUrl;
+    }
+
+    public void setCfgDevJdbcUrl(String cfgDevJdbcUrl) {
+        this.cfgDevJdbcUrl = cfgDevJdbcUrl;
+    }
+
+    public String getCfgDevJdbcUserName() {
+        return cfgDevJdbcUserName;
+    }
+
+    public void setCfgDevJdbcUserName(String cfgDevJdbcUserName) {
+        this.cfgDevJdbcUserName = cfgDevJdbcUserName;
+    }
+
+    public String getCfgDevJdbcUserPwd() {
+        return cfgDevJdbcUserPwd;
+    }
+
+    public void setCfgDevJdbcUserPwd(String cfgDevJdbcUserPwd) {
+        this.cfgDevJdbcUserPwd = cfgDevJdbcUserPwd;
+    }
+
+    public String getCfgDevEurekaIp() {
+        return cfgDevEurekaIp;
+    }
+
+    public void setCfgDevEurekaIp(String cfgDevEurekaIp) {
+        this.cfgDevEurekaIp = cfgDevEurekaIp;
+    }
+
+    public String getCfgDevEurekaPort() {
+        return cfgDevEurekaPort;
+    }
+
+    public void setCfgDevEurekaPort(String cfgDevEurekaPort) {
+        this.cfgDevEurekaPort = cfgDevEurekaPort;
+    }
+
+    public String getCfgDevEurekaInstanceHostname() {
+        return cfgDevEurekaInstanceHostname;
+    }
+
+    public void setCfgDevEurekaInstanceHostname(String cfgDevEurekaInstanceHostname) {
+        this.cfgDevEurekaInstanceHostname = cfgDevEurekaInstanceHostname;
+    }
+
+    public String getCfgServerPort() {
+        return cfgServerPort;
+    }
+
+    public void setCfgServerPort(String cfgServerPort) {
+        this.cfgServerPort = cfgServerPort;
+    }
+
+    public String getCfgWorkerId() {
+        return cfgWorkerId;
+    }
+
+    public void setCfgWorkerId(String cfgWorkerId) {
+        this.cfgWorkerId = cfgWorkerId;
+    }
+
+    public String getCfgEurekaClientServiceUrlDefaultZone() {
+        return cfgEurekaClientServiceUrlDefaultZone;
+    }
+
+    public void setCfgEurekaClientServiceUrlDefaultZone(String cfgEurekaClientServiceUrlDefaultZone) {
+        this.cfgEurekaClientServiceUrlDefaultZone = cfgEurekaClientServiceUrlDefaultZone;
+    }
+
+    public String getCfgEurekaInstanceInstanceId() {
+        return cfgEurekaInstanceInstanceId;
+    }
+
+    public void setCfgEurekaInstanceInstanceId(String cfgEurekaInstanceInstanceId) {
+        this.cfgEurekaInstanceInstanceId = cfgEurekaInstanceInstanceId;
     }
 }

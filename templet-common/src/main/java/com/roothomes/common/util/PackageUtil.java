@@ -17,7 +17,7 @@ public class PackageUtil {
      * @return
      * @author roothomes
      */
-    public static Map<DirEnum,String> generatePackages(SystemEnum systemtype, Cfg param){
+    public static Map<DirEnum,String> generateJavaPackages(SystemEnum systemtype, Cfg param){
        if(SystemEnum.spring_boots.equals(systemtype)){
            return generatePackagesCommon(param);
        }else{

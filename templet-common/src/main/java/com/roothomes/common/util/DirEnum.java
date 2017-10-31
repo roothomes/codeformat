@@ -30,5 +30,19 @@ public enum DirEnum {
     /** spring_boot启动类包 */
     p_application,
     /** keygen包 */
-    p_keygen
+    p_keygen,
+    /** pom文件 */
+    p_pom,
+    /** parent pom 文件 */
+    p_pom_parent,
+    /** application.properties */
+    p_prop_application,
+    /** application-dev.properties */
+    p_prop_application_dev,
+    /** application-test.properties */
+    p_prop_application_test,
+    /** application-pord.properties */
+    p_prop_application_pord,
+    /** log4j.properties */
+    p_prop_log4j
 }

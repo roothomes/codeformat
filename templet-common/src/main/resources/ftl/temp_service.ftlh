@@ -108,5 +108,5 @@ public interface ${CLASSNAME} {
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */
-    void flushCacheJob(Uploadfiles entity);
+    void flushCacheJob(${MODEL_CLASSNAME} entity);
 }

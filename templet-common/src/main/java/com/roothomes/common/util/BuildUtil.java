@@ -456,10 +456,75 @@ public class BuildUtil {
         temp.process(root, out);
     }
 
+    public static void buildPomParentFile(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_pom_parent;
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_POM_PARENT);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildPomFile(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_pom;
+        root.put("BUILD_FINALNAME","${project.groupId}.${project.artifactId}-${project.version}");
+
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_POM);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildPropApplication(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_prop_application;
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_PROP_APPLICATION);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+    public static void buildPropApplicationDev(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_prop_application_dev;
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_PROP_APPLICATION_DEV);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildPropApplicationTest(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_prop_application_test;
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_PROP_APPLICATION_TEST);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildPropApplicationProd(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_prop_application_pord;
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_PROP_APPLICATION_PROD);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildPropLog4j(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_prop_log4j;
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_PROP_LOG4J);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+
     public static void main(String[] args) throws Exception {
 
         Cfg param = new Cfg();
-        Map<DirEnum,String> packageMap = PackageUtil.generatePackages(SystemEnum.spring_boots,param);
+        Map<DirEnum,String> packageMap = PackageUtil.generateJavaPackages(SystemEnum.spring_boots,param);
         Map<DirEnum,String> fileMap = DirUtil.getFilePathMap(SystemEnum.spring_boots,param);
         Map<DirEnum,String> serialNoMap = PackageUtil.generateClassSerialNo(param);
         /* ------------------------------------------------------------------------ */
@@ -481,6 +546,12 @@ public class BuildUtil {
         root.put(IContant.K_GROUPID, param.getCfgGroupId());
         /*设置ArtifactID就是项目的唯一的标识符，用于包结构等*/
         root.put(IContant.K_ARTIFACTID, param.getCfgArtifactId());
+        root.put(IContant.K_VERSION,param.getCfgVersion());
+        /*模型依赖的父工程的Pom的相关配置*/
+        root.put(IContant.K_PARENT_POM_ARTIFACTID,param.getCfgParentPomArtifactId());
+        root.put(IContant.K_PARENT_POM_GROUPID,param.getCfgParentPomGroupId());
+        root.put(IContant.K_PARENT_POM_VERSION,param.getCfgParentPomVersion());
+        root.put(IContant.K_PARENT_POM_RELATIVEPATH,param.getCfgParentPomRelativePath());
 
         /* 设置类名称 */
         root.put(IContant.K_CLASSNAME,param.getCfgPojoName());
@@ -500,6 +571,23 @@ public class BuildUtil {
         root.put(IContant.K_CONTROLLER_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_controller));
         root.put(IContant.K_PK_ID_TYPE,param.getCfgJavaPkIdType());
 
+        root.put("cfgLoggingLevelComApec","${logging.level.com.apec}");
+        root.put("cfgDevJdbcUrl",param.getCfgDevJdbcUrl());
+        root.put("cfgDevJdbcUserName",param.getCfgDevJdbcUserName());
+        root.put("cfgDevJdbcUserPwd",param.getCfgDevJdbcUserPwd());
+        root.put("cfgDevEurekaIp",param.getCfgDevEurekaIp());
+        root.put("cfgDevEurekaPort",param.getCfgDevEurekaPort());
+        root.put("cfgDevEurekaInstanceHostname",param.getCfgDevEurekaInstanceHostname());
+
+
+        root.put("cfgServerPort",param.getCfgServerPort());
+        root.put("cfgWorkerId",param.getCfgWorkerId());
+        root.put("cfgEurekaClientServiceUrlDefaultZone",param.getCfgEurekaClientServiceUrlDefaultZone());
+        root.put("cfgEurekaInstanceInstanceId",param.getCfgEurekaInstanceInstanceId());
+
+
+        buildPomParentFile(param,cfg,root,packageMap,fileMap);
+        buildPomFile(param,cfg,root,packageMap,fileMap);
 //        buildJavaFile4BaseModel(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Model(param,cfg,root,packageMap,fileMap);
         buildJavaFile4DTO(param,cfg,root,packageMap,fileMap);
@@ -514,5 +602,10 @@ public class BuildUtil {
         buildJavaFile4Controller(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Application(param,cfg,root,packageMap,fileMap);
 
+        buildPropApplication(param,cfg,root,packageMap,fileMap);
+        buildPropApplicationTest(param,cfg,root,packageMap,fileMap);
+        buildPropApplicationDev(param,cfg,root,packageMap,fileMap);
+        buildPropApplicationProd(param,cfg,root,packageMap,fileMap);
+        buildPropLog4j(param,cfg,root,packageMap,fileMap);
     }
 }

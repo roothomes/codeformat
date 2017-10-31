@@ -20,6 +20,11 @@ public interface IContant {
     String K_ARTIFACTID="ARTIFACTID";
 
     /**
+     * 模型项目版本号
+     */
+    String K_VERSION="VERSION";
+
+    /**
      * 生成文件的包空间
      */
     String K_PACKAGE = "PACKAGE";
@@ -218,6 +223,41 @@ public interface IContant {
     String V_TEMPLET_FILE_BASECONTROLLER="temp_basecontroller.ftlh";
 
     /**
+     * pom.xml 模型子工程文件
+     */
+    String V_TEMPLET_FILE_POM ="temp_pom.ftlh";
+
+    /**
+     * pom.xml 模型父工程文件
+     */
+    String V_TEMPLET_FILE_POM_PARENT ="temp_pom_parent.ftlh";
+
+    /**
+     *  application.properties 文件
+     */
+    String V_TEMPLET_FILE_PROP_APPLICATION ="temp_prop_application.ftlh";
+
+    /**
+     * application-dev.properties 文件
+     */
+    String V_TEMPLET_FILE_PROP_APPLICATION_DEV ="temp_prop_application_dev.ftlh";
+
+    /**
+     * application-test.properties 文件
+     */
+    String V_TEMPLET_FILE_PROP_APPLICATION_TEST ="temp_prop_application_test.ftlh";
+
+    /**
+     * application-prod.properties 文件
+     */
+    String V_TEMPLET_FILE_PROP_APPLICATION_PROD ="temp_prop_application_prod.ftlh";
+
+    /**
+     * log4j.properties 文件
+     */
+    String V_TEMPLET_FILE_PROP_LOG4J ="temp_prop_log4j.ftlh";
+
+    /**
      * 模板文件的基础路径
      */
     String V_TEMPLET_BASEDIR = ".\\templet-common\\src\\main\\resources\\ftl\\";
@@ -252,6 +292,21 @@ public interface IContant {
      * 每页默认的条数
      */
     Integer DEFAULT_NUMBER_ONE_PAGE =20;
+    /**
+     * 模型依赖的父工程的项目组织唯一的标识符
+     */
+    String K_PARENT_POM_GROUPID="PARENT_POM_GROUPID";
+    /**
+     * 模型依赖的父工程的项目的唯一的标识符
+     */
+    String K_PARENT_POM_ARTIFACTID="PARENT_POM_ARTIFACTID";
+    /**
+     * 模型依赖的父工程的项目路径
+     */
+    String K_PARENT_POM_RELATIVEPATH="PARENT_POM_RELATIVEPATH";
 
-
+    /**
+     * 模型依赖的父工程的版本号
+     */
+    String K_PARENT_POM_VERSION="PARENT_POM_VERSION";
 }
