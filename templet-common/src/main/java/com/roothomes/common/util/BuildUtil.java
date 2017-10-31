@@ -522,8 +522,18 @@ public class BuildUtil {
 
 
     public static void main(String[] args) throws Exception {
+//        Cfg param = new Cfg();
+        Cfg param = getRedisCfg();
+        buildAll(param);
+        param = getTempCfgMain();
+        buildAll(param);
+        param = getTempCfgAttributes();
+        buildAll(param);
+        param = getTempCfgContants();
+        buildAll(param);
+    }
 
-        Cfg param = new Cfg();
+    public static void buildAll(Cfg param)throws Exception {
         Map<DirEnum,String> packageMap = PackageUtil.generateJavaPackages(SystemEnum.spring_boots,param);
         Map<DirEnum,String> fileMap = DirUtil.getFilePathMap(SystemEnum.spring_boots,param);
         Map<DirEnum,String> serialNoMap = PackageUtil.generateClassSerialNo(param);
@@ -608,4 +618,388 @@ public class BuildUtil {
         buildPropApplicationProd(param,cfg,root,packageMap,fileMap);
         buildPropLog4j(param,cfg,root,packageMap,fileMap);
     }
+
+    /**
+     * 配置缓存表的数据
+     * @return
+     */
+    public static Cfg getRedisCfg(){
+        Cfg param = new Cfg();
+        /** 项目的唯一的标识符 */
+        param.setCfgArtifactId("tempcfgredis");
+        /** POJO中模型类的名称 */
+        param.setCfgPojoName("TempCfgRedis");
+        param.setCfgSerialNo("BL_PU10000_10");
+        /** 数据库表名称 */
+        param.setCfgDBTableName("temp_cfg_redis");
+        /** 数据库名称 */
+        param.setCfgDBName("cncsen");
+        /** 模型的描述 */
+        param.setCfgModelDesc("模板生成记录之Redis配置信息");
+        param.setCfgJavaAttributeDesc("缓存类型|IP地址|端口|口令|索引");
+        /**
+         * 数据库字段名称
+         * */
+        param.setCfgDBColumnCode("REDIS_TYPE|REDIS_IP|REDIS_PORT|REDIS_PASSWORD|REDIS_INDEX");
+        /**
+         * Java属性类型(支持基本数据类型)
+         * */
+        param.setCfgJavaAttributeType("String|String|String|String|String");
+        /**
+         * Java POJO模型类中属性的名称;
+         */
+        param.setCfgJavaAttributeCode("redisType|redisIp|redisPort|redisPassword|redisIndex");
+        /**
+         * 属性新增的是否是否可以为空（0:不可为空；1:可以为空；）
+         */
+        param.setCfgJavaAttributeCanNull("0|0|0|0|0");
+        /**
+         * 设置属性的默认值
+         */
+        param.setCfgJavaAttributeDefaultVal(
+                "DEFAULT_VAL_REDIS_TYPE_SINGLETON|" +
+                "DEFAULT_VAL_REDIS_IP|" +
+                "DEFAULT_VAL_REDIS_PORT|" +
+                "DEFAULT_VAL_REDIS_PASSWORD|" +
+                "DEFAULT_VAL_REDIS_INDEX"
+        );
+
+        param.setCfgJavaContantDesc(
+                "redis实例类型(单例:singleton;)|" + "redis实例类型(集群:cluster)|" +
+                        "redis配置Ip地址|" +
+                "redis的端口号6379|" + "redis的端口号7000|" + "redis的端口号7001|" +"redis的端口号7002|" +"redis的端口号7003|" +"redis的端口号7004|" +"redis的端口号7005|" +
+                        "redis密码|" +
+                "redis的数据默认索引:0|" + "redis的数据默认索引:1|"  + "redis的数据默认索引:2|" + "redis的数据默认索引:3|" + "redis的数据默认索引:4|" + "redis的数据默认索引:5|" + "redis的数据默认索引:6|" + "redis的数据默认索引:7|" +
+                        "缓存Key值前缀"
+        );
+        /**
+         * 配置常量接口里面常量的类型
+         */
+        param.setCfgJavaContantType(
+                "String|" + "String|" +
+                "String|" +
+                "String|" + "String|" +"String|" +"String|" +"String|" +"String|" +"String|" +
+                "String|" +
+                "String|" + "String|" + "String|" +"String|" +"String|" +"String|" +"String|" +"String|" +
+                "String"
+        );
+
+        /**
+         * 配置常量接口里面常量的名称
+         */
+        param.setCfgJavaContantCode(
+                "DEFAULT_VAL_REDIS_TYPE_SINGLETON|" + "DEFAULT_VAL_REDIS_TYPE_CLUSTER|" +
+                "DEFAULT_VAL_REDIS_IP|" +
+                "DEFAULT_VAL_REDIS_PORT|" + "DEFAULT_VAL_REDIS_PORT7000|" + "DEFAULT_VAL_REDIS_PORT7001|" + "DEFAULT_VAL_REDIS_PORT7002|" + "DEFAULT_VAL_REDIS_PORT7003|" + "DEFAULT_VAL_REDIS_PORT7004|" + "DEFAULT_VAL_REDIS_PORT7005|" +
+                "DEFAULT_VAL_REDIS_PASSWORD|"  +
+                "DEFAULT_VAL_REDIS_INDEX|" + "DEFAULT_VAL_REDIS_INDEX1|" +"DEFAULT_VAL_REDIS_INDEX2|" +"DEFAULT_VAL_REDIS_INDEX3|" +"DEFAULT_VAL_REDIS_INDEX4|" +"DEFAULT_VAL_REDIS_INDEX5|" +"DEFAULT_VAL_REDIS_INDEX6|" +"DEFAULT_VAL_REDIS_INDEX7|" +
+                        "CACHE_PREFIX"
+        );
+        /**
+         * 配置常量接口里面常量的默认值
+         */
+        param.setCfgJavaContantDefaultVal(
+                "singleton|" + "cluster|" +
+                        "127.0.0.1|" +
+                        "6379|" + "7000|" + "7001|" + "7002|" + "7003|" + "7004|" + "7005|" +
+                        "foobared|"  +
+                        "0|" + "1|" +"2|" +"3|" +"4|" +"5|" +"6|" +"7|" +
+                        "Cache_Model_"
+        );
+
+        return param;
+    }
+
+
+    /**
+     * 模板配置主表
+     * @return
+     */
+    public static Cfg getTempCfgMain(){
+        Cfg param = new Cfg();
+        /** 项目的唯一的标识符 */
+        param.setCfgArtifactId("tempcfgmain");
+        /** POJO中模型类的名称 */
+        param.setCfgPojoName("TempCfgMain");
+        param.setCfgSerialNo("BL_PU10000_10");
+        /** 数据库表名称 */
+        param.setCfgDBTableName("temp_cfg_main");
+        /** 数据库名称 */
+        param.setCfgDBName("cncsen");
+
+        /** 模型的描述 */
+        param.setCfgModelDesc("模板生成记录之配置主表信息");
+        param.setCfgJavaAttributeDesc(
+                "组织标示符|业务标示符|模型PoJo的类|模型描述|模型对象序列号|创建作者|创建时间|" +
+                        "模型对应表所在数据库|模型对应表|" +
+                        "是否启用缓存|是否启用消息"
+        );
+        /**
+         * 数据库字段名称
+         * */
+        param.setCfgDBColumnCode(
+                "GROUPID|ARTIFACTID|MODEL_CLASSNAME|MODEL_CLASSNAME_DESC|MODEL_CLASS_SERIALNO|CREAT_AUTHOR|CREAT_DATETIME|" +
+                        "DATABASE_NAME|TABLE_NAME|" +
+                        "OPEN_CACHE|OPEN_MQ"
+        );
+        /**
+         * Java属性类型(支持基本数据类型)
+         * */
+        param.setCfgJavaAttributeType(
+                "String|String|String|String|String|String|String|" +
+                        "String|String|" +
+                        "String|String"
+        );
+        /**
+         * Java POJO模型类中属性的名称;
+         */
+        param.setCfgJavaAttributeCode(
+                "groupId|artifactId|modelClassName|modelClassDesc|modelClassSerialNo|createAuthor|createDateTime|" +
+                        "databaseName|tableName|" +
+                        "openCache|openMQ"
+        );
+        /**
+         * 属性新增的是否是否可以为空（0:不可为空；1:可以为空；）
+         */
+        param.setCfgJavaAttributeCanNull(
+                "0|0|0|0|0|0|0|" +
+                        "0|0|" +
+                        "0|0"
+        );
+        /**
+         * 设置属性的默认值
+         */
+        param.setCfgJavaAttributeDefaultVal(
+                "DEFAULT_VAL_GROUPID|DEFAULT_VAL_ARTIFACTID|DEFAULT_VAL_MODEL_CLASSNAME|DEFAULT_VAL_MODEL_CLASSNAME_DESC|DEFAULT_VAL_MODEL_CLASS_SERIALNO|DEFAULT_VAL_CREAT_AUTHOR|DEFAULT_VAL_CREAT_DATE|" +
+                        "DEFAULT_VAL_DATABASE_NAME|DEFAULT_VAL_TABLE_NAME|" +
+                        "DEFAULT_VAL_OPEN_CACHE_NO|DEFAULT_VAL_OPEN_MQ_NO"
+        );
+
+        param.setCfgJavaContantDesc(
+                "组织标示符|业务标示符|模型PoJo的类|模型描述|模型对象序列号|创建作者|创建时间|" +
+                        "模型对应表所在数据库|模型对应表|" +
+                        "不启用缓存|启用缓存|" +
+                        "不启用消息|启用消息|" +
+                        "缓存Key值前缀"
+        );
+        /**
+         * 配置常量接口里面常量的类型
+         */
+        param.setCfgJavaContantType(
+                "String|String|String|String|String|String|String|" +
+                        "String|String|" +
+                        "String|String|" +
+                        "String|String|" +
+                        "String"
+        );
+
+        /**
+         * 配置常量接口里面常量的名称
+         */
+        param.setCfgJavaContantCode(
+                "DEFAULT_VAL_GROUPID|DEFAULT_VAL_ARTIFACTID|DEFAULT_VAL_MODEL_CLASSNAME|DEFAULT_VAL_MODEL_CLASSNAME_DESC|DEFAULT_VAL_MODEL_CLASS_SERIALNO|DEFAULT_VAL_CREAT_AUTHOR|DEFAULT_VAL_CREAT_DATE|" +
+                        "DEFAULT_VAL_DATABASE_NAME|DEFAULT_VAL_TABLE_NAME|" +
+                        "DEFAULT_VAL_OPEN_CACHE_NO|DEFAULT_VAL_OPEN_CACHE_YES|" +
+                        "DEFAULT_VAL_OPEN_MQ_NO|DEFAULT_VAL_OPEN_MQ_YES|" +
+                        "CACHE_PREFIX"
+        );
+        /**
+         * 配置常量接口里面常量的默认值
+         */
+        param.setCfgJavaContantDefaultVal(
+                "com.apec|default|DefaultClass|默认描述|defaultSerialNo|roothomes|2017-10-31|" +
+                        "tempservice|defaulttable|" +
+                        "no|yes|" +
+                        "no|yes|" +
+                        "Cache_Model_"
+        );
+
+        return param;
+    }
+
+
+    /**
+     * 模板配置属性表
+     * @return
+     */
+    public static Cfg getTempCfgAttributes(){
+        Cfg param = new Cfg();
+        /** 项目的唯一的标识符 */
+        param.setCfgArtifactId("tempcfgattributes");
+        /** POJO中模型类的名称 */
+        param.setCfgPojoName("TempCfgAttributes");
+        param.setCfgSerialNo("BL_PU10000_11");
+        /** 数据库表名称 */
+        param.setCfgDBTableName("temp_cfg_attributes");
+        /** 数据库名称 */
+        param.setCfgDBName("cncsen");
+        /** 模型的描述 */
+        param.setCfgModelDesc("模板生成记录之配置模型属性信息");
+        param.setCfgJavaAttributeDesc(
+                "主表Id|属性描述|属性JAVA类型|属性数据库字段名称|属性JAVA编码|属性是否可以为空|属性默认值"
+        );
+        /**
+         * 数据库字段名称
+         * */
+        param.setCfgDBColumnCode(
+                "MAIN_ID|ATTRIBUTE_DESC|ATTRIBUTE_JAVA_TYPE|ATTRIBUTE_COLUMN_NAME|ATTRIBUTE_JAVA_CODE|ATTRIBUTE_VAL_CAN_NULL|DEFAULT_VAL"
+        );
+        /**
+         * Java属性类型(支持基本数据类型)
+         * */
+        param.setCfgJavaAttributeType(
+                "String|String|String|String|String|String|String"
+        );
+        /**
+         * Java POJO模型类中属性的名称;
+         */
+        param.setCfgJavaAttributeCode(
+                "mainId|attributeId|attributeJavaType|attributeColumnName|attributeJavaCode|attributeCanNull|defaultVal"
+        );
+        /**
+         * 属性新增的是否是否可以为空（0:不可为空；1:可以为空；）
+         */
+        param.setCfgJavaAttributeCanNull(
+                "0|0|0|0|0|0|0"
+        );
+        /**
+         * 设置属性的默认值
+         */
+        param.setCfgJavaAttributeDefaultVal(
+                "DEFAULT_VAL_MAIN_ID|" +
+                        "DEFAULT_VAL_ATTRIBUTE_DESC|" +
+                        "DEFAULT_VAL_ATTRIBUTE_JAVA_TYPE|" +
+                        "DEFAULT_VAL_ATTRIBUTE_COLUMN_NAME|" +
+                        "DEFAULT_VAL_ATTRIBUTE_JAVA_CODE|" +
+                        "DEFAULT_VAL_ATTRIBUTE_VAL_CAN_NULL|" +
+                        "DEFAULT_VAL"
+        );
+
+        param.setCfgJavaContantDesc(
+                "主表Id|属性描述|属性JAVA类型|属性数据库字段名称|属性JAVA编码|属性是否可以为空|属性默认值|缓存前缀"
+        );
+        /**
+         * 配置常量接口里面常量的类型
+         */
+        param.setCfgJavaContantType(
+                "String|String|String|String|String|String|String|String"
+        );
+
+        /**
+         * 配置常量接口里面常量的名称
+         */
+        param.setCfgJavaContantCode(
+                "DEFAULT_VAL_MAIN_ID|" +
+                        "DEFAULT_VAL_ATTRIBUTE_DESC|" +
+                        "DEFAULT_VAL_ATTRIBUTE_JAVA_TYPE|" +
+                        "DEFAULT_VAL_ATTRIBUTE_COLUMN_NAME|" +
+                        "DEFAULT_VAL_ATTRIBUTE_JAVA_CODE|" +
+                        "DEFAULT_VAL_ATTRIBUTE_VAL_CAN_NULL|" +
+                        "DEFAULT_VAL|" +
+
+                        "CACHE_PREFIX"
+        );
+        /**
+         * 配置常量接口里面常量的默认值
+         */
+        param.setCfgJavaContantDefaultVal(
+                "default|default|default|default|default|default|default|" +
+                        "Cache_Model_"
+        );
+
+        return param;
+    }
+
+    /**
+     * 模板配置属性表
+     * @return
+     */
+    public static Cfg getTempCfgContants(){
+        Cfg param = new Cfg();
+        /** 项目的唯一的标识符 */
+        param.setCfgArtifactId("tempcfgcontents");
+        /** POJO中模型类的名称 */
+        param.setCfgPojoName("TempCfgContants");
+        param.setCfgSerialNo("BL_PU10000_12");
+        /** 数据库表名称 */
+        param.setCfgDBTableName("temp_cfg_contants");
+        /** 数据库名称 */
+        param.setCfgDBName("cncsen");
+        /** 模型的描述 */
+        param.setCfgModelDesc("模板生成记录之配置模型常量信息");
+        param.setCfgJavaAttributeDesc(
+                "主表Id|常量描述|常量JAVA类型|常量JAVA编码|常量是否可以为空|常量值"
+        );
+        /**
+         * 数据库字段名称
+         * */
+        param.setCfgDBColumnCode(
+                "MAIN_ID|CONTANT_DESC|CONTANT_JAVA_TYPE|CONTANT_JAVA_CODE|CONTANT_VAL_CAN_NULL|CONTANT_VAL"
+        );
+        /**
+         * Java属性类型(支持基本数据类型)
+         * */
+        param.setCfgJavaAttributeType(
+                "String|String|String|String|String|String"
+        );
+        /**
+         * Java POJO模型类中属性的名称;
+         */
+        param.setCfgJavaAttributeCode(
+                "mainId|contantDesc|contantJavaType|contantJavaCode|contantCanNull|contantVal"
+        );
+        /**
+         * 属性新增的是否是否可以为空（0:不可为空；1:可以为空；）
+         */
+        param.setCfgJavaAttributeCanNull(
+                "0|0|0|0|0|0"
+        );
+        /**
+         * 设置属性的默认值
+         */
+        param.setCfgJavaAttributeDefaultVal(
+                "DEFAULT_VAL_MAIN_ID|" +
+                        "DEFAULT_VAL_CONTANT_DESC|" +
+                        "DEFAULT_VAL_CONTANT_JAVA_TYPE|" +
+                        "DEFAULT_VAL_CONTANT_JAVA_CODE|" +
+                        "DEFAULT_VAL_CONTANT_VAL_CAN_NULL|" +
+                        "DEFAULT_VAL_CONTANT_VAL"
+        );
+
+        param.setCfgJavaContantDesc(
+                "主表Id|常量描述|常量JAVA类型|常量JAVA编码|常量是否可以为空|常量值|缓存前缀"
+        );
+        /**
+         * 配置常量接口里面常量的类型
+         */
+        param.setCfgJavaContantType(
+                "String|String|String|String|String|String|String"
+        );
+
+        /**
+         * 配置常量接口里面常量的名称
+         */
+        param.setCfgJavaContantCode(
+                "DEFAULT_VAL_MAIN_ID|" +
+                        "DEFAULT_VAL_CONTANT_DESC|" +
+                        "DEFAULT_VAL_CONTANT_JAVA_TYPE|" +
+                        "DEFAULT_VAL_CONTANT_JAVA_CODE|" +
+                        "DEFAULT_VAL_CONTANT_VAL_CAN_NULL|" +
+                        "DEFAULT_VAL_CONTANT_VAL|" +
+
+                        "CACHE_PREFIX"
+        );
+        /**
+         * 配置常量接口里面常量的默认值
+         */
+        param.setCfgJavaContantDefaultVal(
+                "default|default|default|default|default|default|" +
+                        "Cache_Model_"
+        );
+
+        return param;
+    }
+
+
+
 }
