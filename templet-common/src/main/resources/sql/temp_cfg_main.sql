@@ -1,0 +1,27 @@
+CREATE TABLE `temp_cfg_main` (
+  `ID` varchar(19) NOT NULL COMMENT 'ID主键',
+  `GROUPID` varchar(100) DEFAULT NULL COMMENT '组织标示符',
+  `ARTIFACTID` varchar(2) DEFAULT NULL COMMENT '业务标示符',
+  `MODEL_CLASSNAME` varchar(800) DEFAULT NULL COMMENT '模型PoJo的类',
+  `MODEL_CLASSNAME_DESC` varchar(3) DEFAULT NULL COMMENT '模型描述',
+  `MODEL_CLASS_SERIALNO` varchar(1024) DEFAULT NULL COMMENT '模型对象序列号',
+  `CREAT_AUTHOR` varchar(32) DEFAULT 'roothomes' COMMENT '创建作者',
+  `CREAT_DATETIME` varchar(32) DEFAULT '2017-10-31' COMMENT '创建时间',
+  `DATABASE_NAME` varchar(32) DEFAULT 'cncsen' COMMENT '模型对应表所在数据库',
+  `TABLE_NAME` varchar(32) DEFAULT 'default' COMMENT '模型对应表',
+  `OPEN_CACHE` varchar(32) DEFAULT 'no' COMMENT '是否启用缓存',
+  `OPEN_MQ` varchar(32) DEFAULT 'no' COMMENT '是否启用消息',
+  `ORDER_NUMBER` int(2) DEFAULT '0' COMMENT '排序',
+  `CITY_ID` int(19) DEFAULT '100' COMMENT '城市代码',
+  `PLANTFORM_ID` varchar(32) DEFAULT 'cncsen' COMMENT '平台id',
+  `OECD_NO` varchar(32) DEFAULT 'cncsen' COMMENT '所属组织编号',
+  `STATUS` int(2) DEFAULT '1' COMMENT '状态（1：有用；0：无用）',
+  `ENABLE_FLAG` varchar(1) DEFAULT 'Y' COMMENT '软删除标志（有效为Y，删除为N）',
+  `CREATE_BY` varchar(16) DEFAULT NULL COMMENT '创建人',
+  `CREATE_DATE` datetime DEFAULT NULL COMMENT '创建时间',
+  `LAST_UPDATE_BY` varchar(16) DEFAULT NULL COMMENT '最后操作人',
+  `LAST_UPDATE_DATE` datetime DEFAULT NULL COMMENT '更新时间',
+  `REMARKS` varchar(255) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告信息';
+
