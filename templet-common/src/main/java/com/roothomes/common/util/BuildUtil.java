@@ -521,8 +521,7 @@ public class BuildUtil {
     }
 
 
-    public static void main(String[] args) throws Exception {
-//        Cfg param = new Cfg();
+    public static void buildTempletManager(String[] args) throws Exception {
         Cfg param = getRedisCfg();
         buildAll(param);
         param = getTempCfgMain();
