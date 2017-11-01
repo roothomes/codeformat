@@ -5,7 +5,10 @@ package com.roothomes.common.util;
  * @author roothomes
  */
 public class Cfg {
-
+    /**
+     * 模板文件的基础路径
+     */
+    private String cfgTempletBaseDir=".\\templet-common\\src\\main\\resources\\ftl\\";
     /**
      * 生成文件的基本目录 
      */
@@ -453,5 +456,13 @@ public class Cfg {
 
     public void setCfgEurekaInstanceInstanceId(String cfgEurekaInstanceInstanceId) {
         this.cfgEurekaInstanceInstanceId = cfgEurekaInstanceInstanceId;
+    }
+
+    public String getCfgTempletBaseDir() {
+        return cfgTempletBaseDir;
+    }
+
+    public void setCfgTempletBaseDir(String cfgTempletBaseDir) {
+        this.cfgTempletBaseDir = cfgTempletBaseDir;
     }
 }

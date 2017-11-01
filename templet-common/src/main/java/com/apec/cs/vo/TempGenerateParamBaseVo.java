@@ -8,6 +8,12 @@ package com.apec.cs.vo;
 public class TempGenerateParamBaseVo {
 
     /**
+     * 模板文件的基础路径
+     * =".\\templet-common\\src\\main\\resources\\ftl\\"
+     */
+    private String cfgTempletBaseDir;
+
+    /**
      * 生成文件的基本目录
      *  = "D:\\svn\\trade\\App_cncsen\\Src\\"
      */
@@ -140,6 +146,13 @@ public class TempGenerateParamBaseVo {
      */
     private String cfgEurekaInstanceInstanceId ;
 
+    public String getCfgTempletBaseDir() {
+        return cfgTempletBaseDir;
+    }
+
+    public void setCfgTempletBaseDir(String cfgTempletBaseDir) {
+        this.cfgTempletBaseDir = cfgTempletBaseDir;
+    }
 
     public String getCfgOutputBaseDir() {
         return cfgOutputBaseDir;

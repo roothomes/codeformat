@@ -7,6 +7,13 @@ import org.springframework.stereotype.Service;
 public class CsConfig {
 
     /**
+     * 模板文件的基础路径
+     * =".\\templet-common\\src\\main\\resources\\ftl\\"
+     */
+    @Value("${cfgTempletBaseDir}")
+    private String cfgTempletBaseDir;
+
+    /**
      * 生成文件的基本目录
      *  = "D:\\svn\\trade\\App_cncsen\\Src\\"
      */
@@ -364,5 +371,13 @@ public class CsConfig {
 
     public void setCfgJavaContantDefaultVal(String cfgJavaContantDefaultVal) {
         this.cfgJavaContantDefaultVal = cfgJavaContantDefaultVal;
+    }
+
+    public String getCfgTempletBaseDir() {
+        return cfgTempletBaseDir;
+    }
+
+    public void setCfgTempletBaseDir(String cfgTempletBaseDir) {
+        this.cfgTempletBaseDir = cfgTempletBaseDir;
     }
 }

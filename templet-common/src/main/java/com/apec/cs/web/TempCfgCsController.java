@@ -6,6 +6,7 @@ import com.apec.cs.vo.TempGenerateRsVo;
 import com.apec.framework.common.Constants;
 import com.apec.framework.common.ResultData;
 import com.apec.framework.common.util.BeanUtil;
+import com.apec.framework.common.util.JsonUtil;
 import com.google.common.base.Strings;
 import com.roothomes.common.util.BuildUtil;
 import com.roothomes.common.util.Cfg;
@@ -79,29 +80,6 @@ public class TempCfgCsController extends MyBaseController {
 
 	public Cfg initCfg(TempGenerateParamVo model ) throws InvocationTargetException {
 		Cfg param = new Cfg();
-//		BeanUtil.copyProperties(vo,param,null);
-//		if(Strings.isNullOrEmpty(vo.getCfgParentPomGroupId())){
-//			param.setCfgParentPomGroupId(cfgParentPomGroupId);
-//		}else if(Strings.isNullOrEmpty(vo.getCfgParentPomArtifactId())){
-//			param.setCfgParentPomArtifactId(cfgParentPomArtifactId);
-//		}else if(Strings.isNullOrEmpty(vo.getCfgParentPomVersion())){
-//			param.setCfgParentPomVersion(cfgParentPomVersion);
-//		}else if(Strings.isNullOrEmpty(vo.getCfgParentPomRelativePath())){
-//			param.setCfgParentPomRelativePath(cfgParentPomRelativePath);
-//		}else if(Strings.isNullOrEmpty(vo.getCfgGroupId())){
-//			param.setCfgGroupId(cfgGroupId);
-//		}else if(Strings.isNullOrEmpty(vo.getCfgVersion())){
-//			param.setCfgVersion(cfgVersion);
-//		}else if(Strings.isNullOrEmpty(vo.getCfgSerialNo())){
-//			param.setCfgSerialNo(cfgSerialNo);
-//		}else if(Strings.isNullOrEmpty(vo.getCfgCreatAuthor())){
-//			param.setCfgCreatAuthor(cfgCreatAuthor);
-//		}
-//		else if(Strings.isNullOrEmpty(vo.get)){
-//			param.set();
-//		}
-
-
 		// 获取实体类的所有属性，返回Field数组
 		Field[] field = model.getClass().getDeclaredFields();
 		try {
@@ -122,7 +100,7 @@ public class TempCfgCsController extends MyBaseController {
 						m = model.getClass().getMethod("set"+name,String.class);
 						Method mCsConfig = csConfig.getClass().getMethod("get" + name);
 						String csValue = (String)mCsConfig.invoke(csConfig);
-						m.invoke(model, csValue);
+						m.invoke(model, csValue.trim());
 					}
 				}
 				if (type.equals("class java.lang.Integer")) {
@@ -164,8 +142,9 @@ public class TempCfgCsController extends MyBaseController {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
-
+		LOG.info("model data:{}",JsonUtil.toJSONString(model));
 		BeanUtil.copyProperties(model,param);
+		LOG.info("param data:{}",JsonUtil.toJSONString(param));
 		return param;
 	}
 

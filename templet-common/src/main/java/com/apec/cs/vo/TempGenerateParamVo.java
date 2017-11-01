@@ -126,6 +126,13 @@ public class TempGenerateParamVo{
     }
 
 
+    /*************************************************/
+
+    /**
+     * 模板文件的基础路径
+     * =".\\templet-common\\src\\main\\resources\\ftl\\"
+     */
+    private String cfgTempletBaseDir;
 
     /**
      * 生成文件的基本目录
@@ -260,6 +267,13 @@ public class TempGenerateParamVo{
      */
     private String cfgEurekaInstanceInstanceId ;
 
+    public String getCfgTempletBaseDir() {
+        return cfgTempletBaseDir;
+    }
+
+    public void setCfgTempletBaseDir(String cfgTempletBaseDir) {
+        this.cfgTempletBaseDir = cfgTempletBaseDir;
+    }
 
     public String getCfgOutputBaseDir() {
         return cfgOutputBaseDir;
@@ -468,4 +482,5 @@ public class TempGenerateParamVo{
     public void setCfgEurekaInstanceInstanceId(String cfgEurekaInstanceInstanceId) {
         this.cfgEurekaInstanceInstanceId = cfgEurekaInstanceInstanceId;
     }
+
 }

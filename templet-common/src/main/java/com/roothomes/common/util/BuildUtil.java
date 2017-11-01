@@ -1,8 +1,11 @@
 package com.roothomes.common.util;
 
+import com.apec.cs.web.TempCfgCsController;
+import com.apec.framework.common.util.JsonUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,7 +20,7 @@ import java.util.Map;
  * @author roothomes
  */
 public class BuildUtil {
-
+    private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(BuildUtil.class);
 
     public static void buildJavaFile4BaseModel(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
         DirEnum fileType = DirEnum.p_basemodel;
@@ -533,6 +536,7 @@ public class BuildUtil {
     }
 
     public static void buildAll(Cfg param)throws Exception {
+        LOG.info("cfgInfo:{}" ,JsonUtil.toJSONString(param));
         Map<DirEnum,String> packageMap = PackageUtil.generateJavaPackages(SystemEnum.spring_boots,param);
         Map<DirEnum,String> fileMap = DirUtil.getFilePathMap(SystemEnum.spring_boots,param);
         Map<DirEnum,String> serialNoMap = PackageUtil.generateClassSerialNo(param);
@@ -541,7 +545,7 @@ public class BuildUtil {
 
         /* Create and adjust the configuration singleton */
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
-        cfg.setDirectoryForTemplateLoading(new File(IContant.V_TEMPLET_BASEDIR));
+        cfg.setDirectoryForTemplateLoading(new File(param.getCfgTempletBaseDir()));
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setLogTemplateExceptions(false);
