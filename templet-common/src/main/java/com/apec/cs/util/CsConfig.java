@@ -169,6 +169,19 @@ public class CsConfig {
     @Value("${cfgJavaContantDefaultVal}")
     private String cfgJavaContantDefaultVal ;
 
+    /**
+     * 配置常量接口里面常量的默认值
+     * ="/home/nginxShare/apec/service"
+     */
+    @Value("${zipDir}")
+    private String zipDir;
+    /**
+     * 配置常量接口里面常量的默认值
+     * ="http://192.168.7.203/apec/service/"
+     */
+    @Value("${httpZipBasePath}")
+    private String httpZipBasePath;
+
     public String getCfgOutputBaseDir() {
         return cfgOutputBaseDir;
     }
@@ -383,5 +396,21 @@ public class CsConfig {
 
     public void setCfgTempletBaseDir(String cfgTempletBaseDir) {
         this.cfgTempletBaseDir = cfgTempletBaseDir;
+    }
+
+    public String getZipDir() {
+        return zipDir;
+    }
+
+    public void setZipDir(String zipDir) {
+        this.zipDir = zipDir;
+    }
+
+    public String getHttpZipBasePath() {
+        return httpZipBasePath;
+    }
+
+    public void setHttpZipBasePath(String httpZipBasePath) {
+        this.httpZipBasePath = httpZipBasePath;
     }
 }
