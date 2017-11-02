@@ -146,24 +146,28 @@ public class CsConfig {
     /****************  常量设置 start  ***********************/
     /**
      * 配置常量接口里面的常量的描述信息
+     * ="缓存Key值前缀"
      */
     @Value("${cfgJavaContantDesc}")
-    private String cfgJavaContantDesc="缓存Key值前缀";
+    private String cfgJavaContantDesc;
     /**
      * 配置常量接口里面常量的类型
+     *  ="String"
      */
     @Value("${cfgJavaContantType}")
-    private String cfgJavaContantType ="String";
+    private String cfgJavaContantType;
     /**
      * 配置常量接口里面常量的名称
+     *  ="CACHE_PREFIX"
      */
     @Value("${cfgJavaContantCode}")
-    private String cfgJavaContantCode ="CACHE_PREFIX";
+    private String cfgJavaContantCode;
     /**
      * 配置常量接口里面常量的默认值
+     * ="Cache_Model_"
      */
     @Value("${cfgJavaContantDefaultVal}")
-    private String cfgJavaContantDefaultVal ="Cache_Model_";
+    private String cfgJavaContantDefaultVal ;
 
     public String getCfgOutputBaseDir() {
         return cfgOutputBaseDir;
