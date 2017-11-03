@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class SnowFlakeKeyGen implements EnvironmentAware{
+public class KeyGen${MODEL_CLASSNAME} implements EnvironmentAware{
 
     private static final long WORKER_ID_BITS = 6L;
 
@@ -40,7 +40,7 @@ public class SnowFlakeKeyGen implements EnvironmentAware{
 
     private final static long TWEPOCH = 1452866247339L;
 
-    public SnowFlakeKeyGen()
+    public KeyGen${MODEL_CLASSNAME}()
     {
         if(workerId > MAX_WORKER_ID || workerId < 0)
         {
@@ -60,7 +60,7 @@ public class SnowFlakeKeyGen implements EnvironmentAware{
         }
     }
 
-    public SnowFlakeKeyGen(long workerId)
+    public KeyGen${MODEL_CLASSNAME}(long workerId)
     {
         if(workerId > MAX_WORKER_ID || workerId < 0)
         {

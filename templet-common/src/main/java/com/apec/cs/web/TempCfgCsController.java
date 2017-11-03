@@ -66,10 +66,11 @@ public class TempCfgCsController extends MyBaseController {
 			data.setRequestTime(rt);
 			TempGenerateParamVo vo = getFormJSON(json, TempGenerateParamVo.class);
 			LOG.info("TempGenerateParamVo:{}",JsonUtil.toJSONString(vo));
+
+			Cfg param = initCfg(vo);
 			checkContantCfg(vo);
 			checkAttributeCfg(vo);
 
-			Cfg param = initCfg(vo);
 			//设置dir的名称
 			String outputPath = param.getCfgOutputBaseDir();
 			String dirTime = DateFormatUtils.format(new Date(),DIR_FORMAT);
@@ -83,26 +84,26 @@ public class TempCfgCsController extends MyBaseController {
 			BuildUtil.buildAll(param);
 			resultData.setSucceed(true);
 
-			String zipPath = null;
-			if(csConfig.getZipDir().endsWith(File.separator)){
-				zipPath = csConfig.getZipDir() + param.getCfgArtifactId() + dirTime + ".zip";
-			}else{
-				zipPath = csConfig.getZipDir() + File.separator + param.getCfgArtifactId() + dirTime + ".zip";
-			}
-			ZipCompress zipCom = new ZipCompress(zipPath,outputPath);
-			zipCom.zip();
+//			String zipPath = null;
+//			if(csConfig.getZipDir().endsWith(File.separator)){
+//				zipPath = csConfig.getZipDir() + param.getCfgArtifactId() + dirTime + ".zip";
+//			}else{
+//				zipPath = csConfig.getZipDir() + File.separator + param.getCfgArtifactId() + dirTime + ".zip";
+//			}
+//			ZipCompress zipCom = new ZipCompress(zipPath,outputPath);
+//			zipCom.zip();
 
 			rt = DateFormatUtils.format(new Date(),UTC_FORMAT);
 			data.setFilesIp("192.168.7.203");
 			data.setFilesPath(param.getCfgOutputBaseDir());
 			data.setResponseTime(rt);
-			String httpZipPath = null;
-			if(csConfig.getHttpZipBasePath().endsWith(File.separator)){
-				httpZipPath = csConfig.getHttpZipBasePath() + param.getCfgArtifactId() + dirTime + ".zip";
-			}else{
-				httpZipPath = csConfig.getHttpZipBasePath() + File.separator + param.getCfgArtifactId() + dirTime + ".zip";
-			}
-			data.setHttpZip(httpZipPath);
+//			String httpZipPath = null;
+//			if(csConfig.getHttpZipBasePath().endsWith(File.separator)){
+//				httpZipPath = csConfig.getHttpZipBasePath() + param.getCfgArtifactId() + dirTime + ".zip";
+//			}else{
+//				httpZipPath = csConfig.getHttpZipBasePath() + File.separator + param.getCfgArtifactId() + dirTime + ".zip";
+//			}
+//			data.setHttpZip(httpZipPath);
 			resultData.setData(data);
 			resultData.setErrorCode(CsConstants.BUSINESS_CODE_OK);
 			resultData.setErrorMsg(CsConstants.BUSINESS_CODE_OK_DESC);

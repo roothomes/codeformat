@@ -32,7 +32,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
     @Autowired
     private ${DAO_CLASSNAME} dao;
     @Autowired
-    private SnowFlakeKeyGen idGen;
+    private KeyGen${MODEL_CLASSNAME} idGen;
     @Autowired
     private CacheService cacheService;
 

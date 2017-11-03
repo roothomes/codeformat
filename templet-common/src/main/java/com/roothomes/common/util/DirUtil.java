@@ -147,7 +147,7 @@ public class DirUtil {
         }else if(DirEnum.p_application.equals(e)){
             fileName = cfg.getCfgPojoName() + "ServiceApplication"+ IContant.JAVA_EXTENSION_NAME;
         }else if(DirEnum.p_keygen.equals(e)){
-            fileName = "SnowFlakeKeyGen" + IContant.JAVA_EXTENSION_NAME;
+            fileName = "KeyGen" + cfg.getCfgPojoName() + IContant.JAVA_EXTENSION_NAME;
         }else if(DirEnum.p_basemodel.equals(e)){
             fileName = "BaseModel"+ IContant.JAVA_EXTENSION_NAME;;
         }else if(DirEnum.p_pom.equals(e) || DirEnum.p_pom_parent.equals(e)){
