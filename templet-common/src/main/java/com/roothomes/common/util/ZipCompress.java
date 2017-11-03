@@ -68,19 +68,94 @@ public class ZipCompress
             int tag;
             System.out.println(base);
             //将源文件写入到zip文件中
-            while((tag=bis.read())!=-1)
-            {
-                bos.write(tag);
+//            while((tag=bis.read())!=-1)
+//            {
+//                bos.write(tag);
+//            }
+            int buffer = 2048;
+            int count = 0;
+            byte[] data = new byte[buffer];
+
+            while ((count = bis.read(data,0,buffer))!= -1) {
+                bos.write(data,0,count);
             }
+            bos.flush();
+
             bis.close();
             fos.close();
             
         }
     }
 
+    /**
+     * 程序主入口
+     * @param args
+     * @throws FileNotFoundException
+     */
+    public static void mainxxx(String[] args){
+        //输出流
+        FileOutputStream fos = null;
+        BufferedOutputStream bos = null;
+        ZipOutputStream zipos = null;
+        //输入流
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        try {
+            //建立输出
+            fos = new FileOutputStream("C:\\Documents and Settings\\Administrator\\桌面\\TestZip.zip");
+            bos = new BufferedOutputStream(fos);
+            zipos = new ZipOutputStream(bos);
+            //条目列表以压缩方式（DEFLATED）方式加入ZIP文件中
+            //zipos.setMethod(ZipOutputStream.DEFLATED);
+            //条目列表以不压缩方式(STORED)方式加入ZIP文件中
+            //zipos.setMethod(ZipOutputStream.DEFLATED);
+            //建立与要压缩的文件列表的连接
+            File fileDirectory = new File("C:\\Documents and Settings\\Administrator\\桌面\\zipFile");
+            //获取文件列表
+            String[] files = fileDirectory.list();
+            ZipEntry entry = null;
+            int buffer = 2048;
+            int count = 0;
+            byte[] data = new byte[buffer];
+            for (int i = 0; i < files.length; i++) {
+                String fileName = files[i];
+                System.out.println("添加文件：" + fileName);
+                //建立输入
+                fis = new FileInputStream(new File(fileDirectory,fileName));
+                bis = new BufferedInputStream(fis);
+                //读出的数据创建一个ZIP条目列表
+                entry = new ZipEntry(fileName);
+                //将ZIP条目列表写入输出流
+                zipos.putNextEntry(entry);
+                //将数据写入ZIP文件
+                while ((count = bis.read(data,0,buffer))!= -1) {
+                    zipos.write(data,0,count);
+                }
+                zipos.flush();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                zipos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                bis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     public static void testmain(String[] args)
     {
-        ZipCompress zipCom = new ZipCompress("C:\\rabbit-produce.zip","C:\\rabbit-produce");
+        ZipCompress zipCom = new ZipCompress("D:\\svn\\trade\\App_cncsen\\Src\\fapplication-parent.zip","D:\\svn\\trade\\App_cncsen\\Src\\fapplication-parent");
         try
         {
             zipCom.zip();
