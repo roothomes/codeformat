@@ -163,8 +163,14 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         }
         
         </#if>
+	<#else>
+        if (null != vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}()) {
+			entity.set${BASE_ATTRIBUTE[x_index].javaCode?cap_first}(vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}());
+        }
+        
     </#if>
 </#list>
+        dao.saveAndFlush(entity);
         return entity;
     }
 	
