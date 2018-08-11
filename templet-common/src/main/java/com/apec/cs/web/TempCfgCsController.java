@@ -1,5 +1,12 @@
 package com.apec.cs.web;
 
+import com.apec.codetemplet.model.Codetemplet;
+import com.apec.codetemplet.service.CodetempletService;
+import com.apec.codetemplet.util.KeyGenCodetemplet;
+import com.apec.codetemplet.vo.CodetempletVo;
+import com.apec.codetempletitem.model.CodetempletItem;
+import com.apec.codetempletitem.service.CodetempletItemService;
+import com.apec.codetempletitem.vo.CodetempletItemVo;
 import com.apec.cs.constants.CsConstants;
 import com.apec.cs.util.CsConfig;
 import com.apec.cs.vo.TempGenerateParamVo;
@@ -26,6 +33,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -43,6 +51,13 @@ public class TempCfgCsController extends MyBaseController {
 	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(TempCfgCsController.class);
 	@Autowired
 	CsConfig csConfig;
+
+	@Autowired
+	CodetempletService codetempletService;
+	@Autowired
+	CodetempletItemService codetempletItemService;
+	@Autowired
+	private KeyGenCodetemplet idGen;
 
 	/****************  常量设置 end  ***********************/
 
@@ -107,6 +122,7 @@ public class TempCfgCsController extends MyBaseController {
 			resultData.setData(data);
 			resultData.setErrorCode(CsConstants.BUSINESS_CODE_OK);
 			resultData.setErrorMsg(CsConstants.BUSINESS_CODE_OK_DESC);
+			saveDataToDB(param,resultData);
 		} catch (Exception e) {
 			LOG.error("generateFile ", e);
 			String rt = DateFormatUtils.format(new Date(),UTC_FORMAT);
@@ -118,6 +134,45 @@ public class TempCfgCsController extends MyBaseController {
 
 
 		return resultData;
+	}
+
+	public void saveDataToDB(Cfg param,ResultData<TempGenerateRsVo> resultData) {
+
+		try {
+			CodetempletVo codetempletVo = new CodetempletVo();
+			codetempletVo.setCfgArtifactId(param.getCfgArtifactId());
+			codetempletVo.setCfgDbTableName(param.getCfgDBTableName());
+			codetempletVo.setCfgModeDesc(param.getCfgModelDesc());
+			codetempletVo.setCfgPojoName(param.getCfgPojoName());
+			codetempletVo.setId(String.valueOf(idGen.nextId()));
+			codetempletVo.setStatus("1");
+			codetempletVo.setRemarks(resultData.getData().getHttpZip());
+
+			codetempletService.create(codetempletVo);
+
+			String[]  codeS = param.getCfgJavaAttributeCode().split(IContant.K_SPLIT);
+			String[]  typeS = param.getCfgJavaAttributeType().split(IContant.K_SPLIT);
+			String[]  valS = param.getCfgJavaAttributeDefaultVal().split(IContant.K_SPLIT);
+			String[]  descS = param.getCfgJavaAttributeDesc().split(IContant.K_SPLIT);
+			String[]  nullS = param.getCfgJavaAttributeCanNull().split(IContant.K_SPLIT);
+			String[]  dbS = param.getCfgDBColumnCode().split(IContant.K_SPLIT);
+			CodetempletItemVo itemVo = new CodetempletItemVo();
+			for(int i=0;i<codeS.length;i++){
+				itemVo = new CodetempletItemVo();
+				itemVo.setTempletId(codetempletVo.getId());
+				itemVo.setCfgDBColumnCode(codeS[i]);
+				itemVo.setCfgJavaAttributeCanNull(nullS[i]);
+				itemVo.setCfgJavaAttributeCode(codeS[i]);
+				itemVo.setCfgJavaAttributeDefaultVal(valS[i]);
+				itemVo.setCfgJavaAttributeDesc(descS[i]);
+				itemVo.setCfgJavaAttributeType(typeS[i]);
+				codetempletItemService.create(itemVo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
 	}
 
 	/**

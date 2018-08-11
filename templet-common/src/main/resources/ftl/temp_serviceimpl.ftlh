@@ -337,7 +337,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
 		List<BooleanExpression> list = getBooleanExpressionList4Base(entity);
 		
 <#list ATTRIBUTE_CAN_NULL as x>
-<#if x=='0'>
+
 	<#if ATTRIBUTE[x_index].type =='String'>
 		if (!Strings.isNullOrEmpty(entity.get${ATTRIBUTE[x_index].javaCode?cap_first}())) {
 			list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.${ATTRIBUTE[x_index].javaCode?uncap_first}.like("%" + entity.get${ATTRIBUTE[x_index].javaCode?cap_first}() + "%"));
@@ -351,7 +351,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
 			list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.${ATTRIBUTE[x_index].javaCode?uncap_first}.eq(entity.get${ATTRIBUTE[x_index].javaCode?cap_first}()));
 		}
 	</#if>
-</#if>
+
 </#list>
 
 		return list;
