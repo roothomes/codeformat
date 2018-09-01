@@ -133,8 +133,26 @@ public class CodetempletItemServiceImpl implements CodetempletItemService,Codete
 			return null;
         }
 		//模块属性设置
+        if (!Strings.isNullOrEmpty(vo.getCfgDBColumnCode())) {
+            entity.setCfgDBColumnCode(vo.getCfgDBColumnCode());
+        }
+        if (!Strings.isNullOrEmpty(vo.getCfgJavaAttributeCanNull())) {
+            entity.setCfgJavaAttributeCanNull(vo.getCfgJavaAttributeCanNull());
+        }
+        if (!Strings.isNullOrEmpty(vo.getCfgJavaAttributeCode())) {
+            entity.setCfgJavaAttributeCode(vo.getCfgJavaAttributeCode());
+        }
+        if (!Strings.isNullOrEmpty(vo.getCfgJavaAttributeDefaultVal())) {
+            entity.setCfgJavaAttributeDefaultVal(vo.getCfgJavaAttributeDefaultVal());
+        }
+        if (!Strings.isNullOrEmpty(vo.getCfgJavaAttributeDesc())) {
+            entity.setCfgJavaAttributeDesc(vo.getCfgJavaAttributeDesc());
+        }
+        if (!Strings.isNullOrEmpty(vo.getCfgJavaAttributeType())) {
+            entity.setCfgJavaAttributeType(vo.getCfgJavaAttributeType());
+        }
 
-		//基础属性设置
+        //基础属性设置
         if (!Strings.isNullOrEmpty(vo.getId())) {
 			entity.setId(vo.getId());
         }
@@ -229,7 +247,8 @@ public class CodetempletItemServiceImpl implements CodetempletItemService,Codete
     }
 	
 	public List<CodetempletItem> queryAllModel(CodetempletItem entity) {
-		Iterable<CodetempletItem> iterable = dao.findAll(getInputConditionModel(entity));
+        Sort sort3 = new Sort(Sort.Direction.DESC, "createDate");
+		Iterable<CodetempletItem> iterable = dao.findAll(getInputConditionModel(entity),sort3);
 		Iterator<CodetempletItem> iterator = iterable.iterator();
 		List<CodetempletItem> list = new ArrayList<CodetempletItem>();
 		while (iterator.hasNext()) {
@@ -342,8 +361,24 @@ public class CodetempletItemServiceImpl implements CodetempletItemService,Codete
      */
 	private List<BooleanExpression> getBooleanExpressionList4Model(CodetempletItem entity) {
 		List<BooleanExpression> list = getBooleanExpressionList4Base(entity);
-		
-
+        if (!Strings.isNullOrEmpty(entity.getTempletId())) {
+            list.add(QCodetempletItem.codetempletItem.templetId.eq(entity.getTempletId()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getCfgJavaAttributeDesc())) {
+            list.add(QCodetempletItem.codetempletItem.cfgJavaAttributeDesc.eq(entity.getCfgJavaAttributeDesc()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getCfgJavaAttributeType())) {
+            list.add(QCodetempletItem.codetempletItem.cfgJavaAttributeType.eq(entity.getCfgJavaAttributeType()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getCfgJavaAttributeCode())) {
+            list.add(QCodetempletItem.codetempletItem.cfgJavaAttributeCode.eq(entity.getCfgJavaAttributeCode()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getCfgJavaAttributeCanNull())) {
+            list.add(QCodetempletItem.codetempletItem.cfgJavaAttributeCanNull.eq(entity.getCfgJavaAttributeCanNull()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getCfgJavaAttributeDefaultVal())) {
+            list.add(QCodetempletItem.codetempletItem.cfgJavaAttributeDefaultVal.eq(entity.getCfgJavaAttributeDefaultVal()));
+        }
 		return list;
 	}
 	

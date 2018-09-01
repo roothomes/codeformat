@@ -34,8 +34,9 @@ public class MyBaseController extends BaseController
     	 Sort sort4 = new Sort(Sort.Direction.ASC, "cityId");
          Sort sort = new Sort(Sort.Direction.DESC, "orderNumber");
          Sort sort2 = new Sort(Sort.Direction.DESC, "status");
-         Sort sort3 = new Sort(Sort.Direction.ASC, "createDate");
-        
+         Sort sort3 = new Sort(Sort.Direction.DESC, "createDate");
+        sort.and(sort3);
+
         int pageNumber = 1;
         int pageSize = 10;
         if(dto.getPageNumber() > 0)
@@ -46,7 +47,7 @@ public class MyBaseController extends BaseController
         {
             pageSize = dto.getPageSize();
         }
-        PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, sort);
+        PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, sort3);
         return pageRequest;
     }
 

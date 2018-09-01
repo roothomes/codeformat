@@ -43,7 +43,6 @@ import java.util.Date;
  * @author roothomes
  * @date 2017-10-30
  */
-
 @RestController
 @RequestMapping("/tempCfgCs")
 public class TempCfgCsController extends MyBaseController {

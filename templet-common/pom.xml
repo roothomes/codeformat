@@ -14,12 +14,12 @@
         <dependency>
             <groupId>com.apec</groupId>
             <artifactId>framework-jpa</artifactId>
-            <version>1.0.1-RELEASE</version>
+            <version>1.0-CNCSEN</version>
         </dependency>
         <dependency>
             <groupId>com.apec</groupId>
             <artifactId>framework-springcloud</artifactId>
-            <version>1.0.1-RELEASE</version>
+            <version>1.0-CNCSEN</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -46,7 +46,7 @@
         <dependency>
         	<groupId>com.apec</groupId>
         	<artifactId>framework-cache</artifactId>
-        	<version>1.0.1-RELEASE</version>
+        	<version>1.0-CNCSEN</version>
         </dependency>
         <dependency>
             <groupId>com.esotericsoftware</groupId>
@@ -83,20 +83,20 @@
 			<artifactId>lombok</artifactId>
 			<version>1.16.12</version>
 		</dependency>
-		<dependency>
-			<groupId>com.apec</groupId>
-			<artifactId>project-common</artifactId>
-			<version>1.0.1-RELEASE</version>
-		</dependency>
+        <dependency>
+            <groupId>com.apec</groupId>
+            <artifactId>common-base</artifactId>
+            <version>1.0-CNCSEN</version>
+        </dependency>
 		<dependency>
 			<groupId>com.apec</groupId>
 			<artifactId>framework-mq</artifactId>
-			<version>1.0.1-RELEASE</version>
+			<version>1.0-CNCSEN</version>
 		</dependency>
 		<dependency>
 			<groupId>com.apec</groupId>
 			<artifactId>framework-locks</artifactId>
-			<version>1.0.1-RELEASE</version>
+			<version>1.0-CNCSEN</version>
 		</dependency>
         <dependency>
             <groupId>org.freemarker</groupId>

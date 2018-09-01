@@ -133,6 +133,18 @@ public class CodetempletServiceImpl implements CodetempletService,CodetempletCon
 			return null;
         }
 		//模块属性设置
+        if (!Strings.isNullOrEmpty(vo.getCfgDbTableName())) {
+            entity.setCfgDbTableName(vo.getCfgDbTableName());
+        }
+        if (!Strings.isNullOrEmpty(vo.getCfgArtifactId())) {
+            entity.setCfgArtifactId(vo.getCfgArtifactId());
+        }
+        if (!Strings.isNullOrEmpty(vo.getCfgPojoName())) {
+            entity.setCfgPojoName(vo.getCfgPojoName());
+        }
+        if (!Strings.isNullOrEmpty(vo.getCfgModeDesc())) {
+            entity.setCfgModeDesc(vo.getCfgModeDesc());
+        }
 
 		//基础属性设置
         if (!Strings.isNullOrEmpty(vo.getId())) {
@@ -229,7 +241,8 @@ public class CodetempletServiceImpl implements CodetempletService,CodetempletCon
     }
 	
 	public List<Codetemplet> queryAllModel(Codetemplet entity) {
-		Iterable<Codetemplet> iterable = dao.findAll(getInputConditionModel(entity));
+        Sort sort3 = new Sort(Sort.Direction.DESC, "createDate");
+		Iterable<Codetemplet> iterable = dao.findAll(getInputConditionModel(entity),sort3);
 		Iterator<Codetemplet> iterator = iterable.iterator();
 		List<Codetemplet> list = new ArrayList<Codetemplet>();
 		while (iterator.hasNext()) {
@@ -342,7 +355,18 @@ public class CodetempletServiceImpl implements CodetempletService,CodetempletCon
      */
 	private List<BooleanExpression> getBooleanExpressionList4Model(Codetemplet entity) {
 		List<BooleanExpression> list = getBooleanExpressionList4Base(entity);
-		
+        if (!Strings.isNullOrEmpty(entity.getCfgDbTableName())) {
+            list.add(QCodetemplet.codetemplet.cfgDbTableName.eq(entity.getCfgDbTableName()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getCfgArtifactId())) {
+            list.add(QCodetemplet.codetemplet.cfgArtifactId.eq(entity.getCfgArtifactId()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getCfgPojoName())) {
+            list.add(QCodetemplet.codetemplet.cfgPojoName.eq(entity.getCfgPojoName()));
+        }
+        if (!Strings.isNullOrEmpty(entity.getCfgModeDesc())) {
+            list.add(QCodetemplet.codetemplet.cfgModeDesc.eq(entity.getCfgModeDesc()));
+        }
 
 		return list;
 	}
