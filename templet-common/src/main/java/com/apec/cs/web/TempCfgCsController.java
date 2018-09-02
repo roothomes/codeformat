@@ -39,7 +39,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 类 编 号：
@@ -148,7 +150,9 @@ public class TempCfgCsController extends MyBaseController {
 	 * @param listItem
 	 * @return
 	 */
-	private TempGenerateParamVo swtichDB2ParamVo(Codetemplet codetemplet,List<CodeTempletItem> listItem,List<CodeTempletContants> listContants){
+	private TempGenerateParamVo swtichDB2ParamVo(Codetemplet codetemplet,List<CodeTempletItem> listItem,List<CodeTempletContants> listContants)
+	throws ApecRuntimeException
+	{
 		TempGenerateParamVo vo = new TempGenerateParamVo();
 		vo.setCfgDBTableName(codetemplet.getCfgDbTableName());
 		vo.setCfgArtifactId(codetemplet.getCfgArtifactId());
@@ -161,8 +165,14 @@ public class TempCfgCsController extends MyBaseController {
 		StringBuilder cfgJavaAttributeCode = new StringBuilder();
 		StringBuilder cfgJavaAttributeCanNull = new StringBuilder();
 		StringBuilder cfgJavaAttributeDefaultVal = new StringBuilder();
+		Map<String,String> itemMap = new HashMap<>();
 		for(int i=0;i<listItem.size();i++){
 			CodeTempletItem one = listItem.get(i);
+			if(itemMap.containsKey(one.getCfgJavaAttributeCode().toUpperCase())){
+				throw new ApecRuntimeException(CsConstants.ERROR_CODE_ITEM_SAME_VARIABLE);
+			}else{
+				itemMap.put(one.getCfgJavaAttributeCode().toUpperCase(),one.getCfgJavaAttributeCode().toUpperCase());
+			}
 			if((i+1) == listItem.size()){
 				cfgJavaAttributeDesc.append(one.getCfgJavaAttributeDesc());
 				cfgDBColumnCode.append(one.getCfgDBColumnCode());
@@ -185,7 +195,9 @@ public class TempCfgCsController extends MyBaseController {
 		vo.setCfgJavaAttributeCode(cfgJavaAttributeCode.toString());
 		vo.setCfgJavaAttributeCanNull(cfgJavaAttributeCanNull.toString());
 		vo.setCfgJavaAttributeDefaultVal(cfgJavaAttributeDefaultVal.toString());
+
 		if(null != listContants && !listContants.isEmpty()){
+			Map<String,String> contantsMap = new HashMap<>();
 			StringBuilder cfgJavaContantDesc = new StringBuilder();
 			StringBuilder cfgJavaContantCode = new StringBuilder();
 			StringBuilder cfgJavaContantType = new StringBuilder();
@@ -193,14 +205,19 @@ public class TempCfgCsController extends MyBaseController {
 
 			for(int i=0;i<listContants.size();i++){
 				CodeTempletContants one = listContants.get(i);
+				if(contantsMap.containsKey(one.getVariableName().toUpperCase())){
+					throw new ApecRuntimeException(CsConstants.ERROR_CONTANTS_SAME_VARIABLE);
+				}else{
+					contantsMap.put(one.getVariableName().toUpperCase(),one.getVariableName().toUpperCase());
+				}
 				if((i+1) == listContants.size()){
 					cfgJavaContantDesc.append(one.getVariableDesc());
-					cfgJavaContantCode.append(one.getVariableName());
+					cfgJavaContantCode.append(one.getVariableName().toUpperCase());
 					cfgJavaContantType.append(one.getVariableType());
 					cfgJavaContantDefaultVal.append(one.getVariableVal());
 				}else{
 					cfgJavaContantDesc.append(one.getVariableDesc()).append("|");
-					cfgJavaContantCode.append(one.getVariableName()).append("|");
+					cfgJavaContantCode.append(one.getVariableName().toUpperCase()).append("|");
 					cfgJavaContantType.append(one.getVariableType()).append("|");
 					cfgJavaContantDefaultVal.append(one.getVariableVal()).append("|");
 				}

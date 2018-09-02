@@ -45,6 +45,9 @@ public interface ${CLASSNAME}{
      */
     String STATUS_VALID = "1";
 
+    /** cache */
+    String CACHE_PREFIX = "Cache_Model_";
+
 
 <#list CONTANT_CLASSNAME_TYPE as x>
     /** ${CONTANT_CLASSNAME_DESC[x_index]} */

@@ -922,7 +922,7 @@ public class BuildUtil {
         /** 项目的唯一的标识符 */
         param.setCfgArtifactId("tempcfgcontents");
         /** POJO中模型类的名称 */
-        param.setCfgPojoName("TempCfgContants");
+        param.setCfgPojoName("CodeTempletContants");
         param.setCfgSerialNo("BL_PU10000_12");
         /** 数据库表名称 */
         param.setCfgDBTableName("temp_cfg_contants");
