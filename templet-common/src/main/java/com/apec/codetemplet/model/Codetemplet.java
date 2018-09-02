@@ -27,7 +27,7 @@ import com.apec.framework.jpa.model.BaseModel;
 /** hibernate自动生成 */
 @GenericGenerator(name = Constants.SYSTEM_GENERATOR, strategy = Constants.ASSIGNED)
 /** JPA表注解 */
-@Table(name = "codetemplet", catalog = "cncsen")
+@Table(name = "code_templet", catalog = "cncsen")
 
 /**
  * 类 编 号：BL_PU6030202_1000_model

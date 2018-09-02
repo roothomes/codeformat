@@ -17,12 +17,12 @@ import java.lang.Integer;
 
 /**
  * 类 编 号：BL_PU6030202_1000_dto
- * 类 名 称：CodetempletItemDTO
+ * 类 名 称：CodeTempletItemDTO
  * 内容摘要：业务模型Dto类,里面包含业务模型的属性，以及该属性的get set方法
  * @author roothomes
  * @date 2017-10-30
  */
-public class CodetempletItemDTO extends BaseDTO
+public class CodeTempletItemDTO extends BaseDTO
 {
     private static final long serialVersionUID = 1L;
 

@@ -1,27 +1,22 @@
-package com.apec.tempcfgcontents.util;
+package com.apec.codetempletitem.util;
+
+import com.apec.codetempletitem.constants.CodeTempletItemContant;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-
-import com.apec.tempcfgcontents.model.TempCfgContants;
-import com.apec.tempcfgcontents.dto.TempCfgContantsDTO;
-import com.apec.tempcfgcontents.vo.TempCfgContantsVo;
-import com.apec.tempcfgcontents.constants.TempCfgContantsContant;
-import com.apec.tempcfgcontents.util.TempCfgContantsUtil;
-import com.apec.framework.common.PageDTO;
 /**
- * 类 编 号：BL_PU10000_12_util
- * 类 名 称：TempCfgContantsUtil
+ * 类 编 号：BL_PU6030202_1000_util
+ * 类 名 称：CodeTempletItemUtil
  * 内容摘要：业务模型Util类,里面包含业务常用的方法
  * @author roothomes
  * @date 2017-10-30
  */
-public class TempCfgContantsUtil implements TempCfgContantsContant{
+public class CodeTempletItemUtil implements CodeTempletItemContant {
 
     private static ObjectMapper mapper = new ObjectMapper();
     public static String toJson(Object bean)

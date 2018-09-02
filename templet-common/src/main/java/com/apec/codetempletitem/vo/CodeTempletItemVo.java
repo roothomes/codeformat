@@ -1,4 +1,4 @@
-package com.apec.tempcfgcontents.vo;
+package com.apec.codetempletitem.vo;
 
 
 /** 继承的基础分页类 */
@@ -16,28 +16,30 @@ import java.lang.Integer;
 
 
 /**
- * 类 编 号：BL_PU10000_12_vo
- * 类 名 称：TempCfgContantsVo
+ * 类 编 号：BL_PU6030202_1000_vo
+ * 类 名 称：CodeTempletItemVo
  * 内容摘要：业务模型Vo类,里面包含业务模型的属性，以及该属性的get set方法
  * @author roothomes
  * @date 2017-10-30
  */
-public class TempCfgContantsVo extends BaseDTO
+public class CodeTempletItemVo extends BaseDTO
 {
     private static final long serialVersionUID = 1L;
 
-    /** 主表Id */
-    private String mainId;
-    /** 常量描述 */
-    private String contantDesc;
-    /** 常量JAVA类型 */
-    private String contantJavaType;
-    /** 常量JAVA编码 */
-    private String contantJavaCode;
-    /** 常量是否可以为空 */
-    private String contantCanNull;
-    /** 常量值 */
-    private String contantVal;
+    /** 代码模板id */
+    private String templetId;
+    /** java模型属性描述 */
+    private String cfgJavaAttributeDesc;
+    /** 数据字段名称 */
+    private String cfgDBColumnCode;
+    /** java模型属性类型 */
+    private String cfgJavaAttributeType;
+    /** java模型属性编码 */
+    private String cfgJavaAttributeCode;
+    /** java模型属性是否可为空 */
+    private String cfgJavaAttributeCanNull;
+    /** java模型属性默认值 */
+    private String cfgJavaAttributeDefaultVal;
     /** 主键id */
     private String id;
     /** 状态 */
@@ -63,53 +65,61 @@ public class TempCfgContantsVo extends BaseDTO
     /** 备注 */
     private String remarks;
 
-    /** 主表Id */
-    public void setMainId(String mainId) {
-        this.mainId = mainId;
+    /** 代码模板id */
+    public void setTempletId(String templetId) {
+        this.templetId = templetId;
     }
-    /** 主表Id */
-    public String getMainId() {
-       return mainId;
+    /** 代码模板id */
+    public String getTempletId() {
+       return templetId;
     }
-    /** 常量描述 */
-    public void setContantDesc(String contantDesc) {
-        this.contantDesc = contantDesc;
+    /** java模型属性描述 */
+    public void setCfgJavaAttributeDesc(String cfgJavaAttributeDesc) {
+        this.cfgJavaAttributeDesc = cfgJavaAttributeDesc;
     }
-    /** 常量描述 */
-    public String getContantDesc() {
-       return contantDesc;
+    /** java模型属性描述 */
+    public String getCfgJavaAttributeDesc() {
+       return cfgJavaAttributeDesc;
     }
-    /** 常量JAVA类型 */
-    public void setContantJavaType(String contantJavaType) {
-        this.contantJavaType = contantJavaType;
+    /** 数据字段名称 */
+    public void setCfgDBColumnCode(String cfgDBColumnCode) {
+        this.cfgDBColumnCode = cfgDBColumnCode;
     }
-    /** 常量JAVA类型 */
-    public String getContantJavaType() {
-       return contantJavaType;
+    /** 数据字段名称 */
+    public String getCfgDBColumnCode() {
+       return cfgDBColumnCode;
     }
-    /** 常量JAVA编码 */
-    public void setContantJavaCode(String contantJavaCode) {
-        this.contantJavaCode = contantJavaCode;
+    /** java模型属性类型 */
+    public void setCfgJavaAttributeType(String cfgJavaAttributeType) {
+        this.cfgJavaAttributeType = cfgJavaAttributeType;
     }
-    /** 常量JAVA编码 */
-    public String getContantJavaCode() {
-       return contantJavaCode;
+    /** java模型属性类型 */
+    public String getCfgJavaAttributeType() {
+       return cfgJavaAttributeType;
     }
-    /** 常量是否可以为空 */
-    public void setContantCanNull(String contantCanNull) {
-        this.contantCanNull = contantCanNull;
+    /** java模型属性编码 */
+    public void setCfgJavaAttributeCode(String cfgJavaAttributeCode) {
+        this.cfgJavaAttributeCode = cfgJavaAttributeCode;
     }
-    /** 常量是否可以为空 */
-    public String getContantCanNull() {
-       return contantCanNull;
+    /** java模型属性编码 */
+    public String getCfgJavaAttributeCode() {
+       return cfgJavaAttributeCode;
     }
-    /** 常量值 */
-    public void setContantVal(String contantVal) {
-        this.contantVal = contantVal;
+    /** java模型属性是否可为空 */
+    public void setCfgJavaAttributeCanNull(String cfgJavaAttributeCanNull) {
+        this.cfgJavaAttributeCanNull = cfgJavaAttributeCanNull;
     }
-    /** 常量值 */
-    public String getContantVal() {
-       return contantVal;
+    /** java模型属性是否可为空 */
+    public String getCfgJavaAttributeCanNull() {
+       return cfgJavaAttributeCanNull;
+    }
+    /** java模型属性默认值 */
+    public void setCfgJavaAttributeDefaultVal(String cfgJavaAttributeDefaultVal) {
+        this.cfgJavaAttributeDefaultVal = cfgJavaAttributeDefaultVal;
+    }
+    /** java模型属性默认值 */
+    public String getCfgJavaAttributeDefaultVal() {
+       return cfgJavaAttributeDefaultVal;
     }
     /** 主键id */
     public void setId(String id) {

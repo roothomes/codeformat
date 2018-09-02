@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class KeyGenCodetempletItem implements EnvironmentAware{
+public class KeyGenCodeTempletItem implements EnvironmentAware{
 
     private static final long WORKER_ID_BITS = 6L;
 
@@ -40,7 +40,7 @@ public class KeyGenCodetempletItem implements EnvironmentAware{
 
     private final static long TWEPOCH = 1452866247339L;
 
-    public KeyGenCodetempletItem()
+    public KeyGenCodeTempletItem()
     {
         if(workerId > MAX_WORKER_ID || workerId < 0)
         {
@@ -60,7 +60,7 @@ public class KeyGenCodetempletItem implements EnvironmentAware{
         }
     }
 
-    public KeyGenCodetempletItem(long workerId)
+    public KeyGenCodeTempletItem(long workerId)
     {
         if(workerId > MAX_WORKER_ID || workerId < 0)
         {

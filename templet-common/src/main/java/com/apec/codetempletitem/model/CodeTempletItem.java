@@ -27,16 +27,16 @@ import com.apec.framework.jpa.model.BaseModel;
 /** hibernate自动生成 */
 @GenericGenerator(name = Constants.SYSTEM_GENERATOR, strategy = Constants.ASSIGNED)
 /** JPA表注解 */
-@Table(name = "codetemplet_item", catalog = "cncsen")
+@Table(name = "code_templet_item", catalog = "cncsen")
 
 /**
  * 类 编 号：BL_PU6030202_1000_model
- * 类 名 称：CodetempletItem
+ * 类 名 称：CodeTempletItem
  * 内容摘要：业务模型Pojo类,里面包含业务模型的属性，以及该属性的get set方法
  * @author roothomes
  * @date 2017-10-30
  */
-public class CodetempletItem extends BaseModel<String>
+public class CodeTempletItem extends BaseModel<String>
 {
     private static final long serialVersionUID = 1L;
 

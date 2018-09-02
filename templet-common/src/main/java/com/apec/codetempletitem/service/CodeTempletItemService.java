@@ -1,11 +1,10 @@
 package com.apec.codetempletitem.service;
 
 
-import com.apec.codetempletitem.model.CodetempletItem;
+import com.apec.codetempletitem.dto.CodeTempletItemDTO;
+import com.apec.codetempletitem.model.CodeTempletItem;
 
-import com.apec.codetempletitem.dto.CodetempletItemDTO;
-
-import com.apec.codetempletitem.vo.CodetempletItemVo;
+import com.apec.codetempletitem.vo.CodeTempletItemVo;
 
 import com.apec.framework.common.PageDTO;
 
@@ -14,12 +13,12 @@ import org.springframework.data.domain.PageRequest;
 
 /**
  * 类 编 号：BL_PU6030202_1000_service
- * 类 名 称：CodetempletItemService
+ * 类 名 称：CodeTempletItemService
  * 内容摘要：业务模型Service接口类,里面包含新增、删除、单个查询、模糊查询、分页查询的基础方法的定义
  * @author roothomes
  * @date 2017-10-30
  */
-public interface CodetempletItemService {
+public interface CodeTempletItemService {
     /**
      * 创建一个对象
      * @param vo 对象
@@ -28,7 +27,7 @@ public interface CodetempletItemService {
      * @author roothomes
      * @date 2017-10-30
      */
-    CodetempletItemVo create(CodetempletItemVo vo) throws Exception;
+    CodeTempletItemVo create(CodeTempletItemVo vo) throws Exception;
 	
     /**
      * 逻辑删除一个对象
@@ -47,7 +46,7 @@ public interface CodetempletItemService {
      * @author roothomes
      * @date 2017-10-30
      */
-    CodetempletItem updateOrderNumber(String id, Integer orderNumber);
+    CodeTempletItem updateOrderNumber(String id, Integer orderNumber);
 	
     /**
      * 更新状态
@@ -57,7 +56,7 @@ public interface CodetempletItemService {
      * @author roothomes
      * @date 2017-10-30
      */
-    CodetempletItem updateStatus(String id, String status);
+    CodeTempletItem updateStatus(String id, String status);
 	
     /**
      * 更新对象模型
@@ -66,7 +65,7 @@ public interface CodetempletItemService {
      * @author roothomes
      * @date 2017-10-30
      */
-    CodetempletItem updateObject(CodetempletItem vo);
+    CodeTempletItem updateObject(CodeTempletItem vo);
 
     /**
      * 分页查询数据
@@ -76,7 +75,7 @@ public interface CodetempletItemService {
      * @author roothomes
      * @date 2017-10-30
      */
-    PageDTO<CodetempletItemDTO> seachPageDto(CodetempletItemVo vo, PageRequest pageRequest);
+    PageDTO<CodeTempletItemDTO> seachPageDto(CodeTempletItemVo vo, PageRequest pageRequest);
 	
 	/**
      * 分页查询数据
@@ -86,7 +85,7 @@ public interface CodetempletItemService {
      * @author roothomes
      * @date 2017-10-30
      */
-    PageDTO<CodetempletItem> seachPageModel(CodetempletItemVo vo, PageRequest pageRequest);
+    PageDTO<CodeTempletItem> seachPageModel(CodeTempletItemVo vo, PageRequest pageRequest);
 	
     /**
      * 根据主键查询对象
@@ -95,7 +94,7 @@ public interface CodetempletItemService {
      * @author roothomes
      * @date 2017-10-30
      */
-    CodetempletItem findOne(String id);
+    CodeTempletItem findOne(String id);
 
     /**
      * 查询数据列表
@@ -104,7 +103,7 @@ public interface CodetempletItemService {
      * @author roothomes
      * @date 2017-10-30
      */
-    List<CodetempletItem> queryAll(CodetempletItemVo vo);
+    List<CodeTempletItem> queryAll(CodeTempletItemVo vo);
 	
 	/**
      * 后台任务刷新对象模型所有数据
@@ -112,5 +111,5 @@ public interface CodetempletItemService {
      * @author roothomes
      * @date 2017-10-30
      */
-    void flushCacheJob(CodetempletItem entity);
+    void flushCacheJob(CodeTempletItem entity);
 }

@@ -1,18 +1,24 @@
 package com.apec.cs.web;
 
+import com.apec.codetempletcontants.model.CodeTempletContants;
+import com.apec.codetempletcontants.service.CodeTempletContantsService;
+import com.apec.codetempletcontants.vo.CodeTempletContantsVo;
+import com.apec.codetempletitem.model.CodeTempletItem;
+import com.apec.codetempletitem.vo.CodeTempletItemVo;
+import com.apec.codetemplet.dto.CodetempletDTO;
 import com.apec.codetemplet.model.Codetemplet;
 import com.apec.codetemplet.service.CodetempletService;
 import com.apec.codetemplet.util.KeyGenCodetemplet;
 import com.apec.codetemplet.vo.CodetempletVo;
-import com.apec.codetempletitem.model.CodetempletItem;
-import com.apec.codetempletitem.service.CodetempletItemService;
-import com.apec.codetempletitem.vo.CodetempletItemVo;
+import com.apec.codetempletitem.service.CodeTempletItemService;
 import com.apec.cs.constants.CsConstants;
 import com.apec.cs.util.CsConfig;
 import com.apec.cs.vo.TempGenerateParamVo;
 import com.apec.cs.vo.TempGenerateRsVo;
 import com.apec.framework.common.Constants;
 import com.apec.framework.common.ResultData;
+import com.apec.framework.common.constants.ErrorCodeConsts;
+import com.apec.framework.common.exception.ApecRuntimeException;
 import com.apec.framework.common.util.BeanUtil;
 import com.apec.framework.common.util.JsonUtil;
 import com.google.common.base.Strings;
@@ -23,7 +29,6 @@ import com.roothomes.common.util.ZipCompress;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,8 +38,8 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 类 编 号：
@@ -54,7 +59,9 @@ public class TempCfgCsController extends MyBaseController {
 	@Autowired
 	CodetempletService codetempletService;
 	@Autowired
-	CodetempletItemService codetempletItemService;
+	CodeTempletItemService codetempletItemService;
+	@Autowired
+	CodeTempletContantsService codeTempletContantsService;
 	@Autowired
 	private KeyGenCodetemplet idGen;
 
@@ -74,66 +81,188 @@ public class TempCfgCsController extends MyBaseController {
 	public ResultData<TempGenerateRsVo> generateFile(@RequestBody String json) {
 		ResultData<TempGenerateRsVo> resultData = new ResultData<TempGenerateRsVo>();
 		LOG.debug("generateFile:{}",json);
-		TempGenerateRsVo data = new TempGenerateRsVo();
 		try {
-			String rt = DateFormatUtils.format(new Date(),UTC_FORMAT);
-			data.setRequestTime(rt);
 			TempGenerateParamVo vo = getFormJSON(json, TempGenerateParamVo.class);
 			LOG.info("TempGenerateParamVo:{}",JsonUtil.toJSONString(vo));
-
 			Cfg param = initCfg(vo);
-			checkContantCfg(vo);
-			checkAttributeCfg(vo);
-
-			//设置dir的名称
-			String outputPath = param.getCfgOutputBaseDir();
-			String dirTime = DateFormatUtils.format(new Date(),DIR_FORMAT);
-			if(param.getCfgOutputBaseDir().endsWith(File.separator)){
-				outputPath = param.getCfgOutputBaseDir() + param.getCfgArtifactId() + dirTime;
-			}else{
-				outputPath = param.getCfgOutputBaseDir() + File.separator + param.getCfgArtifactId() + dirTime;
+			resultData = generateFile(param,vo);
+			if(resultData.isSucceed()){
+				//不是从数据库配置里面拉取的配置，需要把临时的模型对象存到数据库。
+				saveDataToDB(param,resultData);
 			}
-
-			param.setCfgOutputBaseDir(outputPath);
-			BuildUtil.buildAll(param);
-			resultData.setSucceed(true);
-
-			String zipPath = null;
-			if(csConfig.getZipDir().endsWith(File.separator)){
-				zipPath = csConfig.getZipDir() + param.getCfgArtifactId() + dirTime + ".zip";
-			}else{
-				zipPath = csConfig.getZipDir() + File.separator + param.getCfgArtifactId() + dirTime + ".zip";
-			}
-			ZipCompress zipCom = new ZipCompress(zipPath,outputPath);
-			zipCom.zip();
-
-			rt = DateFormatUtils.format(new Date(),UTC_FORMAT);
-			data.setFilesIp("192.168.7.203");
-			data.setFilesPath(param.getCfgOutputBaseDir());
-			data.setResponseTime(rt);
-			String httpZipPath = null;
-			if(csConfig.getHttpZipBasePath().endsWith(File.separator)){
-				httpZipPath = csConfig.getHttpZipBasePath() + param.getCfgArtifactId() + dirTime + ".zip";
-			}else{
-				httpZipPath = csConfig.getHttpZipBasePath() + File.separator + param.getCfgArtifactId() + dirTime + ".zip";
-			}
-			data.setHttpZip(httpZipPath);
-			resultData.setData(data);
-			resultData.setErrorCode(CsConstants.BUSINESS_CODE_OK);
-			resultData.setErrorMsg(CsConstants.BUSINESS_CODE_OK_DESC);
-			saveDataToDB(param,resultData);
 		} catch (Exception e) {
 			LOG.error("generateFile ", e);
-			String rt = DateFormatUtils.format(new Date(),UTC_FORMAT);
-			data.setResponseTime(rt);
 			resultData.setSucceed(false);
 			resultData.setErrorCode(Constants.SYS_ERROR);
 			resultData.setErrorMsg(e.getMessage());
 		}
+		return resultData;
+	}
 
+	/**
+	 * 从配置的模型对象，生成服务文件
+	 * @param json JSON请求参数
+	 * @return
+	 * @author roothomes
+	 * @date 2018-09-01
+	 */
+	@RequestMapping(value = "/generateFileFromCfgModel", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public ResultData<TempGenerateRsVo> generateFileFromCfgModel(@RequestBody String json) {
+		ResultData<TempGenerateRsVo> resultData = new ResultData<TempGenerateRsVo>();
+		LOG.debug("generateFile:{}",json);
+		try {
+			CodetempletDTO code = getFormJSON(json, CodetempletDTO.class);
+			if(null == code || Strings.isNullOrEmpty(code.getId())){
+				throw new ApecRuntimeException(ErrorCodeConsts.COMMON_MISSING_PARAMS);
+			}
+			Codetemplet codetemplet = codetempletService.findOne(code.getId());
+			if(null == codetemplet){
+				throw new ApecRuntimeException(ErrorCodeConsts.ERROR_QUERY_DATA_NOT_EXIST_BY_ID);
+			}
+			LOG.info("codetemplet:{}",JsonUtil.toJSONString(codetemplet));
+			CodeTempletItemVo queryItemVo = new CodeTempletItemVo();
+			queryItemVo.setTempletId(codetemplet.getId());
+			List<CodeTempletItem> listItem = codetempletItemService.queryAll(queryItemVo);
+			CodeTempletContantsVo codeTempletContantsVo = new CodeTempletContantsVo();
+			codeTempletContantsVo.setTempletId(codetemplet.getId());
+			List<CodeTempletContants> listContants = codeTempletContantsService.queryAll(codeTempletContantsVo);
+
+			//需要从数据库拉取配置的信息，填充到模型里面进行设置
+			TempGenerateParamVo vo =  swtichDB2ParamVo(codetemplet,listItem,listContants);
+			LOG.info("TempGenerateParamVo:{}",JsonUtil.toJSONString(vo));
+			Cfg param = initCfg(vo);
+			resultData = generateFile(param,vo);
+
+		} catch (Exception e) {
+			LOG.error("generateFile ", e);
+			resultData.setSucceed(false);
+			resultData.setErrorCode(Constants.SYS_ERROR);
+			resultData.setErrorMsg(e.getMessage());
+		}
+		return resultData;
+	}
+
+	/**
+	 * 把数据库里面配置的信息转换为生成文件需要的对象
+	 * @param codetemplet
+	 * @param listItem
+	 * @return
+	 */
+	private TempGenerateParamVo swtichDB2ParamVo(Codetemplet codetemplet,List<CodeTempletItem> listItem,List<CodeTempletContants> listContants){
+		TempGenerateParamVo vo = new TempGenerateParamVo();
+		vo.setCfgDBTableName(codetemplet.getCfgDbTableName());
+		vo.setCfgArtifactId(codetemplet.getCfgArtifactId());
+		vo.setCfgPojoName(codetemplet.getCfgPojoName());
+		vo.setCfgModelDesc(codetemplet.getCfgModeDesc());
+
+		StringBuilder cfgJavaAttributeDesc = new StringBuilder();
+		StringBuilder cfgDBColumnCode = new StringBuilder();
+		StringBuilder cfgJavaAttributeType = new StringBuilder();
+		StringBuilder cfgJavaAttributeCode = new StringBuilder();
+		StringBuilder cfgJavaAttributeCanNull = new StringBuilder();
+		StringBuilder cfgJavaAttributeDefaultVal = new StringBuilder();
+		for(int i=0;i<listItem.size();i++){
+			CodeTempletItem one = listItem.get(i);
+			if((i+1) == listItem.size()){
+				cfgJavaAttributeDesc.append(one.getCfgJavaAttributeDesc());
+				cfgDBColumnCode.append(one.getCfgDBColumnCode());
+				cfgJavaAttributeType.append(one.getCfgJavaAttributeType());
+				cfgJavaAttributeCode.append(one.getCfgJavaAttributeCode());
+				cfgJavaAttributeCanNull.append(one.getCfgJavaAttributeCanNull());
+				cfgJavaAttributeDefaultVal.append(one.getCfgJavaAttributeDefaultVal());
+			}else{
+				cfgJavaAttributeDesc.append(one.getCfgJavaAttributeDesc()).append("|");
+				cfgDBColumnCode.append(one.getCfgDBColumnCode()).append("|");
+				cfgJavaAttributeType.append(one.getCfgJavaAttributeType()).append("|");
+				cfgJavaAttributeCode.append(one.getCfgJavaAttributeCode()).append("|");
+				cfgJavaAttributeCanNull.append(one.getCfgJavaAttributeCanNull()).append("|");
+				cfgJavaAttributeDefaultVal.append(one.getCfgJavaAttributeDefaultVal()).append("|");
+			}
+		}
+		vo.setCfgJavaAttributeDesc(cfgJavaAttributeDesc.toString()) ;
+		vo.setCfgDBColumnCode(cfgDBColumnCode.toString());
+		vo.setCfgJavaAttributeType(cfgJavaAttributeType.toString());
+		vo.setCfgJavaAttributeCode(cfgJavaAttributeCode.toString());
+		vo.setCfgJavaAttributeCanNull(cfgJavaAttributeCanNull.toString());
+		vo.setCfgJavaAttributeDefaultVal(cfgJavaAttributeDefaultVal.toString());
+		if(null != listContants && !listContants.isEmpty()){
+			StringBuilder cfgJavaContantDesc = new StringBuilder();
+			StringBuilder cfgJavaContantCode = new StringBuilder();
+			StringBuilder cfgJavaContantType = new StringBuilder();
+			StringBuilder cfgJavaContantDefaultVal = new StringBuilder();
+
+			for(int i=0;i<listContants.size();i++){
+				CodeTempletContants one = listContants.get(i);
+				if((i+1) == listContants.size()){
+					cfgJavaContantDesc.append(one.getVariableDesc());
+					cfgJavaContantCode.append(one.getVariableName());
+					cfgJavaContantType.append(one.getVariableType());
+					cfgJavaContantDefaultVal.append(one.getVariableVal());
+				}else{
+					cfgJavaContantDesc.append(one.getVariableDesc()).append("|");
+					cfgJavaContantCode.append(one.getVariableName()).append("|");
+					cfgJavaContantType.append(one.getVariableType()).append("|");
+					cfgJavaContantDefaultVal.append(one.getVariableVal()).append("|");
+				}
+			}
+			vo.setCfgJavaContantDesc(cfgJavaContantDesc.toString()); ;
+			vo.setCfgJavaContantCode(cfgJavaContantCode.toString());
+			vo.setCfgJavaContantType(cfgJavaContantType.toString());
+			vo.setCfgJavaContantDefaultVal(cfgJavaContantDefaultVal.toString());
+		}
+
+
+		return vo;
+	}
+
+	private ResultData<TempGenerateRsVo> generateFile(Cfg param ,TempGenerateParamVo vo) throws Exception{
+		ResultData<TempGenerateRsVo> resultData = new ResultData<TempGenerateRsVo>();
+		LOG.debug("generateFile:{}",JsonUtil.toJSONString(vo));
+		TempGenerateRsVo data = new TempGenerateRsVo();
+		String rt = DateFormatUtils.format(new Date(),UTC_FORMAT);
+		data.setRequestTime(rt);
+		checkContantCfg(vo);
+		checkAttributeCfg(vo);
+		//设置dir的名称
+		String outputPath = param.getCfgOutputBaseDir();
+		String dirTime = DateFormatUtils.format(new Date(),DIR_FORMAT);
+		if(param.getCfgOutputBaseDir().endsWith(File.separator)){
+			outputPath = param.getCfgOutputBaseDir() + param.getCfgArtifactId() + dirTime;
+		}else{
+			outputPath = param.getCfgOutputBaseDir() + File.separator + param.getCfgArtifactId() + dirTime;
+		}
+
+		param.setCfgOutputBaseDir(outputPath);
+		BuildUtil.buildAll(param);
+		resultData.setSucceed(true);
+
+		String zipPath = null;
+		if(csConfig.getZipDir().endsWith(File.separator)){
+			zipPath = csConfig.getZipDir() + param.getCfgArtifactId() + dirTime + ".zip";
+		}else{
+			zipPath = csConfig.getZipDir() + File.separator + param.getCfgArtifactId() + dirTime + ".zip";
+		}
+		ZipCompress zipCom = new ZipCompress(zipPath,outputPath);
+		zipCom.zip();
+
+		rt = DateFormatUtils.format(new Date(),UTC_FORMAT);
+		data.setFilesIp("192.168.7.203");
+		data.setFilesPath(param.getCfgOutputBaseDir());
+		data.setResponseTime(rt);
+		String httpZipPath = null;
+		if(csConfig.getHttpZipBasePath().endsWith(File.separator)){
+			httpZipPath = csConfig.getHttpZipBasePath() + param.getCfgArtifactId() + dirTime + ".zip";
+		}else{
+			httpZipPath = csConfig.getHttpZipBasePath() + File.separator + param.getCfgArtifactId() + dirTime + ".zip";
+		}
+		data.setHttpZip(httpZipPath);
+		resultData.setData(data);
+		resultData.setErrorCode(CsConstants.BUSINESS_CODE_OK);
+		resultData.setErrorMsg(CsConstants.BUSINESS_CODE_OK_DESC);
 
 		return resultData;
 	}
+
 
 	public void saveDataToDB(Cfg param,ResultData<TempGenerateRsVo> resultData) {
 
@@ -155,9 +284,9 @@ public class TempCfgCsController extends MyBaseController {
 			String[]  descS = param.getCfgJavaAttributeDesc().split(IContant.K_SPLIT);
 			String[]  nullS = param.getCfgJavaAttributeCanNull().split(IContant.K_SPLIT);
 			String[]  dbS = param.getCfgDBColumnCode().split(IContant.K_SPLIT);
-			CodetempletItemVo itemVo = new CodetempletItemVo();
+			CodeTempletItemVo itemVo = new CodeTempletItemVo();
 			for(int i=0;i<codeS.length;i++){
-				itemVo = new CodetempletItemVo();
+				itemVo = new CodeTempletItemVo();
 				itemVo.setTempletId(codetempletVo.getId());
 				itemVo.setCfgDBColumnCode(codeS[i]);
 				itemVo.setCfgJavaAttributeCanNull(nullS[i]);
@@ -215,15 +344,15 @@ public class TempCfgCsController extends MyBaseController {
 		boolean typeEmpty = Strings.isNullOrEmpty(vo.getCfgJavaContantType());
 		boolean valEmpty = Strings.isNullOrEmpty(vo.getCfgJavaContantDefaultVal());
 		boolean descEmpty = Strings.isNullOrEmpty(vo.getCfgJavaContantDesc());
-		boolean empty = (codeEmpty || typeEmpty || valEmpty || descEmpty);
+		boolean empty = (!codeEmpty || !typeEmpty || !valEmpty || !descEmpty);
 		if(empty){
 			int codeSize = vo.getCfgJavaContantCode().split(IContant.K_SPLIT).length;
 			int typeSize = vo.getCfgJavaContantType().split(IContant.K_SPLIT).length;
 			int valSize = vo.getCfgJavaContantDefaultVal().split(IContant.K_SPLIT).length;
 			int descSize = vo.getCfgJavaContantDesc().split(IContant.K_SPLIT).length;
 			if((codeSize != typeSize)
-					|| (codeSize == valSize)
-					|| (codeSize == descSize) ){
+					|| (codeSize != valSize)
+					|| (codeSize != descSize) ){
 				throw new Exception("参数:cfgJavaContantDesc,cfgJavaContantType,cfgJavaContantCode,cfgJavaContantDefaultVal 的分割数量必须相等");
 			}
 		}

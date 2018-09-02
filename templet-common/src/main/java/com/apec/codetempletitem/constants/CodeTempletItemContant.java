@@ -4,12 +4,12 @@ package com.apec.codetempletitem.constants;
 
 /**
  * 类 编 号：BL_PU6030202_1000_constants
- * 类 名 称：CodetempletItemContant
+ * 类 名 称：CodeTempletItem
  * 内容摘要：业务模型常量类,包含各种常量信息
  * @author roothomes
  * @date 2017-10-30
  */
-public interface CodetempletItemContant{
+public interface CodeTempletItemContant {
 
     /**
      * 默认平台ID

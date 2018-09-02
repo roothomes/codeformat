@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
 
 /**
  * 类 编 号：BL_PU10000_10_basecontroller
- * 类 名 称：MyBaseController
+ * 类 名 称：MyBase4CodeTempletItemController
  * 内容摘要：业务模型BaseController类
  * @author roothomes
  * @date 2017-10-30
