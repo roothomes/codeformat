@@ -48,7 +48,7 @@ public interface ${CLASSNAME}{
 
 <#list CONTANT_CLASSNAME_TYPE as x>
     /** ${CONTANT_CLASSNAME_DESC[x_index]} */
-    ${CONTANT_CLASSNAME_TYPE[x_index]} ${CONTANT_CLASSNAME_CODE[x_index]} = <#if CONTANT_CLASSNAME_TYPE[x_index] == 'String'>"${CONTANT_CLASSNAME_DEAFULT_VAL[x_index]}"<#else>${CONTANT_CLASSNAME_DEAFULT_VAL[x_index]}</#if>;
+    ${CONTANT_CLASSNAME_TYPE[x_index]} ${CONTANT_CLASSNAME_CODE[x_index]} = ${CONTANT_CLASSNAME_DEAFULT_VAL[x_index]};
 </#list>
 
 }

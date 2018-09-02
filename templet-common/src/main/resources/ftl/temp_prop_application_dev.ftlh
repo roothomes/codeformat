@@ -1,7 +1,6 @@
 eureka.instance.hostname=${cfgDevEurekaInstanceHostname}
 server.port=${cfgServerPort}
 
-logging.level=INFO
 logging.level.org.hibernate=ERROR
 logging.level.com.apec=debug
 

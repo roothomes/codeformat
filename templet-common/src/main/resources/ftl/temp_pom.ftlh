@@ -14,17 +14,17 @@
         <dependency>
             <groupId>com.apec</groupId>
             <artifactId>framework-jpa</artifactId>
-            <version>1.0.1-RELEASE</version>
+            <version>${VERSION}</version>
         </dependency>
         <dependency>
             <groupId>com.apec</groupId>
             <artifactId>framework-springcloud</artifactId>
-            <version>1.0.1-RELEASE</version>
+            <version>${VERSION}</version>
         </dependency>
 		<dependency>
 			<groupId>com.apec</groupId>
 			<artifactId>framework-common</artifactId>
-			<version>1.0.1-RELEASE</version>
+			<version>${VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>redis.clients</groupId>
@@ -55,12 +55,12 @@
         <dependency>
         	<groupId>com.apec</groupId>
         	<artifactId>framework-cache</artifactId>
-        	<version>1.0.1-RELEASE</version>
+        	<version>${VERSION}</version>
         </dependency>
         <dependency>
             <groupId>com.apec</groupId>
-            <artifactId>project-common</artifactId>
-            <version>1.0.1-RELEASE</version>
+            <artifactId>common-base</artifactId>
+            <version>${VERSION}</version>
         </dependency>
         <dependency>
         	<groupId>org.projectlombok</groupId>
@@ -70,7 +70,7 @@
         <dependency>
         	<groupId>com.apec</groupId>
         	<artifactId>framework-ftp</artifactId>
-        	<version>1.0.1-RELEASE</version>
+        	<version>${VERSION}</version>
         </dependency>
     </dependencies>	
     <dependencyManagement>

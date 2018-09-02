@@ -4,7 +4,6 @@ server.port=30023
 eureka.instance.hostname=129.1.1.214:1111
 eureka.client.serviceUrl.defaultZone=http://129.1.1.214:1111/eureka/,http://129.1.1.216:1111/eureka/,http://129.1.1.221:1111/eureka/,http://129.1.1.231:1111/eureka/
 
-logging.level=INFO
 logging.level.org.hibernate=ERROR
 logging.level.com.apec=debug
 
