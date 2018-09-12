@@ -5,7 +5,7 @@ package ${PACKAGE};
     <#if p.desc??>
 /** ${p.desc} */
     </#if>
-${p.importPackage}
+import ${p.importPackage};
 </#list>
 
 

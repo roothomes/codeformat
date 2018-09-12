@@ -14,6 +14,9 @@ public class TempletAttribute {
     private String desc;
     private String type;
     private String dbCode;
+    /**
+     * Java基础属性是否可以为空（0:不可为空；1:可以为空；）;(12个属性)
+     */
     private String canNull;
 
     public void setJavaCode(String javaCode) {
@@ -48,10 +51,18 @@ public class TempletAttribute {
         return dbCode;
     }
 
+    /**
+     * Java基础属性是否可以为空（0:不可为空；1:可以为空；）;(12个属性)
+     * @return
+     */
     public String getCanNull() {
         return canNull;
     }
 
+    /**
+     * Java基础属性是否可以为空（0:不可为空；1:可以为空；）;(12个属性)
+     * @param canNull
+     */
     public void setCanNull(String canNull) {
         this.canNull = canNull;
     }

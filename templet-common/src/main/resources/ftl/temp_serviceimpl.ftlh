@@ -5,18 +5,6 @@ package ${PACKAGE};
 import ${p.importPackage};
 </#list>
 
-import java.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import com.google.common.base.Strings;
-import com.mysema.query.types.Predicate;
-import com.mysema.query.types.expr.BooleanExpression;
-import javax.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 类 编 号：${CLASS_SERIALNO}
@@ -45,7 +33,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
     <#-- ${ATTRIBUTE[x_index].javaCode} -->
     <#if x=='0'>
         <#if ATTRIBUTE[x_index].type =='String'>
-        if (Strings.isNullOrEmpty(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}())) {
+        if (StringUtils.isBlank(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}())) {
             vo.set${ATTRIBUTE[x_index].javaCode?cap_first}(${ATTRIBUTE_DEFAULT_VAL[x_index]});
         }
         <#elseif ATTRIBUTE[x_index].type =='Integer'>
@@ -58,13 +46,13 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         if (null == vo.getCityId()) {
             vo.setCityId(DEFAULT_CITY_ID);
         }
-        if (Strings.isNullOrEmpty(vo.getStatus())) {
+        if (StringUtils.isBlank(vo.getStatus())) {
             vo.setStatus(STATUS_INVALID);
         }
-        if (Strings.isNullOrEmpty(vo.getPlantformId())) {
+        if (StringUtils.isBlank(vo.getPlantformId())) {
             vo.setPlantformId(DEFAULT_PLANTFORM_ID);
         }
-        if (Strings.isNullOrEmpty(vo.getOecdNo())) {
+        if (StringUtils.isBlank(vo.getOecdNo())) {
             vo.setOecdNo(DEFAULT_OECD_NO);
         }
         if (null == vo.getEnableFlag()) {
@@ -130,7 +118,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
 <#list ATTRIBUTE_CAN_NULL as x>
     <#if x=='0'>
         <#if ATTRIBUTE[x_index].type =='String'>
-        if (!Strings.isNullOrEmpty(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}())) {
+        if (!StringUtils.isBlank(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}())) {
 			entity.set${ATTRIBUTE[x_index].javaCode?cap_first}(vo.get${ATTRIBUTE[x_index].javaCode?cap_first}());
         }
         <#elseif ATTRIBUTE[x_index].type =='Integer'>
@@ -150,7 +138,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
 <#list BASE_ATTRIBUTE_CAN_NULL as x>
     <#if x=='0'>
         <#if BASE_ATTRIBUTE[x_index].type =='String'>
-        if (!Strings.isNullOrEmpty(vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}())) {
+        if (!StringUtils.isBlank(vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}())) {
 			entity.set${BASE_ATTRIBUTE[x_index].javaCode?cap_first}(vo.get${BASE_ATTRIBUTE[x_index].javaCode?cap_first}());
         }
         <#elseif BASE_ATTRIBUTE[x_index].type =='Integer'>
@@ -295,7 +283,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         if (null != entity.getCityId()) {
             list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.cityId.eq(entity.getCityId()));
         }
-        if (!Strings.isNullOrEmpty(entity.getStatus())) {
+        if (!StringUtils.isBlank(entity.getStatus())) {
             list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.status.eq(entity.getStatus()));
         }
 
@@ -305,22 +293,22 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
         if (null != entity.getLastUpdateDate()) {
             list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.lastUpdateDate.eq(entity.getLastUpdateDate()));
         }
-        if (!Strings.isNullOrEmpty(entity.getCreateBy())) {
+        if (!StringUtils.isBlank(entity.getCreateBy())) {
             list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.createBy.eq(entity.getCreateBy()));
         }
-        if (!Strings.isNullOrEmpty(entity.getLastUpdateBy())) {
+        if (!StringUtils.isBlank(entity.getLastUpdateBy())) {
             list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.lastUpdateBy.eq(entity.getLastUpdateBy()));
         }
-        if (!Strings.isNullOrEmpty(entity.getPlantformId())) {
+        if (!StringUtils.isBlank(entity.getPlantformId())) {
             list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.plantformId.eq(entity.getPlantformId()));
         }
-        if (!Strings.isNullOrEmpty(entity.getOecdNo())) {
+        if (!StringUtils.isBlank(entity.getOecdNo())) {
             list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.oecdNo.eq(entity.getOecdNo()));
         }
         if (null != entity.getOrderNumber()) {
             list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.orderNumber.eq(entity.getOrderNumber()));
         }
-        if (!Strings.isNullOrEmpty(entity.getRemarks())) {
+        if (!StringUtils.isBlank(entity.getRemarks())) {
             list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.remarks.eq(entity.getRemarks()));
         }
         return list;
@@ -339,7 +327,7 @@ public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
 <#list ATTRIBUTE_CAN_NULL as x>
 
 	<#if ATTRIBUTE[x_index].type =='String'>
-		if (!Strings.isNullOrEmpty(entity.get${ATTRIBUTE[x_index].javaCode?cap_first}())) {
+		if (!StringUtils.isBlank(entity.get${ATTRIBUTE[x_index].javaCode?cap_first}())) {
 			list.add(Q${MODEL_CLASSNAME}.${MODEL_CLASSNAME?uncap_first}.${ATTRIBUTE[x_index].javaCode?uncap_first}.like("%" + entity.get${ATTRIBUTE[x_index].javaCode?cap_first}() + "%"));
 		}
 	<#elseif ATTRIBUTE[x_index].type =='Integer'>

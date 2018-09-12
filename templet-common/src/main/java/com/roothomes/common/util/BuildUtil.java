@@ -1,6 +1,5 @@
 package com.roothomes.common.util;
 
-import com.apec.cs.web.TempCfgCsController;
 import com.apec.framework.common.util.JsonUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -54,17 +53,13 @@ public class BuildUtil {
                 param.getCfgJavaAttributeCanNull());
         root.put(IContant.K_ATTRIBUTE,listModel );
         /* 设置导入的包的信息 */
-        List<TempletPackage> listPackage = TempletUtil.getModelClassImportPackages(param.getCfgJavaAttributeType());
-        TempletPackage packae = new TempletPackage();
-        packae.setImportPackage("import com.apec.framework.jpa.model.BaseModel;");
-        packae.setDesc("模型的基础继承类");
-        listPackage.add(packae);
+        List<TempletPackage> listPackage = TempletPackage.getModelBasePackageV1();
         root.put(IContant.K_PACKAGES,listPackage);
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
         /* 设置注解列表 */
-        List<TempletAnnotation> list = TempletAnnotation.getTModelClassList();
+        List<TempletAnnotation> list = TempletAnnotation.getModelAnnotationsV1();
         TempletAnnotation one = new TempletAnnotation();
         one.setName("@Table(name = \""+param.getCfgDBTableName()+"\", catalog = \""+param.getCfgDBName()+"\")");
         one.setDesc("JPA表注解");
@@ -94,7 +89,7 @@ public class BuildUtil {
                 param.getCfgDBColumnCode());
         root.put(IContant.K_ATTRIBUTE,listDTO );
          /* 设置导入的包的信息 */
-        root.put(IContant.K_PACKAGES, TempletUtil.getDTOClassImportPackages(IContant.BASE_JAVA_ATTRIBUTE_TYPE));
+        root.put(IContant.K_PACKAGES, TempletPackage.getDTOBasePackageV1());
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
@@ -122,7 +117,7 @@ public class BuildUtil {
                 param.getCfgDBColumnCode());
         root.put(IContant.K_ATTRIBUTE,listDTO );
          /* 设置导入的包的信息 */
-        root.put(IContant.K_PACKAGES, TempletUtil.getDTOClassImportPackages(IContant.BASE_JAVA_ATTRIBUTE_TYPE));
+        root.put(IContant.K_PACKAGES, TempletPackage.getDTOBasePackageV1());
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
@@ -213,7 +208,7 @@ public class BuildUtil {
         root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Service接口类,里面包含新增、删除、单个查询、模糊查询、分页查询的基础方法的定义");
-        List<TempletPackage> listPackage = new ArrayList<TempletPackage>(4);
+        List<TempletPackage> listPackage = new ArrayList<>(4);
         TempletPackage one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
         listPackage.add(one);
@@ -223,9 +218,7 @@ public class BuildUtil {
         one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
         listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.common.PageDTO");
-        listPackage.add(one);
+        TempletPackage.getServiceBasePackageV1().stream().forEach(e->{listPackage.add(e);});
 
          /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,listPackage);
@@ -256,32 +249,7 @@ public class BuildUtil {
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型BaseController类");
         List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
-        TempletPackage one = null;
-        one = new TempletPackage();
-        one.setImportPackage("org.springframework.data.domain.PageRequest");
-        one.setDesc("");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("org.springframework.data.domain.Sort");
-        one.setDesc("");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.base.BaseController");
-        one.setDesc("");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.common.PageJSON");
-        one.setDesc("");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.common.util.JsonUtil");
-        one.setDesc("");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.dto.BaseDTO");
-        one.setDesc("");
-        listPackage.add(one);
-
+        TempletPackage.getBaseControllerPackageV1().stream().forEach(e->{listPackage.add(e);});
          /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,listPackage);
         // 设置类名称
@@ -302,25 +270,10 @@ public class BuildUtil {
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型BaseController类");
         List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
+        TempletPackage.getControllerBasePackageV1().stream().forEach(e->{listPackage.add(e);});
         TempletPackage one = null;
         one = new TempletPackage();
-        one.setImportPackage("org.springframework.data.domain.PageRequest");
-        one.setDesc("");
-        listPackage.add(one);
-        one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_service) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
-        one.setDesc("");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.common.PageJSON");
-        one.setDesc("");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.common.util.JsonUtil");
-        one.setDesc("");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.dto.BaseDTO");
         one.setDesc("");
         listPackage.add(one);
 
@@ -346,6 +299,7 @@ public class BuildUtil {
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Service实现类,里面包含新增、删除、单个查询、模糊查询、分页查询的基础方法的定义");
         List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
+        TempletPackage.getServiceImplBasePackageV1().stream().forEach(e->{ listPackage.add(e); });
         TempletPackage one = null;
         one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_service) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
@@ -358,24 +312,6 @@ public class BuildUtil {
         one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_model) + ".Q" + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
         one.setDesc("模型DAO类");
-        listPackage.add(one);
-
-
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.cache.CacheService");
-        one.setDesc("缓存类");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.common.PageDTO");
-        one.setDesc("分页模型类");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.common.enumtype.EnableFlag");
-        one.setDesc("逻辑删除的枚举");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.common.util.BeanUtil");
-        one.setDesc("Bean的常用方法");
         listPackage.add(one);
         one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_keygen) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_keygen));
@@ -401,6 +337,7 @@ public class BuildUtil {
         root.put(IContant.K_ATTRIBUTE_CAN_NULL,param.getCfgJavaAttributeCanNull().split(IContant.K_SPLIT));
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+
         /* Get the template (uses cache internally) */
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_SERVICEIMPL);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
@@ -416,24 +353,16 @@ public class BuildUtil {
         root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务启动类");
-        List<TempletPackage> listPackage = new ArrayList<TempletPackage>(3);
-        TempletPackage one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.base.BaseApplication");
-        one.setDesc("springboot架构中基础应用类");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.common.enumtype.RoutingKey");
-        one.setDesc("springboot架构中消息队列注册类");
-        listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("com.apec.framework.springcloud.SpringCloudConfig");
-        one.setDesc("spring云配置文件类");
-        listPackage.add(one);
-
+        List<TempletPackage> listPackage = TempletPackage.getApplicationBasePackageV1();
          /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,listPackage);
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+
+         /* 设置注解列表 */
+        List<TempletAnnotation> list = TempletAnnotation.getApplicationAnnotationsV1();
+        root.put(IContant.K_ANNOTATION, list);
+
         /* Get the template (uses cache internally) */
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_APPLICATION);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));

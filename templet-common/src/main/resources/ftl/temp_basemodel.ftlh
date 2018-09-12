@@ -1,26 +1,10 @@
 package ${PACKAGE};
 
 
-import com.apec.framework.common.Constants;
-import com.apec.framework.common.enumtype.EnableFlag;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.Persistable;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.io.Serializable;
-import java.util.Date;
+<#list PACKAGES as p>
+<#if p.desc??>/** ${p.desc} */</#if>
+import ${p.importPackage};
+</#list>
 
 /**
  * 类 编 号：BL_PU6030202_BaseModel

@@ -49,6 +49,10 @@ public interface IContant {
      */
     String K_CLASSNAME = "CLASSNAME";
     /**
+     * 继承的类名字
+     */
+    String K_EXTENDSCLASSNAME="EXTENDSCLASSNAME";
+    /**
      * 类的描述
      */
     String K_CLASSNAME_DESC="CLASSNAME_DESC";

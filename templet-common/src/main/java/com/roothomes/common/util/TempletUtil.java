@@ -1,5 +1,7 @@
 package com.roothomes.common.util;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,7 @@ public class TempletUtil {
      * @param descCfg java属性字段里面的注释
      * @param typeCfg java属性的类型
      * @param dbCodeCfg 数据库属性对象的字段
+     * @param javaCodeCanNull Java基础属性是否可以为空（0:不可为空；1:可以为空；）如果为空，所有都可为空
      * @return
      * @author roothomes
      * @date 2017-10-20
@@ -27,7 +30,11 @@ public class TempletUtil {
         String[] descs = descCfg.split(IContant.K_SPLIT);
         String[] types = typeCfg.split(IContant.K_SPLIT);
         String[] dbCodes = dbCodeCfg.split(IContant.K_SPLIT);
-        String[] canNulls = javaCodeCanNull.split(IContant.K_SPLIT);
+        String[] canNulls = null;
+        if(StringUtils.isNotBlank(javaCodeCanNull)){
+            canNulls = javaCodeCanNull.split(IContant.K_SPLIT);
+        }
+
         List<TempletAttribute> list = new ArrayList<TempletAttribute>(javaCodeCfg.length());
 
         for(int i=0;i<javaCodes.length;i++){
@@ -36,160 +43,33 @@ public class TempletUtil {
             one.setJavaCode(javaCodes[i]);
             one.setDesc(descs[i]);
             one.setType(types[i]);
-            one.setCanNull(canNulls[i]);
+            one.setCanNull(canNulls == null ? "1" : canNulls[i]);
             list.add(one);
         }
         return list;
     }
 
-
+    /**
+     * 模型的基础属性列表
+     * @return
+     */
     public static List<TempletAttribute> getBaseModelAttributList(){
-        String[] javaCodes = IContant.BASE_JAVA_ATTRIBUTE_CODE.split(IContant.K_SPLIT);
-        String[] descs = IContant.BASE_JAVA_ATTRIBUTE_DESC.split(IContant.K_SPLIT);
-        String[] types = IContant.BASE_JAVA_ATTRIBUTE_TYPE.split(IContant.K_SPLIT);
-        String[] dbCodes =  IContant.BASE_DB_COLUMN_CODE.split(IContant.K_SPLIT);
-        String[] canNulls = IContant.BASE_JAVA_ATTRIBUTE_CAN_NULL.split(IContant.K_SPLIT);
-        List<TempletAttribute> list = new ArrayList<TempletAttribute>(javaCodes.length);
-        for(int i=0;i<javaCodes.length;i++){
-            TempletAttribute one = new TempletAttribute();
-            one.setDbCode(dbCodes[i]);
-            one.setJavaCode(javaCodes[i]);
-            one.setDesc(descs[i]);
-            one.setType(types[i]);
-            one.setCanNull(canNulls[i]);
-            list.add(one);
-        }
-        return list;
+        return getModelAttributeList(
+                IContant.BASE_JAVA_ATTRIBUTE_CODE,
+                IContant.BASE_JAVA_ATTRIBUTE_DESC,
+                IContant.BASE_JAVA_ATTRIBUTE_TYPE,
+                IContant.BASE_DB_COLUMN_CODE,
+                IContant.BASE_JAVA_ATTRIBUTE_CAN_NULL);
     }
 
     public static List<TempletAttribute> getDTOAttributeList(String javaCodeCfg, String descCfg, String typeCfg, String dbCodeCfg){
-        String[] javaCodes = javaCodeCfg.split(IContant.K_SPLIT);
-        String[] descs = descCfg.split(IContant.K_SPLIT);
-        String[] types = typeCfg.split(IContant.K_SPLIT);
-        String[] dbCodes = dbCodeCfg.split(IContant.K_SPLIT);
-        List<TempletAttribute> list = new ArrayList<TempletAttribute>(javaCodeCfg.length());
-        for(int i=0;i<javaCodes.length;i++){
-            TempletAttribute one = new TempletAttribute();
-            one.setDbCode(dbCodes[i]);
-            one.setJavaCode(javaCodes[i]);
-            one.setDesc(descs[i]);
-            one.setType(types[i]);
-            list.add(one);
-        }
+        List<TempletAttribute> list = getModelAttributeList(javaCodeCfg, descCfg, typeCfg, dbCodeCfg,null);
         List<TempletAttribute> baseList =  getBaseModelAttributList();
-        for (TempletAttribute one:baseList){
-            list.add(one);
-        }
+        baseList.stream().forEach(e->{
+            list.add(e);
+        });
         return list;
     }
 
-
-
-    public static List<TempletPackage> getModelClassBasePackage(){
-        List<TempletPackage> packages = new ArrayList<TempletPackage>();
-        TempletPackage one = null;
-        one = new TempletPackage();
-        one.setImportPackage("import javax.persistence.Column;");
-        one.setDesc("JPA列注解");
-        packages.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("import javax.persistence.Entity;");
-        one.setDesc("JPA实体注解");
-        packages.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("import javax.persistence.Table;");
-        one.setDesc("JPA表注解");
-        packages.add(one);
-        one = new TempletPackage();
-        one.setImportPackage("import org.hibernate.annotations.DynamicUpdate;");
-        one.setDesc("hibernate动态更新");
-        packages.add(one);
-
-        one = new TempletPackage();
-        one.setImportPackage("import org.hibernate.annotations.GenericGenerator;");
-        one.setDesc("hibernate自动生成");
-        packages.add(one);
-
-        one = new TempletPackage();
-        one.setImportPackage("import com.apec.framework.common.Constants;");
-        one.setDesc("平台常量类");
-        packages.add(one);
-
-        one = new TempletPackage();
-        one.setImportPackage("import com.apec.framework.common.util.JsonUtil;");
-        one.setDesc("JSON转换类");
-        packages.add(one);
-        return packages;
-    }
-
-    private static String getBaseImportPackages(String type){
-        String packageName = "";
-        if(BaseTypeEnum.String.name().equalsIgnoreCase(type)){
-            packageName = "import java.lang.String;";
-        }else if(BaseTypeEnum.Integer.name().equalsIgnoreCase(type)){
-            packageName = "import java.lang.Integer;";
-        }else if(BaseTypeEnum.Double.name().equalsIgnoreCase(type)){
-            packageName = "import java.lang.Double;";
-        }else if(BaseTypeEnum.Float.name().equalsIgnoreCase(type)){
-            packageName = "import java.lang.Float;";
-        }else if(BaseTypeEnum.Date.name().equalsIgnoreCase(type)){
-            packageName = "import java.util.Date;";
-        }else if(BaseTypeEnum.EnableFlag.name().equalsIgnoreCase(type)){
-            packageName = "import com.apec.framework.common.enumtype.EnableFlag;";
-        }
-        return packageName;
-    }
-    public static List<TempletPackage> getModelClassImportPackages(String modelType){
-        String[] types = modelType.split(IContant.K_SPLIT);
-        List<TempletPackage> list = getModelClassBasePackage();
-        TempletPackage one = null;
-        Map<String,String> maps = new HashMap<String,String>(types.length);
-        for(String type:types){
-            String packageName = getBaseImportPackages(type);
-            if(maps.containsKey(packageName)){
-                continue;
-            }
-            maps.put(packageName,packageName);
-
-            one = new TempletPackage();
-            one.setImportPackage(packageName);
-            list.add(one);
-        }
-        return list;
-    }
-
-    public static List<TempletPackage> getDTOClassBasePackage(){
-        List<TempletPackage> packages = new ArrayList<TempletPackage>();
-        TempletPackage one = null;
-        one = new TempletPackage();
-        one.setImportPackage("import com.apec.framework.dto.BaseDTO;");
-        one.setDesc("继承的基础分页类");
-        packages.add(one);
-
-        one = new TempletPackage();
-        one.setImportPackage("import com.apec.framework.common.util.JsonUtil;");
-        one.setDesc("JSON转换类");
-        packages.add(one);
-
-        return packages;
-    }
-    public static List<TempletPackage> getDTOClassImportPackages(String modelType){
-        String[] types = modelType.split(IContant.K_SPLIT);
-        List<TempletPackage> list = getDTOClassBasePackage();
-        TempletPackage one = null;
-        Map<String,String> maps = new HashMap<String,String>(types.length);
-        for(String type:types){
-            String packageName = getBaseImportPackages(type);
-            if(maps.containsKey(packageName)){
-                continue;
-            }
-            maps.put(packageName,packageName);
-
-            one = new TempletPackage();
-            one.setImportPackage(packageName);
-            list.add(one);
-        }
-        return list;
-    }
 
 }

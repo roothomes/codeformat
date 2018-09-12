@@ -3,7 +3,7 @@ package ${PACKAGE};
 
 <#list PACKAGES as p>
 <#if p.desc??>/** ${p.desc} */</#if>
-${p.importPackage}
+import ${p.importPackage};
 </#list>
 
 

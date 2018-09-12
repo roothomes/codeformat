@@ -5,8 +5,6 @@ package ${PACKAGE};
 import ${p.importPackage};
 </#list>
 
-import java.util.*;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * 类 编 号：${CLASS_SERIALNO}

@@ -1,24 +1,5 @@
 package ${PACKAGE};
 
-import java.util.*;
-
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.apec.framework.common.Constants;
-import com.apec.framework.common.PageDTO;
-import com.apec.framework.common.PageJSON;
-import com.apec.framework.common.ResultData;
-import com.apec.framework.common.exception.BusinessException;
-import com.apec.framework.common.util.JsonUtil;
-import com.apec.framework.common.util.SpringUtil;
-import com.google.common.base.Strings;
-import com.apec.project.common.constants.JSConstants;
 
 
 <#list PACKAGES as p>
