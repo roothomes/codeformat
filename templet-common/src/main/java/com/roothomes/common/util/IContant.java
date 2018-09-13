@@ -51,7 +51,11 @@ public interface IContant {
     /**
      * 继承的类名字
      */
-    String K_EXTENDSCLASSNAME="EXTENDSCLASSNAME";
+    String K_EXTENDS_CLASSNAME ="EXTENDS_CLASSNAME";
+    /**
+     * 实现接口名字
+     */
+    String K_IMPLEMENTS_INTERFACE_NAME ="INTERFACE_NAME";
     /**
      * 类的描述
      */
@@ -181,6 +185,11 @@ public interface IContant {
      * java 类的DTO的模板文件名称
      */
     String V_TEMPLET_FILE_DTO="temp_dto.ftlh";
+
+    /**
+     * java 类的DTO的模板文件名称
+     */
+    String V_TEMPLET_FILE_QUERYDTO="temp_dtoquery.ftlh";
 
     /**
      * java 类的vo的模板文件名称
@@ -313,4 +322,21 @@ public interface IContant {
      * 模型依赖的父工程的版本号
      */
     String K_PARENT_POM_VERSION="PARENT_POM_VERSION";
+    /**
+     * Java Spring Boot 依赖的框架的版本号;
+     * V1: 使用 framework 的 1.0-CNCSEN 版本;<br/>
+     * V2: 使用 framework 的 1.5.0-RELEASE 版本<br/>
+     * */
+    String CFG_JAVA_FRAMEWORK_VERSION_V1 ="V1";
+    /**
+     * Java Spring Boot 依赖的框架的版本号;
+     * V1: 使用 framework 的 1.0-CNCSEN 版本;<br/>
+     * V2: 使用 framework 的 1.5.0-RELEASE 版本<br/>
+     * */
+    String CFG_JAVA_FRAMEWORK_VERSION_V2 ="V2";
+
+    String cfg_framework_version="framework_version";
+    String cfg_framework_relativePath="framework_relativePath";
+    String cfg_model_version="model_version";
+
 }

@@ -137,7 +137,13 @@ public class Cfg {
     private String cfgDevEurekaIp = "192.168.7.203";
     private String cfgDevEurekaPort = "1111";
     private String cfgDevEurekaInstanceHostname="192.168.7.203:1111";
-
+    /**
+     * Java Spring Boot 依赖的框架的版本号;
+     * V1: 使用 framework 的 1.0-CNCSEN 版本;<br/>
+     * V2: 使用 framework 的 1.5.0-RELEASE 版本<br/>
+     *
+     * */
+    private String cfgJavaFrameworkVersion=IContant.CFG_JAVA_FRAMEWORK_VERSION_V1;
 
 
 
@@ -464,5 +470,13 @@ public class Cfg {
 
     public void setCfgTempletBaseDir(String cfgTempletBaseDir) {
         this.cfgTempletBaseDir = cfgTempletBaseDir;
+    }
+
+    public String getCfgJavaFrameworkVersion() {
+        return cfgJavaFrameworkVersion;
+    }
+
+    public void setCfgJavaFrameworkVersion(String cfgJavaFrameworkVersion) {
+        this.cfgJavaFrameworkVersion = cfgJavaFrameworkVersion;
     }
 }

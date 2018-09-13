@@ -43,7 +43,7 @@ public class TempletAnnotation {
         List<TempletAnnotation> list = new ArrayList<TempletAnnotation>();
         list.add(IAnnotation.entity);
         list.add(IAnnotation.dynamicUpdate);
-        list.add(IAnnotation.genericGenerator);
+        list.add(IAnnotation.genericGeneratorV1);
         return list;
     }
 
@@ -57,7 +57,7 @@ public class TempletAnnotation {
         list.add(IAnnotation.lombokData);
         list.add(IAnnotation.entity);
         list.add(IAnnotation.dynamicUpdate);
-        list.add(IAnnotation.genericGenerator);
+        list.add(IAnnotation.genericGeneratorV2);
         return list;
     }
 

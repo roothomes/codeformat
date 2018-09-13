@@ -80,6 +80,7 @@ public class TempletPackage {
         packages.add(IPackageV2.pkgPersistenceColumn);
         packages.add(IPackageV2.pkgApecEnableFlag);
         packages.add(IPackageV2.pkgApecJsonUtils);
+        packages.add(IPackageV2.pkgHibernateDynamicUpdate);
         return packages;
     }
 
@@ -114,6 +115,7 @@ public class TempletPackage {
         packages.add(IPackageV2.pkgLombokData);
         packages.add(IPackageV2.pkgLombokAllArgsConstructor);
         packages.add(IPackageV2.pkgLombokNoArgsConstructor);
+        packages.add(IPackageV2.pkgApecJsonUtils);
         return packages;
     }
 
@@ -281,6 +283,7 @@ public class TempletPackage {
         packages.add(IPackageV2.pkgSpringService);
         packages.add(IPackageV2.pkgSpringTransactional);
         packages.add(IPackageV2.pkgSpringSort);
+        packages.add(IPackageV2.pkgApecCacheService);
         //具体模型的扩展类单独生成
         return packages;
     }
@@ -346,7 +349,7 @@ public class TempletPackage {
      * @return
      */
     public static List<TempletPackage> getApplicationBasePackageV2(){
-        List<TempletPackage> packages = new ArrayList<TempletPackage>();
+        List<TempletPackage> packages = new ArrayList<>();
         packages.add(IPackageV2.pkgJavaLang);
         packages.add(IPackageV2.pkgJavaUtil);
         packages.add(IPackageV2.pkgSpringBootApplication);
@@ -356,6 +359,7 @@ public class TempletPackage {
 
         packages.add(IPackageV2.pkgApecSpringCloudConfig);
         packages.add(IPackageV2.pkgApecBaseApplication);
+        packages.add(IPackageV2.pkgSpringEnableScheduling);
         //具体模型的扩展类单独生成
         return packages;
     }

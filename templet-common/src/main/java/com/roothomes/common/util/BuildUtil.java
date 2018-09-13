@@ -53,18 +53,22 @@ public class BuildUtil {
                 param.getCfgJavaAttributeCanNull());
         root.put(IContant.K_ATTRIBUTE,listModel );
         /* 设置导入的包的信息 */
-        List<TempletPackage> listPackage = TempletPackage.getModelBasePackageV1();
+        List<TempletPackage> listPackage =
+                IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ?
+                        TempletPackage.getModelBasePackageV2() : TempletPackage.getApplicationBasePackageV1();
         root.put(IContant.K_PACKAGES,listPackage);
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
         /* 设置注解列表 */
-        List<TempletAnnotation> list = TempletAnnotation.getModelAnnotationsV1();
+        List<TempletAnnotation> listAnnotation =
+                IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ?
+                        TempletAnnotation.getModelAnnotationsV2() : TempletAnnotation.getModelAnnotationsV1();
         TempletAnnotation one = new TempletAnnotation();
         one.setName("@Table(name = \""+param.getCfgDBTableName()+"\", catalog = \""+param.getCfgDBName()+"\")");
         one.setDesc("JPA表注解");
-        list.add(one);
-        root.put(IContant.K_ANNOTATION, list);
+        listAnnotation.add(one);
+        root.put(IContant.K_ANNOTATION, listAnnotation);
 
         /* Get the template (uses cache internally) */
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_MODEL);
@@ -82,6 +86,46 @@ public class BuildUtil {
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Dto类,里面包含业务模型的属性，以及该属性的get set方法");
         /* 设置属性 */
+        List<TempletAttribute> listDTO =  IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ?
+                TempletUtil.getModelAttributeList(
+                        param.getCfgJavaAttributeCode(), param.getCfgJavaAttributeDesc(),
+                        param.getCfgJavaAttributeType(), param.getCfgDBColumnCode(),null)
+                :
+                TempletUtil.getDTOAttributeList(
+                        param.getCfgJavaAttributeCode(), param.getCfgJavaAttributeDesc(),
+                        param.getCfgJavaAttributeType(), param.getCfgDBColumnCode());
+
+        root.put(IContant.K_ATTRIBUTE,listDTO );
+         /* 设置导入的包的信息 */
+        List<TempletPackage> listPackage =
+                IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ?
+                        TempletPackage.getDTOBasePackageV2() : TempletPackage.getDTOBasePackageV1();
+        root.put(IContant.K_PACKAGES, listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+
+        /* 设置注解列表 */
+        if( IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion())){
+            root.put(IContant.K_ANNOTATION, TempletAnnotation.getDTOAnnotationsV2());
+        }
+
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_DTO);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+
+    public static void buildJavaFile4QueryDTO(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_dto;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型Dto类,里面包含业务模型的属性，以及该属性的get set方法");
+        /* 设置属性 */
         List<TempletAttribute> listDTO = TempletUtil.getDTOAttributeList(
                 param.getCfgJavaAttributeCode(),
                 param.getCfgJavaAttributeDesc(),
@@ -89,12 +133,15 @@ public class BuildUtil {
                 param.getCfgDBColumnCode());
         root.put(IContant.K_ATTRIBUTE,listDTO );
          /* 设置导入的包的信息 */
-        root.put(IContant.K_PACKAGES, TempletPackage.getDTOBasePackageV1());
+        List<TempletPackage> listPackage = IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ? TempletPackage.getDTOBasePackageV2() : TempletPackage.getDTOBasePackageV1();
+        root.put(IContant.K_PACKAGES, listPackage);
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        // 基础类的名称
+        root.put(IContant.K_EXTENDS_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_model) + "QueryDTO");
 
         /* Get the template (uses cache internally) */
-        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_DTO);
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_QUERYDTO);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
         temp.process(root, out);
@@ -117,7 +164,8 @@ public class BuildUtil {
                 param.getCfgDBColumnCode());
         root.put(IContant.K_ATTRIBUTE,listDTO );
          /* 设置导入的包的信息 */
-        root.put(IContant.K_PACKAGES, TempletPackage.getDTOBasePackageV1());
+        List<TempletPackage> listPackage = IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ? TempletPackage.getDTOBasePackageV2() : TempletPackage.getDTOBasePackageV1();
+        root.put(IContant.K_PACKAGES, listPackage);
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
 
@@ -136,9 +184,9 @@ public class BuildUtil {
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Dao类,里面包含业务模型定制的方法");
 
-        List<TempletPackage> listPackage = new ArrayList<TempletPackage>(1);
+        List<TempletPackage> listPackage = IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ? TempletPackage.getDAOBasePackageV2() : TempletPackage.getDAOBasePackageV1();
         TempletPackage one = new TempletPackage();
-        one.setImportPackage("import " + packageMap.get(DirEnum.p_model) + "." +param.getCfgPojoName() + ";");
+        one.setImportPackage(packageMap.get(DirEnum.p_model) + "." +param.getCfgPojoName());
         listPackage.add(one);
 
          /* 设置导入的包的信息 */
@@ -182,7 +230,7 @@ public class BuildUtil {
         root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Util类,里面包含业务常用的方法");
-        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
+        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageListV1(packageMap,fileMap);
         TempletPackage one = null;
         one = new TempletPackage();
         one.setImportPackage("com.apec.framework.common.PageDTO");
@@ -218,7 +266,8 @@ public class BuildUtil {
         one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
         listPackage.add(one);
-        TempletPackage.getServiceBasePackageV1().stream().forEach(e->{listPackage.add(e);});
+        List<TempletPackage> listBasePackage = IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ? TempletPackage.getServiceBasePackageV2() : TempletPackage.getServiceBasePackageV1();
+        listBasePackage.stream().forEach(e->{listPackage.add(e);});
 
          /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,listPackage);
@@ -232,7 +281,8 @@ public class BuildUtil {
     }
 
     /**
-     * 生成基础控制类主方法
+     * 生成基础控制类主方法<br/>
+     * 框架版本V1生成此类文件；框架版本V2不生成此类文件
      * @param param
      * @param cfg
      * @param root
@@ -248,7 +298,7 @@ public class BuildUtil {
         root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型BaseController类");
-        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
+        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageListV1(packageMap,fileMap);
         TempletPackage.getBaseControllerPackageV1().stream().forEach(e->{listPackage.add(e);});
          /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,listPackage);
@@ -269,13 +319,18 @@ public class BuildUtil {
         root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型BaseController类");
-        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
-        TempletPackage.getControllerBasePackageV1().stream().forEach(e->{listPackage.add(e);});
-        TempletPackage one = null;
-        one = new TempletPackage();
+        List<TempletPackage> listPackage = IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion())  ?
+                PackageUtil.getBaseImportPackageListV2(packageMap,fileMap) :  PackageUtil.getBaseImportPackageListV1(packageMap,fileMap);
+
+        TempletPackage one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_service) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
-        one.setDesc("");
+        one.setDesc("业务服务类");
         listPackage.add(one);
+
+        List<TempletPackage> listBasePackage =
+                IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ?
+                        TempletPackage.getControllerBasePackageV2() : TempletPackage.getControllerBasePackageV1();
+        listBasePackage.stream().forEach(e->{listPackage.add(e);});
 
          /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,listPackage);
@@ -298,8 +353,13 @@ public class BuildUtil {
         root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Service实现类,里面包含新增、删除、单个查询、模糊查询、分页查询的基础方法的定义");
-        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageList(packageMap,fileMap);
-        TempletPackage.getServiceImplBasePackageV1().stream().forEach(e->{ listPackage.add(e); });
+        List<TempletPackage> listPackage = IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion())  ?
+                PackageUtil.getBaseImportPackageListV2(packageMap,fileMap) :  PackageUtil.getBaseImportPackageListV1(packageMap,fileMap);
+        //new ArrayList<>();PackageUtil.getBaseImportPackageList(packageMap,fileMap);
+        List<TempletPackage> listBasePackage =
+                IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion())  ?
+                        TempletPackage.getServiceImplBasePackageV2() :  TempletPackage.getServiceImplBasePackageV1();
+        listBasePackage.stream().forEach(e->{ listPackage.add(e); });
         TempletPackage one = null;
         one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_service) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
@@ -313,11 +373,12 @@ public class BuildUtil {
         one.setImportPackage(packageMap.get(DirEnum.p_model) + ".Q" + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
         one.setDesc("模型DAO类");
         listPackage.add(one);
-        one = new TempletPackage();
-        one.setImportPackage(packageMap.get(DirEnum.p_keygen) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_keygen));
-        one.setDesc("主键序列");
-        listPackage.add(one);
-
+        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
+            one = new TempletPackage();
+            one.setImportPackage(packageMap.get(DirEnum.p_keygen) + "." + DirUtil.getJavaClassName(fileMap, DirEnum.p_keygen));
+            one.setDesc("主键序列");
+            listPackage.add(one);
+        }
          /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,listPackage);
         //设置模型的属性（不包含基础属性）
@@ -353,7 +414,9 @@ public class BuildUtil {
         root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务启动类");
-        List<TempletPackage> listPackage = TempletPackage.getApplicationBasePackageV1();
+        List<TempletPackage> listPackage =
+                IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ?
+                        TempletPackage.getApplicationBasePackageV2() : TempletPackage.getApplicationBasePackageV1();
          /* 设置导入的包的信息 */
         root.put(IContant.K_PACKAGES,listPackage);
         // 设置类名称
@@ -370,6 +433,15 @@ public class BuildUtil {
         temp.process(root, out);
     }
 
+    /**
+     * 框架版本V1生成此类文件；框架版本V2不生成此类文件
+     * @param param
+     * @param cfg
+     * @param root
+     * @param packageMap
+     * @param fileMap
+     * @throws Exception
+     */
     public static void buildJavaFile4SnowFlakeKeyGen(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
         DirEnum fileType = DirEnum.p_keygen;
         /* 生成类文件的注释中的描述信息 */
@@ -508,8 +580,10 @@ public class BuildUtil {
         root.put(IContant.K_DAO_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_dao));
         root.put(IContant.K_SERVICE_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
         root.put(IContant.K_CONTANT_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_contant));
-        root.put(IContant.K_UTIL_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_util));
-        root.put(IContant.K_BASECONTROLLER_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_basecontroller));
+//        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
+            root.put(IContant.K_UTIL_CLASSNAME, DirUtil.getJavaClassName(fileMap, DirEnum.p_util));
+            root.put(IContant.K_BASECONTROLLER_CLASSNAME, DirUtil.getJavaClassName(fileMap, DirEnum.p_basecontroller));
+//        }
         root.put(IContant.K_CONTROLLER_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_controller));
         root.put(IContant.K_PK_ID_TYPE,param.getCfgJavaPkIdType());
 
@@ -533,14 +607,21 @@ public class BuildUtil {
 //        buildJavaFile4BaseModel(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Model(param,cfg,root,packageMap,fileMap);
         buildJavaFile4DTO(param,cfg,root,packageMap,fileMap);
+
         buildJavaFile4Vo(param,cfg,root,packageMap,fileMap);
         buildJavaFile4DAO(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Contant(param,cfg,root,packageMap,fileMap);
-        buildJavaFile4SnowFlakeKeyGen(param,cfg,root,packageMap,fileMap);
-        buildJavaFile4Util(param,cfg,root,packageMap,fileMap);
+        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
+            buildJavaFile4SnowFlakeKeyGen(param, cfg, root, packageMap, fileMap);
+        }
+        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
+            buildJavaFile4Util(param, cfg, root, packageMap, fileMap);
+        }
         buildJavaFile4Service(param,cfg,root,packageMap,fileMap);
         buildJavaFile4ServiceImpl(param,cfg,root,packageMap,fileMap);
-        buildJavaFile4BaseController(param,cfg,root,packageMap,fileMap);
+        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
+            buildJavaFile4BaseController(param, cfg, root, packageMap, fileMap);
+        }
         buildJavaFile4Controller(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Application(param,cfg,root,packageMap,fileMap);
 
@@ -548,7 +629,9 @@ public class BuildUtil {
         buildPropApplicationTest(param,cfg,root,packageMap,fileMap);
         buildPropApplicationDev(param,cfg,root,packageMap,fileMap);
         buildPropApplicationProd(param,cfg,root,packageMap,fileMap);
-        buildPropLog4j(param,cfg,root,packageMap,fileMap);
+        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
+            buildPropLog4j(param, cfg, root, packageMap, fileMap);
+        }
     }
 
     /**

@@ -22,4 +22,6 @@ public interface IPackageV2 extends IPackageBase{
     TempletPackage pkgApecBaseApplication = new TempletPackage(" com.apec.framework.base.BaseApplication","Appliation依赖");
     TempletPackage pkgApecResultData =  new TempletPackage("com.apec.framework.common.model.ResultData","框架封装的返回值对象");
 
+    TempletPackage pkgApecCacheService = new TempletPackage("com.apec.cache.base.CacheService","缓存类");
+
 }

@@ -83,7 +83,7 @@ public class PackageUtil {
      * @param fileMap 文件map集合
      * @return
      */
-    public static List<TempletPackage> getBaseImportPackageList(Map<DirEnum,String> packageMap, Map<DirEnum,String> fileMap){
+    public static List<TempletPackage> getBaseImportPackageListV1(Map<DirEnum,String> packageMap, Map<DirEnum,String> fileMap){
         List<TempletPackage> listPackage = new ArrayList<TempletPackage>(4);
         TempletPackage one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
@@ -104,6 +104,27 @@ public class PackageUtil {
         one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_util) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_util));
         one.setDesc("模型常用方法类");
+        listPackage.add(one);
+        return listPackage;
+    }
+
+    public static List<TempletPackage> getBaseImportPackageListV2(Map<DirEnum,String> packageMap, Map<DirEnum,String> fileMap){
+        List<TempletPackage> listPackage = new ArrayList<TempletPackage>(4);
+        TempletPackage one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
+        one.setDesc("模型类");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto));
+        one.setDesc("模型DTO类");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
+        one.setDesc("模型Vo类");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_contant) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_contant));
+        one.setDesc("模型常量类");
         listPackage.add(one);
         return listPackage;
     }

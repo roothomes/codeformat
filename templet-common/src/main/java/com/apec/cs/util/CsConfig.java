@@ -181,6 +181,8 @@ public class CsConfig {
      */
     @Value("${httpZipBasePath}")
     private String httpZipBasePath;
+    @Value("${cfgJavaFrameworkVersion}")
+    private String cfgJavaFrameworkVersion;
 
     public String getCfgOutputBaseDir() {
         return cfgOutputBaseDir;
@@ -412,5 +414,13 @@ public class CsConfig {
 
     public void setHttpZipBasePath(String httpZipBasePath) {
         this.httpZipBasePath = httpZipBasePath;
+    }
+
+    public String getCfgJavaFrameworkVersion() {
+        return cfgJavaFrameworkVersion;
+    }
+
+    public void setCfgJavaFrameworkVersion(String cfgJavaFrameworkVersion) {
+        this.cfgJavaFrameworkVersion = cfgJavaFrameworkVersion;
     }
 }

@@ -26,6 +26,7 @@ import com.roothomes.common.util.BuildUtil;
 import com.roothomes.common.util.Cfg;
 import com.roothomes.common.util.IContant;
 import com.roothomes.common.util.ZipCompress;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,6 +134,9 @@ public class TempCfgCsController extends MyBaseController {
 			TempGenerateParamVo vo =  swtichDB2ParamVo(codetemplet,listItem,listContants);
 			LOG.info("TempGenerateParamVo:{}",JsonUtil.toJSONString(vo));
 			Cfg param = initCfg(vo);
+			if(StringUtils.isBlank(param.getCfgJavaFrameworkVersion())){
+				param.setCfgJavaFrameworkVersion(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1);
+			}
 			resultData = generateFile(param,vo);
 
 		} catch (Exception e) {

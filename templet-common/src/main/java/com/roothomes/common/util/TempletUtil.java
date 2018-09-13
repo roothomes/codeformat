@@ -72,4 +72,15 @@ public class TempletUtil {
     }
 
 
+    public static Map<String,String> getCfgMapByVersion(String version){
+        Map<String,String> reMap = new HashMap<>();
+        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(version)){
+
+
+        }
+
+        return reMap;
+    }
+
+
 }

@@ -24,6 +24,15 @@ public class TempGenerateParamVo{
      *  = "MSG_TYPE|MSG|TITLE|CONTENT_TYPE|URL|HOTSPOT"
      * */
     private String cfgDBColumnCode;
+
+    /**
+     * Java Spring Boot 依赖的框架的版本号;
+     * V1: 使用 framework 的 1.0-CNCSEN 版本;<br/>
+     * V2: 使用 framework 的 1.5.0-RELEASE 版本<br/>
+     *
+     * */
+    private String cfgJavaFrameworkVersion;
+
     /**
      * Java属性类型(支持基本数据类型)
      *  = "String|String|String|String|String|String"
@@ -125,8 +134,14 @@ public class TempGenerateParamVo{
         this.cfgJavaAttributeDefaultVal = cfgJavaAttributeDefaultVal;
     }
 
+    public String getCfgJavaFrameworkVersion() {
+        return cfgJavaFrameworkVersion;
+    }
 
-    /*************************************************/
+    public void setCfgJavaFrameworkVersion(String cfgJavaFrameworkVersion) {
+        this.cfgJavaFrameworkVersion = cfgJavaFrameworkVersion;
+    }
+/*************************************************/
 
     /**
      * 模板文件的基础路径

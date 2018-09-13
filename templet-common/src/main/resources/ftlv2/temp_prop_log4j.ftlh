@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="error" monitorInterval="30">
+
+    <properties>
+        <Property name="fileName">logs</Property>
+        <Property name="serverName">${MODEL_CLASSNAME?uncap_first}-server</Property>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss,SSS} %t %5p %c{1}:%L - %m%n</Property>
+    </properties>
+
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="$\{LOG_PATTERN\}"/>
+        </Console>
+
+        <RollingRandomAccessFile name="infoFile" fileName="$\{fileName\}/$\{serverName\}-info.log"
+                                 filePattern="$\{fileName\}/%d{yyyy-MM-dd}-%i.$\{serverName\}-info.log">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="$\{LOG_PATTERN\}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!--<SizeBasedTriggeringPolicy size="512 MB"/>-->
+            </Policies>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="errorFile" fileName="$\{fileName\}/$\{serverName\}-error.log" immediateFlush="false"
+                                 filePattern="$\{fileName\}/%d{yyyy-MM-dd}-%i.$\{serverName\}-error.log">
+            <PatternLayout pattern="$\{LOG_PATTERN\}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!--<SizeBasedTriggeringPolicy size="512 MB"/>-->
+            </Policies>
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.apec" level="debug" additivity="false">
+            <AppenderRef ref="infoFile"/>
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="errorFile"/>
+        </Logger>
+        <Logger name="org.springframework" level="error" additivity="false"/>
+        <Logger name="org.apache" level="error" additivity="false"/>
+        <Logger name="org.quartz" level="error" additivity="false"/>
+        <Logger name="org.hibernate" level="info" additivity="false"/>
+        <Logger name="org.hibernate.SQL" level="debug" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="infoFile"/>
+            <AppenderRef ref="errorFile"/>
+        </Logger>
+        <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="infoFile"/>
+            <AppenderRef ref="errorFile"/>
+        </Logger>
+
+        <Root level="info" includeLocation="true">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="infoFile"/>
+            <AppenderRef ref="errorFile"/>
+        </Root>
+    </Loggers>
+
+</configuration>
