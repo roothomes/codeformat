@@ -39,12 +39,19 @@ public class PackageUtil {
         map.put(DirEnum.p_model, getPackageBaseName + "." + "model");
         map.put(DirEnum.p_dao, getPackageBaseName + "." + "dao");
         map.put(DirEnum.p_dto, getPackageBaseName + "." + "dto");
+        map.put(DirEnum.p_querydto, getPackageBaseName + "." + "dto");
         map.put(DirEnum.p_service, getPackageBaseName + "." + "service");
         map.put(DirEnum.p_serviceimpl, getPackageBaseName + "." + "service" + "." +"impl");
+        map.put(DirEnum.p_extservice, getPackageBaseName + "." + "service");
+        map.put(DirEnum.p_extserviceimpl, getPackageBaseName + "." + "service" + "." +"ext");
+        map.put(DirEnum.p_facadeservice, getPackageBaseName + "." + "service");
+        map.put(DirEnum.p_facadeserviceimpl, getPackageBaseName + "." + "service" + "." +"facade");
         map.put(DirEnum.p_util, getPackageBaseName + "." + "util");
         map.put(DirEnum.p_vo, getPackageBaseName + "." + "vo");
         map.put(DirEnum.p_basecontroller, getPackageBaseName + "." + "web");
         map.put(DirEnum.p_controller, getPackageBaseName + "." + "web");
+        map.put(DirEnum.p_extcontroller, getPackageBaseName + "." + "web");
+        map.put(DirEnum.p_facadecontroller, getPackageBaseName + "." + "web");
         map.put(DirEnum.p_contant, getPackageBaseName + "." + "constants");
         map.put(DirEnum.p_application,param.getCfgGroupId());
         map.put(DirEnum.p_keygen,getPackageBaseName + "." + "util");
@@ -59,17 +66,24 @@ public class PackageUtil {
      */
     public static Map<DirEnum,String> generateClassSerialNo(Cfg param){
         String baseSerialNo = param.getCfgSerialNo();
-        Map<DirEnum,String> map = new HashMap<DirEnum,String>(13);
+        Map<DirEnum,String> map = new HashMap<>();
         map.put(DirEnum.p_basemodel, baseSerialNo + "_" + "basemodel");
         map.put(DirEnum.p_model, baseSerialNo + "_" + "model");
         map.put(DirEnum.p_dao, baseSerialNo + "_" + "dao");
         map.put(DirEnum.p_dto, baseSerialNo + "_" + "dto");
+        map.put(DirEnum.p_querydto, baseSerialNo + "_" + "querydto");
         map.put(DirEnum.p_service, baseSerialNo + "_" + "service");
         map.put(DirEnum.p_serviceimpl, baseSerialNo + "_" + "serviceimpl");
+        map.put(DirEnum.p_extservice, baseSerialNo + "_" + "extservice");
+        map.put(DirEnum.p_extserviceimpl, baseSerialNo + "_" + "extserviceimpl");
+        map.put(DirEnum.p_facadeservice, baseSerialNo + "_" + "facadeservice");
+        map.put(DirEnum.p_facadeserviceimpl, baseSerialNo + "_" + "facadeserviceimpl");
         map.put(DirEnum.p_util, baseSerialNo + "_" + "util");
         map.put(DirEnum.p_vo, baseSerialNo + "_" + "vo");
         map.put(DirEnum.p_basecontroller, baseSerialNo + "_" + "basecontroller");
         map.put(DirEnum.p_controller, baseSerialNo + "_" + "controller");
+        map.put(DirEnum.p_extcontroller, baseSerialNo + "_" + "extcontroller");
+        map.put(DirEnum.p_facadecontroller, baseSerialNo + "_" + "facadecontroller");
         map.put(DirEnum.p_contant, baseSerialNo + "_" + "constants");
         map.put(DirEnum.p_application,baseSerialNo + "_" + "application");
         map.put(DirEnum.p_keygen,baseSerialNo + "_" + "keygen");
@@ -84,7 +98,7 @@ public class PackageUtil {
      * @return
      */
     public static List<TempletPackage> getBaseImportPackageListV1(Map<DirEnum,String> packageMap, Map<DirEnum,String> fileMap){
-        List<TempletPackage> listPackage = new ArrayList<TempletPackage>(4);
+        List<TempletPackage> listPackage = new ArrayList<>();
         TempletPackage one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
         one.setDesc("模型类");
@@ -109,7 +123,7 @@ public class PackageUtil {
     }
 
     public static List<TempletPackage> getBaseImportPackageListV2(Map<DirEnum,String> packageMap, Map<DirEnum,String> fileMap){
-        List<TempletPackage> listPackage = new ArrayList<TempletPackage>(4);
+        List<TempletPackage> listPackage = new ArrayList<>();
         TempletPackage one = new TempletPackage();
         one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
         one.setDesc("模型类");

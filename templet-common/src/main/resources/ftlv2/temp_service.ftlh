@@ -5,9 +5,6 @@ package ${PACKAGE};
 import ${p.importPackage};
 </#list>
 
-import java.util.*;
-import org.springframework.data.domain.PageRequest;
-
 /**
  * 类 编 号：${CLASS_SERIALNO}
  * 类 名 称：${CLASSNAME}
@@ -19,8 +16,9 @@ public interface ${CLASSNAME} {
     /**
      * 创建一个对象
      * @param vo 对象
+     * @param userId 用户编号
      * @return
-	 * @throws Exception
+	 * @throws ApecRuntimeException
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */
@@ -30,7 +28,9 @@ public interface ${CLASSNAME} {
     /**
      * 逻辑删除一个对象
      * @param id 主键id
+     * @param userId 用户编号
      * @return
+     * @throws ApecRuntimeException
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */
@@ -40,7 +40,9 @@ public interface ${CLASSNAME} {
      * 更新排序
      * @param id 主键id
      * @param orderNumber
+     * @param userId 用户编号
      * @return
+     * @throws ApecRuntimeException
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */
@@ -51,7 +53,9 @@ public interface ${CLASSNAME} {
      * 更新状态
      * @param id 主键id
      * @param status 状态
+     * @param userId 用户编号
      * @return
+     * @throws ApecRuntimeException
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */
@@ -61,7 +65,9 @@ public interface ${CLASSNAME} {
     /**
      * 更新对象模型
      * @param vo 对象
+     * @param userId 用户编号
      * @return
+     * @throws ApecRuntimeException
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */
@@ -72,7 +78,9 @@ public interface ${CLASSNAME} {
      * 分页查询数据
      * @param vo 查询模型
      * @param pageRequest 分页请求
+     * @param userId 用户编号
      * @return
+     * @throws ApecRuntimeException
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */
@@ -83,7 +91,9 @@ public interface ${CLASSNAME} {
      * 分页查询数据
      * @param vo 查询模型
      * @param pageRequest 分页请求
+     * @param userId 用户编号
      * @return
+     * @throws ApecRuntimeException
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */
@@ -93,7 +103,9 @@ public interface ${CLASSNAME} {
     /**
      * 根据主键查询对象
      * @param id 主键id
+     * @param userId 用户编号
      * @return
+     * @throws ApecRuntimeException
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */
@@ -103,7 +115,9 @@ public interface ${CLASSNAME} {
     /**
      * 查询数据列表
      * @param vo
+     * @param userId 用户编号
      * @return
+     * @throws ApecRuntimeException
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */
@@ -113,6 +127,8 @@ public interface ${CLASSNAME} {
 	/**
      * 后台任务刷新对象模型所有数据
      * @param entity
+     * @param userId 用户编号
+     * @throws ApecRuntimeException
      * @author ${CREAT_AUTHOR}
      * @date ${CREAT_DATE}
      */

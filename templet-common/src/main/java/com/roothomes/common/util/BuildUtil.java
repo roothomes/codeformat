@@ -4,16 +4,14 @@ import com.apec.framework.common.util.JsonUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
+import org.apache.http.client.utils.DateUtils;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author roothomes
@@ -118,30 +116,30 @@ public class BuildUtil {
 
 
     public static void buildJavaFile4QueryDTO(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
-        DirEnum fileType = DirEnum.p_dto;
+        DirEnum fileType = DirEnum.p_querydto;
         /* 包名称 */
         root.put(IContant.K_PACKAGE, packageMap.get(fileType));
         /* 获取文件序列号 */
         root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
         /* 生成类文件的注释中的描述信息 */
         root.put(IContant.K_CLASSNAME_DESC,"业务模型Dto类,里面包含业务模型的属性，以及该属性的get set方法");
-        /* 设置属性 */
-        List<TempletAttribute> listDTO = TempletUtil.getDTOAttributeList(
-                param.getCfgJavaAttributeCode(),
-                param.getCfgJavaAttributeDesc(),
-                param.getCfgJavaAttributeType(),
-                param.getCfgDBColumnCode());
-        root.put(IContant.K_ATTRIBUTE,listDTO );
+
          /* 设置导入的包的信息 */
-        List<TempletPackage> listPackage = IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ? TempletPackage.getDTOBasePackageV2() : TempletPackage.getDTOBasePackageV1();
+        List<TempletPackage> listPackage =
+                IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ?
+                        TempletPackage.getQueryDTOBasePackageV2() : TempletPackage.getQueryDTOBasePackageV1();
         root.put(IContant.K_PACKAGES, listPackage);
         // 设置类名称
         root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
-        // 基础类的名称
-        root.put(IContant.K_EXTENDS_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_model) + "QueryDTO");
+        root.put(IContant.K_EXTENDS_CLASSNAME,DirUtil.getJavaClassName(fileMap, DirEnum.p_dto));
+
+        /* 设置注解列表 */
+        if( IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion())){
+            root.put(IContant.K_ANNOTATION, TempletAnnotation.getQueryDTOAnnotationsV2());
+        }
 
         /* Get the template (uses cache internally) */
-        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_QUERYDTO);
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_QUERY_DTO);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
         temp.process(root, out);
@@ -280,6 +278,71 @@ public class BuildUtil {
         temp.process(root, out);
     }
 
+
+    public static void buildJavaFile4ExtService(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_extservice;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型Service的扩展接口类,主要处理本模块里面复杂的业务");
+        List<TempletPackage> listPackage = new ArrayList<>(4);
+        TempletPackage one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto));
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
+        listPackage.add(one);
+        List<TempletPackage> listBasePackage = IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ? TempletPackage.getServiceBasePackageV2() : TempletPackage.getServiceBasePackageV1();
+        listBasePackage.stream().forEach(e->{listPackage.add(e);});
+
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_EXT_SERVICE);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildJavaFile4FacadeService(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_facadeservice;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型Service的扩展接口类,主要为外部模块提供服务");
+        List<TempletPackage> listPackage = new ArrayList<>(4);
+        TempletPackage one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_model) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_dto) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_dto));
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_vo) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
+        listPackage.add(one);
+        List<TempletPackage> listBasePackage = IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion()) ? TempletPackage.getServiceBasePackageV2() : TempletPackage.getServiceBasePackageV1();
+        listBasePackage.stream().forEach(e->{listPackage.add(e);});
+
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_FACADE_SERVICE);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
     /**
      * 生成基础控制类主方法<br/>
      * 框架版本V1生成此类文件；框架版本V2不生成此类文件
@@ -344,6 +407,72 @@ public class BuildUtil {
     }
 
 
+    public static void buildJavaFile4ExtController(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_extcontroller;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型ExtController类");
+        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageListV2(packageMap,fileMap);
+
+        TempletPackage one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_service) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
+        one.setDesc("业务服务类");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_extservice) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_extservice));
+        one.setDesc("业务Ext服务类");
+        listPackage.add(one);
+
+        List<TempletPackage> listBasePackage = TempletPackage.getControllerBasePackageV2();
+        listBasePackage.stream().forEach(e->{listPackage.add(e);});
+
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_EXT_CONTROLLER);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+
+    public static void buildJavaFile4FacadeController(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_facadecontroller;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型ExtController类");
+        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageListV2(packageMap,fileMap);
+
+        TempletPackage one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_facadeservice) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_facadeservice));
+        one.setDesc("业务facade服务类");
+        listPackage.add(one);
+
+        List<TempletPackage> listBasePackage = TempletPackage.getControllerBasePackageV2();
+        listBasePackage.stream().forEach(e->{listPackage.add(e);});
+
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_FACADE_CONTROLLER);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+
 
     public static void buildJavaFile4ServiceImpl(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
         DirEnum fileType = DirEnum.p_serviceimpl;
@@ -401,6 +530,77 @@ public class BuildUtil {
 
         /* Get the template (uses cache internally) */
         Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_SERVICEIMPL);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+
+    public static void buildJavaFile4ExtServiceImpl(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_extserviceimpl;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型ExtService实现类,里面包含本模块里面的所有复杂的业务");
+        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageListV2(packageMap,fileMap);
+        List<TempletPackage> listBasePackage = TempletPackage.getServiceImplBasePackageV2();
+        listBasePackage.stream().forEach(e->{ listPackage.add(e); });
+        TempletPackage one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_service) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
+        one.setDesc("模型服务接口类");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_extservice) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_extservice));
+        one.setDesc("模型服务接口类");
+        listPackage.add(one);
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        root.put(IContant.K_EXT_SERVICE_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_extservice));
+
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_EXT_SERVICEIMPL);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
+    public static void buildJavaFile4FacadeServiceImpl(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_facadeserviceimpl;
+        /* 包名称 */
+        root.put(IContant.K_PACKAGE, packageMap.get(fileType));
+        /* 获取文件序列号 */
+        root.put(IContant.K_CLASS_SERIALNO,PackageUtil.generateClassSerialNo(param).get(fileType));
+        /* 生成类文件的注释中的描述信息 */
+        root.put(IContant.K_CLASSNAME_DESC,"业务模型ExtService实现类,里面包含本模块里面的所有复杂的业务");
+        List<TempletPackage> listPackage = PackageUtil.getBaseImportPackageListV2(packageMap,fileMap);
+        List<TempletPackage> listBasePackage = TempletPackage.getServiceImplBasePackageV2();
+        listBasePackage.stream().forEach(e->{ listPackage.add(e); });
+        TempletPackage one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_service) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
+        one.setDesc("模型服务接口类");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_extservice) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_extservice));
+        one.setDesc("模型服务接口类");
+        listPackage.add(one);
+        one = new TempletPackage();
+        one.setImportPackage(packageMap.get(DirEnum.p_facadeservice) + "." + DirUtil.getJavaClassName(fileMap,DirEnum.p_facadeservice));
+        one.setDesc("模型服务接口类");
+        listPackage.add(one);
+         /* 设置导入的包的信息 */
+        root.put(IContant.K_PACKAGES,listPackage);
+
+        // 设置类名称
+        root.put(IContant.K_CLASSNAME,DirUtil.getJavaClassName(fileMap,fileType));
+        root.put(IContant.K_FACADE_SERVICE_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_facadeservice));
+
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_FACADE_SERVICEIMPL);
         FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
         Writer out = new OutputStreamWriter(fos);
         temp.process(root, out);
@@ -572,19 +772,31 @@ public class BuildUtil {
         /* 设置模型的描述信息 */
         root.put(IContant.K_MODELDESC,param.getCfgModelDesc());
         root.put(IContant.K_CREAT_AUTHOR,param.getCfgCreatAuthor());
-        root.put(IContant.K_CREAT_DATE,param.getCfgCreatDate());
+        root.put(IContant.K_CREAT_DATE, DateUtils.formatDate(new Date(),"yyyy-MM-dd HH:mm:ss"));
         /* 设置模型属性名称 */
         root.put(IContant.K_MODEL_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_model));
         root.put(IContant.K_DTO_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_dto));
+        root.put(IContant.K_QUERY_DTO_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_querydto));
         root.put(IContant.K_VO_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_vo));
         root.put(IContant.K_DAO_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_dao));
+        /* 设置service的类名称 */
         root.put(IContant.K_SERVICE_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_service));
+        root.put(IContant.K_EXT_SERVICE_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_extservice));
+        root.put(IContant.K_FACADE_SERVICE_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_facadeservice));
+        root.put(IContant.K_SERVICE_CLASSNAME_IMPL,DirUtil.getJavaClassName(fileMap,DirEnum.p_serviceimpl));
+        root.put(IContant.K_EXT_SERVICE_CLASSNAME_IMPL,DirUtil.getJavaClassName(fileMap,DirEnum.p_extserviceimpl));
+        root.put(IContant.K_FACADE_SERVICE_CLASSNAME_IMPL,DirUtil.getJavaClassName(fileMap,DirEnum.p_facadeserviceimpl));
+
         root.put(IContant.K_CONTANT_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_contant));
 //        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
             root.put(IContant.K_UTIL_CLASSNAME, DirUtil.getJavaClassName(fileMap, DirEnum.p_util));
             root.put(IContant.K_BASECONTROLLER_CLASSNAME, DirUtil.getJavaClassName(fileMap, DirEnum.p_basecontroller));
 //        }
+        /* 设置 controller 的类名称 */
         root.put(IContant.K_CONTROLLER_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_controller));
+        root.put(IContant.K_EXT_CONTROLLER_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_extcontroller));
+        root.put(IContant.K_FACADE_CONTROLLER_CLASSNAME,DirUtil.getJavaClassName(fileMap,DirEnum.p_facadecontroller));
+
         root.put(IContant.K_PK_ID_TYPE,param.getCfgJavaPkIdType());
 
         root.put("cfgLoggingLevelComApec","${logging.level.com.apec}");
@@ -607,22 +819,38 @@ public class BuildUtil {
 //        buildJavaFile4BaseModel(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Model(param,cfg,root,packageMap,fileMap);
         buildJavaFile4DTO(param,cfg,root,packageMap,fileMap);
+        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion())){
+            buildJavaFile4QueryDTO(param,cfg,root,packageMap,fileMap);
+        }
 
         buildJavaFile4Vo(param,cfg,root,packageMap,fileMap);
         buildJavaFile4DAO(param,cfg,root,packageMap,fileMap);
         buildJavaFile4Contant(param,cfg,root,packageMap,fileMap);
+
         if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
             buildJavaFile4SnowFlakeKeyGen(param, cfg, root, packageMap, fileMap);
         }
         if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
             buildJavaFile4Util(param, cfg, root, packageMap, fileMap);
         }
+        /** service和serviceImpl */
         buildJavaFile4Service(param,cfg,root,packageMap,fileMap);
         buildJavaFile4ServiceImpl(param,cfg,root,packageMap,fileMap);
         if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
             buildJavaFile4BaseController(param, cfg, root, packageMap, fileMap);
         }
+        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion())) {
+            buildJavaFile4ExtService(param,cfg,root,packageMap,fileMap);
+            buildJavaFile4ExtServiceImpl(param,cfg,root,packageMap,fileMap);
+            buildJavaFile4FacadeService(param,cfg,root,packageMap,fileMap);
+            buildJavaFile4FacadeServiceImpl(param,cfg,root,packageMap,fileMap);
+        }
+        /** controller */
         buildJavaFile4Controller(param,cfg,root,packageMap,fileMap);
+        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion())) {
+            buildJavaFile4ExtController(param,cfg,root,packageMap,fileMap);
+            buildJavaFile4FacadeController(param,cfg,root,packageMap,fileMap);
+        }
         buildJavaFile4Application(param,cfg,root,packageMap,fileMap);
 
         buildPropApplication(param,cfg,root,packageMap,fileMap);

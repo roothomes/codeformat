@@ -128,6 +128,8 @@ public class DirUtil {
             fileName = cfg.getCfgPojoName() + IContant.JAVA_EXTENSION_NAME;
         }else if(DirEnum.p_dto.equals(e)){
             fileName = cfg.getCfgPojoName() + "DTO" + IContant.JAVA_EXTENSION_NAME;
+        }else if(DirEnum.p_querydto.equals(e)){
+            fileName = cfg.getCfgPojoName() + "QueryDTO" + IContant.JAVA_EXTENSION_NAME;
         }else if(DirEnum.p_vo.equals(e)){
             fileName = cfg.getCfgPojoName() + "Vo" + IContant.JAVA_EXTENSION_NAME;
         }else if(DirEnum.p_dao.equals(e)){
@@ -138,10 +140,22 @@ public class DirUtil {
             fileName = cfg.getCfgPojoName() +"MyBaseController" + IContant.JAVA_EXTENSION_NAME;
         }else if(DirEnum.p_controller.equals(e)){
             fileName = cfg.getCfgPojoName() + "Controller" + IContant.JAVA_EXTENSION_NAME;
+        }else if(DirEnum.p_extcontroller.equals(e)){
+            fileName = "Ext" + cfg.getCfgPojoName() + "Controller" + IContant.JAVA_EXTENSION_NAME;
+        }else if(DirEnum.p_facadecontroller.equals(e)){
+            fileName = "Facade" + cfg.getCfgPojoName() + "Controller" + IContant.JAVA_EXTENSION_NAME;
         }else if(DirEnum.p_service.equals(e)){
             fileName = cfg.getCfgPojoName() + "Service" + IContant.JAVA_EXTENSION_NAME;
         }else if(DirEnum.p_serviceimpl.equals(e)){
             fileName = cfg.getCfgPojoName() + "ServiceImpl"+ IContant.JAVA_EXTENSION_NAME;
+        }else if(DirEnum.p_extservice.equals(e)){
+            fileName = "Ext" + cfg.getCfgPojoName() + "Service" + IContant.JAVA_EXTENSION_NAME;
+        }else if(DirEnum.p_extserviceimpl.equals(e)){
+            fileName = "Ext" + cfg.getCfgPojoName() + "ServiceImpl"+ IContant.JAVA_EXTENSION_NAME;
+        }else if(DirEnum.p_facadeservice.equals(e)){
+            fileName = "Facade" + cfg.getCfgPojoName() + "Service" + IContant.JAVA_EXTENSION_NAME;
+        }else if(DirEnum.p_facadeserviceimpl.equals(e)){
+            fileName = "Facade" + cfg.getCfgPojoName() + "ServiceImpl"+ IContant.JAVA_EXTENSION_NAME;
         }else if(DirEnum.p_contant.equals(e)){
             fileName = cfg.getCfgPojoName() + "Contant"+ IContant.JAVA_EXTENSION_NAME;
         }else if(DirEnum.p_application.equals(e)){

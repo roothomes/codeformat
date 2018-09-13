@@ -14,14 +14,13 @@ import ${p.importPackage};
  * @date ${CREAT_DATE}
  */
 <#list ANNOTATION as a>
-    <#if a.desc??>
-    /** ${a.desc} */
-    </#if>
+<#if a.desc??>
+/** ${a.desc} */
+</#if>
 ${a.name}
 </#list>
 public class ${CLASSNAME} extends ${EXTENDS_CLASSNAME}
 {
-    private static final long serialVersionUID = 1L;
 
     //时间区间查询
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
@@ -39,8 +38,6 @@ public class ${CLASSNAME} extends ${EXTENDS_CLASSNAME}
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date endInitDate;
-
-    public ${CLASSNAME}(){ }
 
     @Override
     public String toString() {

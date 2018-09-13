@@ -9,6 +9,8 @@ public enum DirEnum {
     p_dao,
     /** 模型dto包 */
     p_dto,
+    /** 模型querydto包 */
+    p_querydto,
     /** 模型基础包 */
     p_basemodel,
     /** 模型model包 */
@@ -21,10 +23,22 @@ public enum DirEnum {
     p_basecontroller,
     /** 模型一般业务控制类文件 */
     p_controller,
+    /** 模型对内部复杂业务控制类文件 */
+    p_extcontroller,
+    /** 模型对外部服务业务控制类文件 */
+    p_facadecontroller,
     /** 模型的一般业务接口包 */
     p_service,
     /** 模型的一般业务实现类包 */
     p_serviceimpl,
+    /** 模型对内部复杂业务接口包 */
+    p_extservice,
+    /** 模型对内部复杂业务实现类包 */
+    p_extserviceimpl,
+    /** 模型对外部服务业务接口包 */
+    p_facadeservice,
+    /** 模型对外部服务业务实现类包 */
+    p_facadeserviceimpl,
     /** 模型常量接口包 */
     p_contant,
     /** spring_boot启动类包 */

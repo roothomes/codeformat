@@ -74,7 +74,18 @@ public class TempletAnnotation {
         list.add(IAnnotation.lombokNoArgsConstructor);
         return list;
     }
-
+    /**
+     *  QueryDTO 应该在类上注入的注解 <br/>
+     * 使用 framework 的 1.5.0-RELEASE 版本
+     * @return
+     */
+    public static List<TempletAnnotation> getQueryDTOAnnotationsV2() {
+        List<TempletAnnotation> list = new ArrayList<TempletAnnotation>();
+        list.add(IAnnotation.lombokData);
+        list.add(IAnnotation.lombokAllArgsConstructor);
+        list.add(IAnnotation.lombokNoArgsConstructor);
+        return list;
+    }
     /**
      * Application 应该在类上注入的注解 <br/>
      * 使用 framework 的 1.5.0-RELEASE 版本

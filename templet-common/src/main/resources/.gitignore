@@ -1,0 +1,27 @@
+
+# ignore intellij idea 
+.idea/
+*.iml
+*.class
+datadict-server.iml
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# ignore Maven generated target folders
+target
+
+# ignore eclipse files
+.project
+.classpath
+.settings
+.metadata
+
+
+
+# ignore git
+# .gitignore
+
+logs/

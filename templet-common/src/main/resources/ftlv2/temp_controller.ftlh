@@ -16,10 +16,12 @@ import ${p.importPackage};
 @RestController
 @RequestMapping("/${MODEL_CLASSNAME?uncap_first}")
 public class ${CLASSNAME}  extends BaseController  {
+
+	private final org.slf4j.Logger LOG = LoggerFactory.getLogger(getClass());
+
 	@Autowired
 	${SERVICE_CLASSNAME} service;
-	
-	private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(${CONTROLLER_CLASSNAME}.class);
+
 	
 	/**
 	 * 分页查询模型列表

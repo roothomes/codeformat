@@ -14,8 +14,11 @@ import ${p.importPackage};
  */
 
 @Service
-public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}{
-    private static final Logger LOG =  LoggerFactory.getLogger( ${CLASSNAME}.class);
+public class ${CLASSNAME} implements ${SERVICE_CLASSNAME},${CONTANT_CLASSNAME}
+{
+
+    private final Logger LOG =  LoggerFactory.getLogger( getClass());
+
     @Autowired
     private ${DAO_CLASSNAME} dao;
 

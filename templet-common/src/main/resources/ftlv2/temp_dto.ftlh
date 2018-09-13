@@ -14,14 +14,13 @@ import ${p.importPackage};
  * @date ${CREAT_DATE}
  */
 <#list ANNOTATION as a>
-    <#if a.desc??>
-    /** ${a.desc} */
-    </#if>
+<#if a.desc??>
+/** ${a.desc} */
+</#if>
 ${a.name}
 </#list>
 public class ${CLASSNAME} extends BaseDTO
 {
-    private static final long serialVersionUID = 1L;
 
 <#-- 属性列表 -->
 <#list ATTRIBUTE as a>

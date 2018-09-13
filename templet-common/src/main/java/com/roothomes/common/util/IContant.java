@@ -73,14 +73,39 @@ public interface IContant {
      */
     String K_DTO_CLASSNAME="DTO_CLASSNAME";
     /**
+     * QUERY_DTO_CLASSNAME 模型类的名称
+     */
+    String K_QUERY_DTO_CLASSNAME="QUERY_DTO_CLASSNAME";
+    /**
      * DAO 模型类的名称
      */
     String K_DAO_CLASSNAME="DAO_CLASSNAME";
 
     /**
-     * SERVICE 模型类的名称
+     * SERVICE_CLASSNAME 模型类的名称
      */
     String K_SERVICE_CLASSNAME="SERVICE_CLASSNAME";
+    /**
+     * EXT_SERVICE_CLASSNAME 模型类的名称
+     */
+    String K_EXT_SERVICE_CLASSNAME="EXT_SERVICE_CLASSNAME";
+    /**
+     * FACADE_SERVICE_CLASSNAME 模型类的名称
+     */
+    String K_FACADE_SERVICE_CLASSNAME="FACADE_SERVICE_CLASSNAME";
+
+    /**
+     * SERVICE_CLASSNAME_IMPL 模型类的名称
+     */
+    String K_SERVICE_CLASSNAME_IMPL="SERVICE_CLASSNAME_IMPL";
+    /**
+     * EXT_SERVICE_CLASSNAME_IMPL 模型类的名称
+     */
+    String K_EXT_SERVICE_CLASSNAME_IMPL="EXT_SERVICE_CLASSNAME_IMPL";
+    /**
+     * FACADE_SERVICE_CLASSNAME_IMPL 模型类的名称
+     */
+    String K_FACADE_SERVICE_CLASSNAME_IMPL="FACADE_SERVICE_CLASSNAME_IMPL";
 
     /**
      * CONTANT 模型类的名称
@@ -95,6 +120,14 @@ public interface IContant {
      * CONTROLLER 模型类的名称
      */
     String K_CONTROLLER_CLASSNAME="CONTROLLER_CLASSNAME";
+    /**
+     * EXT_CONTROLLER_CLASSNAME 模型类的名称
+     */
+    String K_EXT_CONTROLLER_CLASSNAME="EXT_CONTROLLER_CLASSNAME";
+    /**
+     * FACADE_CONTROLLER_CLASSNAME 模型类的名称
+     */
+    String K_FACADE_CONTROLLER_CLASSNAME="FACADE_CONTROLLER_CLASSNAME";
 
     /**
      * UTIL 模型类的名称
@@ -189,7 +222,7 @@ public interface IContant {
     /**
      * java 类的DTO的模板文件名称
      */
-    String V_TEMPLET_FILE_QUERYDTO="temp_dtoquery.ftlh";
+    String V_TEMPLET_FILE_QUERY_DTO="temp_dtoquery.ftlh";
 
     /**
      * java 类的vo的模板文件名称
@@ -207,6 +240,25 @@ public interface IContant {
      * java 类的serviceImpl的模板文件名称
      */
     String V_TEMPLET_FILE_SERVICEIMPL="temp_serviceimpl.ftlh";
+
+    /**
+     * java 类的extservice的模板文件名称
+     */
+    String V_TEMPLET_FILE_EXT_SERVICE="temp_ext_service.ftlh";
+    /**
+     * java 类的extserviceImpl的模板文件名称
+     */
+    String V_TEMPLET_FILE_EXT_SERVICEIMPL="temp_ext_serviceimpl.ftlh";
+
+    /**
+     * java 类的facadeservice的模板文件名称
+     */
+    String V_TEMPLET_FILE_FACADE_SERVICE="temp_facade_service.ftlh";
+    /**
+     * java 类的facadeserviceImpl的模板文件名称
+     */
+    String V_TEMPLET_FILE_FACADE_SERVICEIMPL="temp_facade_serviceimpl.ftlh";
+
     /**
      * java 类的util的模板文件名称
      */
@@ -230,10 +282,23 @@ public interface IContant {
      * java 类的controller的模板文件名称
      */
     String V_TEMPLET_FILE_CONTROLLER="temp_controller.ftlh";
+
     /**
      * java 类的basecontroller的模板文件名称
      */
     String V_TEMPLET_FILE_BASECONTROLLER="temp_basecontroller.ftlh";
+
+
+    /**
+     * java 类的extcontroller的模板文件名称
+     */
+    String V_TEMPLET_FILE_EXT_CONTROLLER="temp_ext_controller.ftlh";
+
+
+    /**
+     * java 类的facadecontroller的模板文件名称
+     */
+    String V_TEMPLET_FILE_FACADE_CONTROLLER="temp_facade_controller.ftlh";
 
     /**
      * pom.xml 模型子工程文件

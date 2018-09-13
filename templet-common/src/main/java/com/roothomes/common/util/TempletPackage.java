@@ -121,6 +121,37 @@ public class TempletPackage {
 
 
     /**
+     * QueryDTO 依赖的包； <br/>
+     * 使用 framework 的 1.0-CNCSEN 版本
+     * @return
+     */
+    public static List<TempletPackage> getQueryDTOBasePackageV1(){
+        List<TempletPackage> packages = new ArrayList<TempletPackage>();
+        packages.add(IPackageV1.pkgJavaLang);
+        packages.add(IPackageV1.pkgJavaUtil);
+        packages.add(IPackageV1.pkgApecBaseDTO);
+        packages.add(IPackageV1.pkgApecEnableFlag);
+        packages.add(IPackageV1.pkgJsonFormat);
+        packages.add(IPackageV1.pkgApecJsonUtils);
+        return packages;
+    }
+
+    /**
+     * QueryDTO 依赖的包； <br/>
+     * 使用 framework 的 1.5.0-RELEASE 版本
+     * @return
+     */
+    public static List<TempletPackage> getQueryDTOBasePackageV2(){
+        List<TempletPackage> packages = new ArrayList<TempletPackage>();
+        packages.add(IPackageV2.pkgJavaUtil);
+        packages.add(IPackageV2.pkgJsonFormat);
+        packages.add(IPackageV2.pkgLombokData);
+        packages.add(IPackageV2.pkgLombokAllArgsConstructor);
+        packages.add(IPackageV2.pkgLombokNoArgsConstructor);
+        packages.add(IPackageV2.pkgApecJsonUtils);
+        return packages;
+    }
+    /**
      * DTO 依赖的包； <br/>
      * 使用 framework 的 1.0-CNCSEN 版本
      * @return
