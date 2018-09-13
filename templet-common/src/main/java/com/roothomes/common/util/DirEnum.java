@@ -58,5 +58,7 @@ public enum DirEnum {
     /** application-pord.properties */
     p_prop_application_pord,
     /** log4j.properties */
-    p_prop_log4j
+    p_prop_log4j,
+    /** log4j2.xml */
+    p_prop_log4j2
 }

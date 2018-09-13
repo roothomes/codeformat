@@ -335,6 +335,12 @@ public interface IContant {
      */
     String V_TEMPLET_FILE_PROP_LOG4J ="temp_prop_log4j.ftlh";
 
+
+    /**
+     * log4j2.xml 文件
+     */
+    String V_TEMPLET_FILE_PROP_LOG4J2 ="temp_prop_log4j2.ftlh";
+
     /**
      * 模板文件的基础路径
      */

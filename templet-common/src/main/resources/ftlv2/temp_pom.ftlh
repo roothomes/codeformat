@@ -74,7 +74,7 @@
 
     <!-- 打包方式 -->
     <build>
-        <finalName>$\{BUILD_FINALNAME\}-$\{project.version\}</finalName>
+        <finalName>${r'${project.artifactId}'}-${r'${project.version}'}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

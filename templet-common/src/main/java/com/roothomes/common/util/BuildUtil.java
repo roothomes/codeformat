@@ -724,6 +724,15 @@ public class BuildUtil {
         temp.process(root, out);
     }
 
+    public static void buildPropLog4j2(Cfg param,Configuration cfg,Map root,Map<DirEnum,String> packageMap,Map<DirEnum,String> fileMap)throws Exception{
+        DirEnum fileType = DirEnum.p_prop_log4j2;
+        /* Get the template (uses cache internally) */
+        Template temp = cfg.getTemplate(IContant.V_TEMPLET_FILE_PROP_LOG4J2);
+        FileOutputStream fos = new FileOutputStream(fileMap.get(fileType));
+        Writer out = new OutputStreamWriter(fos);
+        temp.process(root, out);
+    }
+
 
     public static void buildTempletManager(String[] args) throws Exception {
         Cfg param = getRedisCfg();
@@ -859,6 +868,9 @@ public class BuildUtil {
         buildPropApplicationProd(param,cfg,root,packageMap,fileMap);
         if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V1.equals(param.getCfgJavaFrameworkVersion())) {
             buildPropLog4j(param, cfg, root, packageMap, fileMap);
+        }
+        if(IContant.CFG_JAVA_FRAMEWORK_VERSION_V2.equals(param.getCfgJavaFrameworkVersion())) {
+            buildPropLog4j2(param, cfg, root, packageMap, fileMap);
         }
     }
 

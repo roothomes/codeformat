@@ -3,19 +3,19 @@
 
     <properties>
         <Property name="fileName">logs</Property>
-        <Property name="serverName">${MODEL_CLASSNAME?uncap_first}-server</Property>
+        <Property name="serverName">${MODEL_CLASSNAME?lower_case}-server</Property>
         <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss,SSS} %t %5p %c{1}:%L - %m%n</Property>
     </properties>
 
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="$\{LOG_PATTERN\}"/>
+            <PatternLayout pattern="${r'${LOG_PATTERN}'}"/>
         </Console>
 
-        <RollingRandomAccessFile name="infoFile" fileName="$\{fileName\}/$\{serverName\}-info.log"
-                                 filePattern="$\{fileName\}/%d{yyyy-MM-dd}-%i.$\{serverName\}-info.log">
+        <RollingRandomAccessFile name="infoFile" fileName="${r'${fileName}'}/${r'${serverName}'}-info.log"
+                                 filePattern="${r'${fileName}'}/%d{yyyy-MM-dd}-%i.${r'${serverName}'}-info.log">
             <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="$\{LOG_PATTERN\}"/>
+            <PatternLayout pattern="${r'${LOG_PATTERN}'}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <!--<SizeBasedTriggeringPolicy size="512 MB"/>-->
@@ -23,9 +23,9 @@
             <DefaultRolloverStrategy max="50"/>
         </RollingRandomAccessFile>
 
-        <RollingRandomAccessFile name="errorFile" fileName="$\{fileName\}/$\{serverName\}-error.log" immediateFlush="false"
-                                 filePattern="$\{fileName\}/%d{yyyy-MM-dd}-%i.$\{serverName\}-error.log">
-            <PatternLayout pattern="$\{LOG_PATTERN\}"/>
+        <RollingRandomAccessFile name="errorFile" fileName="${r'${fileName}'}/${r'${serverName}'}-error.log" immediateFlush="false"
+                                 filePattern="${r'${fileName}'}/%d{yyyy-MM-dd}-%i.${r'${serverName}'}-error.log">
+            <PatternLayout pattern="${r'${LOG_PATTERN}'}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
                 <!--<SizeBasedTriggeringPolicy size="512 MB"/>-->
@@ -62,5 +62,6 @@
             <AppenderRef ref="errorFile"/>
         </Root>
     </Loggers>
+
 
 </configuration>

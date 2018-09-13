@@ -35,6 +35,7 @@ public class DirUtil {
         while(iter.hasNext()){
             DirEnum e = iter.next();
             String javaFilePackage = mapPackages.get(e);
+            //文件名称
             String fileName = getFileName(cfg,e);
             //这里都是Java文件的信息
             String packageDir = javaFilePackage.replace('.',File.separatorChar);
@@ -79,6 +80,7 @@ public class DirUtil {
         listDir.add(DirEnum.p_prop_application_test);
         listDir.add(DirEnum.p_prop_application_pord);
         listDir.add(DirEnum.p_prop_log4j);
+        listDir.add(DirEnum.p_prop_log4j2);
         listDir.add(DirEnum.p_pom);
         listDir.add(DirEnum.p_pom_parent);
         return listDir;
@@ -103,7 +105,9 @@ public class DirUtil {
                     + artifactId + dir_server ;
         }else if(DirEnum.p_prop_application.equals(e) || DirEnum.p_prop_application_dev.equals(e)
                 || DirEnum.p_prop_application_test.equals(e) || DirEnum.p_prop_application_pord.equals(e)
-                || DirEnum.p_prop_log4j.equals(e) ){
+                || DirEnum.p_prop_log4j.equals(e)
+                || DirEnum.p_prop_log4j2.equals(e))
+        {
             fileDir = outputBaseDir + File.separator
                     + artifactId + dir_parent + File.separator
                     + artifactId + dir_server + File.separator
@@ -176,6 +180,8 @@ public class DirUtil {
             fileName = "application-prod.properties";
         }else if(DirEnum.p_prop_log4j.equals(e)){
             fileName = "log4j.properties";
+        }else if(DirEnum.p_prop_log4j2.equals(e)){
+            fileName = "log4j2.xml";
         }else{
             fileName = "Undefined.file";
         }
